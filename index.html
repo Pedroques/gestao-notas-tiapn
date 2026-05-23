@@ -6,97 +6,83 @@
     <title>Gestor de Notas</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
-
 </head>
 
 <body>
 
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg">
-        <div class="container">
+        <div class="container flex-column text-center">
 
-            <a class="navbar-brand text-white" href="/index.html">
-                Gestão de Vendas - Sistema de Notas
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-end" id="menu">
-
-                <ul class="navbar-nav">
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/index.html">
-                            Página Inicial
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/cadastroNotas.html">
-                            Venda
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/cadastrarCliente.html">
-                            Cadastrar Cliente
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/relatorios.html">
-                            Relatórios
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/cotasAberto.html">
-                            Cotas Aberto
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/vendedor.html">
-                            Vendedor
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/produtos.html">
-                            Produtos
-                        </a>
-                    </li>
-
-                </ul>
-
+            <div class="navbar-brand text-white titulo-sistema">
+                Sistema Financeiro Gestor de Notas
             </div>
-        </div>
-    </nav>
 
-    <div class="container mt-4">
-
-        <h4>Página Inicial</h4>
-
-    </div>
-
-    <footer class="footer">
-        <div class="container text-center">
-
-            <p class="mb-1">
-                Sistema de Gestão de Vendas
-            </p>
-
-            <small>
-                © 2026 - Todos os direitos reservados
+            <small class="frase-motivacional">
+                Organização hoje, segurança financeira amanhã.
             </small>
 
         </div>
-    </footer>
-</body>
+    </nav>
 
+    <!-- CONTEÚDO -->
+    <div class="container mt-4">
+
+        <h4 class="titulo-pagina">Página Inicial</h4>
+
+        <div class="grid-home">
+
+            <a href="/cadastroNotas.html" class="card-home">
+                <i class="bi bi-cart4"></i>
+                <span>Venda</span>
+                <p>Registre notas promissórias, vendas a prazo e informações completas da transação.</p>
+            </a>
+
+            <a href="/cadastrarCliente.html" class="card-home">
+                <i class="bi bi-person"></i>
+                <span>Cliente</span>
+                <p>Cadastre e gerencie clientes com dados pessoais, endereço e histórico financeiro.</p>
+            </a>
+
+            <a href="/relatorios.html" class="card-home">
+                <i class="bi bi-bar-chart"></i>
+                <span>Relatórios</span>
+                <p>Gere relatórios e análises para apoiar decisões financeiras estratégicas.</p>
+            </a>
+
+            <a href="/cotasAberto.html" class="card-home">
+                <i class="bi bi-clock-history"></i>
+                <span>Em Aberto</span>
+                <p>Visualize parcelas pendentes, atrasos e controle de inadimplência.</p>
+            </a>
+
+            <a href="/vendedor.html" class="card-home">
+                <i class="bi bi-people"></i>
+                <span>Vendedor</span>
+                <p>Gerencie vendedores e acompanhe desempenho e histórico de vendas.</p>
+            </a>
+
+            <a href="/produtos.html" class="card-home">
+                <i class="bi bi-box-seam"></i>
+                <span>Produtos</span>
+                <p>Controle estoque, cadastre produtos e organize o catálogo da empresa.</p>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-1">Sistema de Gestão de Vendas</p>
+            <small>© 2026 - Todos os direitos reservados</small>
+        </div>
+    </footer>
+
+</body>
 </html>
