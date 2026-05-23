@@ -1,0 +1,157 @@
+/* Corpo do projeto */
+body {
+    font-family: 'Poppins', sans-serif;
+
+    background-image: url("../img/fundo-financeiro.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.014);
+    z-index: -1;
+}
+
+/* Fim do corpo */
+
+/* Textos e titulos */
+h4 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 48px;
+    font-weight: 600;
+    color: #172112;
+    margin-bottom: 15px;
+}
+
+/* Fim Texto e titulos */
+
+/* NavBar */
+.navbar {
+    background: rgb(30, 34, 30);
+    backdrop-filter: blur(6px);
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.navbar a {
+    color: #e1eee3;
+    font-size: 14px;
+}
+
+.navbar a:hover {
+    color: #4CAF50 !important;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* Fim NavBar */
+
+/* Body */
+.iconeLupa {
+    width: 30px;
+}
+
+.iconeLupa:hover {
+    width: 38px;
+    transition: width 0.3s ease;
+}
+
+input:hover {
+    border: 1px solid #1e221e;
+}
+
+
+/* Botões */
+#btn-action{
+    background: rgb(30, 34, 30);
+    backdrop-filter: blur(6px);
+    color: #e1eee3;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.btnCriar{
+    background: #0d6efd;
+    color: #fff;
+    border: 2px solid #023b91;
+}
+.btnCriar:hover{
+    background: #c4dbff;
+    color: #0d6efd;
+    border: 2px solid #0d6efd;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.btnEditar{
+    background: #eb8a3b;
+    color: #fff;
+    border: 2px solid #a74b00;
+}
+.btnEditar:hover{
+    background: #ffe5cf;
+    color: #eb8a3b;
+    border: 2px solid #eb8a3b;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.btnSalvar{
+    background: #198754;
+    color: #fff;
+    border: 2px solid #015c08;
+}
+.btnSalvar:hover{
+    background: #baf8cf;
+    color: #198754;
+    border: 2px solid #198754;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.btnCancelar{
+    background: #f44336;
+    color: #fff;
+    border: 2px solid #8a0900;
+}
+.btnCancelar:hover{
+    background: #ffd0d0;
+    color: #f44336;
+    border: 2px solid #f44336;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Fim dos Botões */
+
+/* Fim Body */
+
+/* Rodapé */
+.footer {
+    padding: 20px 0;
+    background: rgb(30, 34, 30);
+    backdrop-filter: blur(6px);
+    color: #e1eee3;
+    font-size: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Fim Rodapé */
