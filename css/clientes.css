@@ -31,11 +31,10 @@ body::before {
 
 /* Textos e titulos */
 h4 {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 48px;
-    font-weight: 600;
     color: #172112;
-    margin-bottom: 15px;
+    font-size: 34px;
+    font-weight: 100px;
+    margin-bottom: 28px;
 }
 
 /* Fim Texto e titulos */

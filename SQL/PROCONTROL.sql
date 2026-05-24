@@ -2,8 +2,17 @@ CREATE DATABASE ProControl;
 USE ProControl;
 
 CREATE TABLE Vendedores (
-    codVendedor INT(3) AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    nomeVendedor VARCHAR(100)
+
+    codVendedor INT(3)
+    AUTO_INCREMENT
+    PRIMARY KEY
+    NOT NULL,
+
+    nomeVendedor VARCHAR(100) NOT NULL,
+
+    status ENUM('ATIVO','INATIVO')
+    DEFAULT 'ATIVO'
+
 );
 
 CREATE TABLE Clientes(

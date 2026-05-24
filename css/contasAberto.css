@@ -18,22 +18,20 @@ body {
 body::before {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.151);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.03);
     z-index: -1;
 }
 
 h4 {
-    font-weight: 600;
-    color: #58655d !important;
-    margin-bottom: 20px;
+    color: #172112;
+    font-size: 34px;
+    font-weight: 100px;
+    margin-bottom: 28px;
 }
 
 .navbar {
-    background: rgba(30, 34, 30, 0.594);
+    background: rgb(30, 34, 30);
     backdrop-filter: blur(6px);
 }
 
@@ -42,7 +40,7 @@ h4 {
 }
 
 .navbar a {
-    color: white !important;
+    color: #e1eee3 !important;
     font-size: 14px;
 }
 
@@ -59,36 +57,33 @@ h4 {
 }
 
 .card {
-
+    background: transparent;
     border: none;
-    border-radius: 12px;
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(6px);
-    color: white;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: none;
+    padding: 0;
+    color: #172112;
 }
 
 label {
 
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 500;
-    color: #dcdcdc;
+    color: #000000;
 }
 
 .form-control {
-
+    background: #ffffff;
     border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid #ced4da;
     font-size: 14px;
-    background: rgba(0, 0, 0, 0.45);
-    color: white;
+    color: #1e221e;
 }
 
 .form-control:focus {
-
+    border: 1px solid #1e221e;
     border-color: #4CAF50;
     box-shadow: 0 0 0 0.1rem rgba(76, 175, 80, 0.25);
-    background: rgba(0, 0, 0, 0.55);
+    background: white;
 }
 
 .btn {
@@ -120,37 +115,31 @@ label {
     background: #4CAF50;
 }
 
-.table {
-
-    background: rgba(0, 0, 0, 0.45);
-    border-radius: 10px;
-    overflow: hidden;
-    backdrop-filter: blur(4px);
+.table{
+    background:#ffffff;
+    border-radius:10px;
+    overflow:hidden;
 }
 
-.table thead {
-
-    background: rgba(0, 0, 0, 0.7);
+.table thead{
+    background:rgb(30,34,30);
 }
 
-.table thead th {
-
-    font-weight: 500;
-    font-size: 14px;
-    color: #e0e0e0;
+.table thead th{
+    color:#000000;
+    font-weight:500;
+    font-size:14px;
+    border:none;
 }
 
-.table tbody td {
-
-    font-size: 14px;
-    vertical-align: middle;
-    color: white;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+.table tbody td{
+    color:#000;
+    font-size:14px;
+    vertical-align:middle;
 }
 
-.table tbody tr:hover {
-
-    background: rgba(255, 255, 255, 0.05);
+.table tbody tr:hover{
+    background:#f3f5f3;
 }
 
 .text-warning {
@@ -164,11 +153,10 @@ label {
     color: #4CAF50 !important;
 }
 
-
 .footer {
 
     padding: 20px 0;
-    background: rgba(30, 34, 30, 0.594);
+    background: rgb(30, 34, 30);
     backdrop-filter: blur(6px);
     color: #e0e0e0;
     font-size: 14px;

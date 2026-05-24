@@ -4,6 +4,7 @@
 <!-- =============================================
      HEAD — META, FONTES E ESTILOS
      ============================================= -->
+
 <head>
   <meta charset="UTF-8">
   <title>Relatórios</title>
@@ -14,334 +15,335 @@
 
 <body>
 
-<!-- =============================================
+  <!-- =============================================
      NAVBAR — BARRA DE NAVEGACAO
      ============================================= -->
-<nav class="navbar navbar-expand-lg">
-  <div class="container">
-    <a class="navbar-brand" href="/index.html">Gestão de Vendas - Sistema de Notas</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="menu">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="/index.html">Página Inicial</a></li>
-        <li class="nav-item"><a class="nav-link" href="/cadastroNotas.html">Venda</a></li>
-        <li class="nav-item"><a class="nav-link" href="/clientes.html">Clientes</a></li>
-        <li class="nav-item"><a class="nav-link active" href="/relatorios.html">Relatórios</a></li>
-        <li class="nav-item"><a class="nav-link" href="/cotasAberto.html">Cotas Aberto</a></li>
-        <li class="nav-item"><a class="nav-link" href="/vendedor.html">Vendedor</a></li>
-        <li class="nav-item"><a class="nav-link" href="/produtos.html">Produtos</a></li>
-      </ul>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="/index.html">Gestão de Vendas - Sistema de Notas</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="menu">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="/index.html">Página Inicial</a></li>
+          <li class="nav-item"><a class="nav-link" href="/cadastroNotas.html">Venda</a></li>
+          <li class="nav-item"><a class="nav-link" href="/clientes.html">Clientes</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/relatorios.html">Relatórios</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contasAberto.html">Contas Aberto</a></li>
+          <li class="nav-item"><a class="nav-link" href="/vendedor.html">Vendedor</a></li>
+          <li class="nav-item"><a class="nav-link" href="/produtos.html">Produtos</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
-
-<!-- =============================================
-     CONTEUDO PRINCIPAL
-     ============================================= -->
-<div class="container mt-4 mb-5">
-  <h4>Relatórios</h4>
+  </nav>
 
   <!-- =============================================
+     CONTEUDO PRINCIPAL
+     ============================================= -->
+  <div class="container mt-4 mb-5">
+    <h4>Relatórios</h4>
+
+    <!-- =============================================
        ABAS — NAVEGACAO ENTRE RELATORIOS
        ============================================= -->
-  <ul class="nav nav-tabs" id="abasRelatorio">
-    <li class="nav-item">
-      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#aba-vendedor">Vendedores</button>
-    </li>
-    <li class="nav-item">
-      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#aba-produtos">Produtos</button>
-    </li>
-    <li class="nav-item">
-      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#aba-parcelas">Parcelas a Vencer</button>
-    </li>
-  </ul>
+    <ul class="nav nav-tabs" id="abasRelatorio">
+      <li class="nav-item">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#aba-vendedor">Vendedores</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#aba-produtos">Produtos</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#aba-parcelas">Parcelas a Vencer</button>
+      </li>
+    </ul>
 
-  <div class="tab-content">
+    <div class="tab-content">
 
-    <!-- =============================================
+      <!-- =============================================
          ABA 1 — RELATORIO DE VENDEDORES
          ============================================= -->
-    <div class="tab-pane fade show active card-relatorio" id="aba-vendedor">
-      <p class="text-muted" style="font-size:0.83rem; margin-bottom:16px;">
-        Consulte o total de vendas realizadas por um vendedor em um periodo determinado.
-      </p>
+      <div class="tab-pane fade show active card-relatorio" id="aba-vendedor">
+        <p class="text-muted" style="font-size:0.83rem; margin-bottom:16px;">
+          Consulte o total de vendas realizadas por um vendedor em um periodo determinado.
+        </p>
 
-      <!-- Filtros -->
-      <div class="row g-3 align-items-end">
-        <div class="col-md-3">
-          <label>Vendedor</label>
-          <select class="form-select" id="sel-vendedor">
-            <option value="">Todos os vendedores</option>
-          </select>
+        <!-- Filtros -->
+        <div class="row g-3 align-items-end">
+          <div class="col-md-3">
+            <label>Vendedor</label>
+            <select class="form-select" id="sel-vendedor">
+              <option value="">Todos os vendedores</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>De</label>
+            <input type="date" class="form-control" id="vend-data-ini">
+          </div>
+          <div class="col-md-3">
+            <label>Ate</label>
+            <input type="date" class="form-control" id="vend-data-fim">
+          </div>
+          <div class="col-md-3">
+            <button class="btn-buscar w-100" onclick="buscarVendedor()">Buscar</button>
+          </div>
         </div>
-        <div class="col-md-3">
-          <label>De</label>
-          <input type="date" class="form-control" id="vend-data-ini">
+
+        <!-- Tabela de resultados -->
+        <div class="secao-resultado" id="resultado-vendedor" style="display:none;">
+          <div class="divider"></div>
+          <h6>Informacoes Encontradas</h6>
+          <div class="tabela-resultado">
+            <table class="table table-hover" id="tabela-vendedor">
+              <thead>
+                <tr>
+                  <th>Cod. Promissoria</th>
+                  <th>Data da Venda</th>
+                  <th>Cliente</th>
+                  <th>Produto(s)</th>
+                  <th>Parcelas</th>
+                  <th>Valor Total</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-vendedor"></tbody>
+            </table>
+          </div>
+          <div class="rodape-tabela">
+            <span id="resumo-vendedor" class="text-muted me-3" style="font-size:0.82rem;"></span>
+            <button class="btn-pdf" onclick="gerarPDF('vendedor')">Gerar PDF</button>
+          </div>
         </div>
-        <div class="col-md-3">
-          <label>Ate</label>
-          <input type="date" class="form-control" id="vend-data-fim">
-        </div>
-        <div class="col-md-3">
-          <button class="btn-buscar w-100" onclick="buscarVendedor()">Buscar</button>
+
+        <!-- Mensagem sem resultado -->
+        <div id="vazio-vendedor" class="msg-vazia" style="display:none;">
+          Nenhum resultado encontrado para os filtros selecionados.
         </div>
       </div>
 
-      <!-- Tabela de resultados -->
-      <div class="secao-resultado" id="resultado-vendedor" style="display:none;">
-        <div class="divider"></div>
-        <h6>Informacoes Encontradas</h6>
-        <div class="tabela-resultado">
-          <table class="table table-hover" id="tabela-vendedor">
-            <thead>
-              <tr>
-                <th>Cod. Promissoria</th>
-                <th>Data da Venda</th>
-                <th>Cliente</th>
-                <th>Produto(s)</th>
-                <th>Parcelas</th>
-                <th>Valor Total</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-vendedor"></tbody>
-          </table>
-        </div>
-        <div class="rodape-tabela">
-          <span id="resumo-vendedor" class="text-muted me-3" style="font-size:0.82rem;"></span>
-          <button class="btn-pdf" onclick="gerarPDF('vendedor')">Gerar PDF</button>
-        </div>
-      </div>
-
-      <!-- Mensagem sem resultado -->
-      <div id="vazio-vendedor" class="msg-vazia" style="display:none;">
-        Nenhum resultado encontrado para os filtros selecionados.
-      </div>
-    </div>
-
-    <!-- =============================================
+      <!-- =============================================
          ABA 2 — RELATORIO DE PRODUTOS
          ============================================= -->
-    <div class="tab-pane fade card-relatorio" id="aba-produtos">
-      <p class="text-muted" style="font-size:0.83rem; margin-bottom:16px;">
-        Visualize os produtos vendidos mais recentemente ou filtre por periodo.
-      </p>
+      <div class="tab-pane fade card-relatorio" id="aba-produtos">
+        <p class="text-muted" style="font-size:0.83rem; margin-bottom:16px;">
+          Visualize os produtos vendidos mais recentemente ou filtre por periodo.
+        </p>
 
-      <!-- Filtros -->
-      <div class="row g-3 align-items-end">
-        <div class="col-md-3">
-          <label>Produto</label>
-          <select class="form-select" id="sel-produto">
-            <option value="">Todos os produtos</option>
-          </select>
+        <!-- Filtros -->
+        <div class="row g-3 align-items-end">
+          <div class="col-md-3">
+            <label>Produto</label>
+            <select class="form-select" id="sel-produto">
+              <option value="">Todos os produtos</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>De</label>
+            <input type="date" class="form-control" id="prod-data-ini">
+          </div>
+          <div class="col-md-3">
+            <label>Ate</label>
+            <input type="date" class="form-control" id="prod-data-fim">
+          </div>
+          <div class="col-md-3">
+            <button class="btn-buscar w-100" onclick="buscarProdutos()">Buscar</button>
+          </div>
         </div>
-        <div class="col-md-3">
-          <label>De</label>
-          <input type="date" class="form-control" id="prod-data-ini">
+
+        <!-- Tabela de resultados -->
+        <div class="secao-resultado" id="resultado-produtos" style="display:none;">
+          <div class="divider"></div>
+          <h6>Informacoes Encontradas</h6>
+          <div class="tabela-resultado">
+            <table class="table table-hover" id="tabela-produtos">
+              <thead>
+                <tr>
+                  <th>Cod. Produto</th>
+                  <th>Nome do Produto</th>
+                  <th>Ultima Venda</th>
+                  <th>Qtd. Vendida</th>
+                  <th>Valor Unit.</th>
+                  <th>Total Arrecadado</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-produtos"></tbody>
+            </table>
+          </div>
+          <div class="rodape-tabela">
+            <span id="resumo-produtos" class="text-muted me-3" style="font-size:0.82rem;"></span>
+            <button class="btn-pdf" onclick="gerarPDF('produtos')">Gerar PDF</button>
+          </div>
         </div>
-        <div class="col-md-3">
-          <label>Ate</label>
-          <input type="date" class="form-control" id="prod-data-fim">
-        </div>
-        <div class="col-md-3">
-          <button class="btn-buscar w-100" onclick="buscarProdutos()">Buscar</button>
+
+        <!-- Mensagem sem resultado -->
+        <div id="vazio-produtos" class="msg-vazia" style="display:none;">
+          Nenhum resultado encontrado para os filtros selecionados.
         </div>
       </div>
 
-      <!-- Tabela de resultados -->
-      <div class="secao-resultado" id="resultado-produtos" style="display:none;">
-        <div class="divider"></div>
-        <h6>Informacoes Encontradas</h6>
-        <div class="tabela-resultado">
-          <table class="table table-hover" id="tabela-produtos">
-            <thead>
-              <tr>
-                <th>Cod. Produto</th>
-                <th>Nome do Produto</th>
-                <th>Ultima Venda</th>
-                <th>Qtd. Vendida</th>
-                <th>Valor Unit.</th>
-                <th>Total Arrecadado</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-produtos"></tbody>
-          </table>
-        </div>
-        <div class="rodape-tabela">
-          <span id="resumo-produtos" class="text-muted me-3" style="font-size:0.82rem;"></span>
-          <button class="btn-pdf" onclick="gerarPDF('produtos')">Gerar PDF</button>
-        </div>
-      </div>
-
-      <!-- Mensagem sem resultado -->
-      <div id="vazio-produtos" class="msg-vazia" style="display:none;">
-        Nenhum resultado encontrado para os filtros selecionados.
-      </div>
-    </div>
-
-    <!-- =============================================
+      <!-- =============================================
          ABA 3 — PARCELAS A VENCER
          ============================================= -->
-    <div class="tab-pane fade card-relatorio" id="aba-parcelas">
-      <p class="text-muted" style="font-size:0.83rem; margin-bottom:16px;">
-        Verifique quais clientes possuem parcelas vencendo neste mes, nesta semana ou em um periodo customizado.
-      </p>
+      <div class="tab-pane fade card-relatorio" id="aba-parcelas">
+        <p class="text-muted" style="font-size:0.83rem; margin-bottom:16px;">
+          Verifique quais clientes possuem parcelas vencendo neste mes, nesta semana ou em um periodo customizado.
+        </p>
 
-      <!-- Botoes de atalho de periodo -->
-      <div class="row g-3 align-items-end">
-        <div class="col-md-12 d-flex gap-2 flex-wrap">
-          <button class="btn-periodo" id="btn-semana" onclick="atalhoVencimento('semana')">Esta semana</button>
-          <button class="btn-periodo" id="btn-mes" onclick="atalhoVencimento('mes')">Este mes</button>
-          <button class="btn-periodo" id="btn-custom" onclick="atalhoVencimento('custom')">Periodo customizado</button>
+        <!-- Botoes de atalho de periodo -->
+        <div class="row g-3 align-items-end">
+          <div class="col-md-12 d-flex gap-2 flex-wrap">
+            <button class="btn-periodo" id="btn-semana" onclick="atalhoVencimento('semana')">Esta semana</button>
+            <button class="btn-periodo" id="btn-mes" onclick="atalhoVencimento('mes')">Este mes</button>
+            <button class="btn-periodo" id="btn-custom" onclick="atalhoVencimento('custom')">Periodo
+              customizado</button>
+          </div>
+        </div>
+
+        <!-- Filtro de periodo customizado (oculto por padrao) -->
+        <div class="row g-3 align-items-end mt-1" id="painel-custom" style="display:none;">
+          <div class="col-md-3">
+            <label>De</label>
+            <input type="date" class="form-control" id="parc-data-ini">
+          </div>
+          <div class="col-md-3">
+            <label>Ate</label>
+            <input type="date" class="form-control" id="parc-data-fim">
+          </div>
+          <div class="col-md-3">
+            <button class="btn-buscar" onclick="buscarParcelas()">Buscar</button>
+          </div>
+        </div>
+
+        <!-- Tabela de resultados -->
+        <div class="secao-resultado" id="resultado-parcelas" style="display:none;">
+          <div class="divider"></div>
+          <h6>Informacoes Encontradas</h6>
+          <div class="tabela-resultado">
+            <table class="table table-hover" id="tabela-parcelas">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Cod. Promissoria</th>
+                  <th>N. Parcela</th>
+                  <th>Valor da Parcela</th>
+                  <th>Vencimento</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-parcelas"></tbody>
+            </table>
+          </div>
+          <div class="rodape-tabela">
+            <span id="resumo-parcelas" class="text-muted me-3" style="font-size:0.82rem;"></span>
+            <button class="btn-pdf" onclick="gerarPDF('parcelas')">Gerar PDF</button>
+          </div>
+        </div>
+
+        <!-- Mensagem sem resultado -->
+        <div id="vazio-parcelas" class="msg-vazia" style="display:none;">
+          Nenhuma parcela encontrada para o periodo selecionado.
         </div>
       </div>
 
-      <!-- Filtro de periodo customizado (oculto por padrao) -->
-      <div class="row g-3 align-items-end mt-1" id="painel-custom" style="display:none;">
-        <div class="col-md-3">
-          <label>De</label>
-          <input type="date" class="form-control" id="parc-data-ini">
-        </div>
-        <div class="col-md-3">
-          <label>Ate</label>
-          <input type="date" class="form-control" id="parc-data-fim">
-        </div>
-        <div class="col-md-3">
-          <button class="btn-buscar" onclick="buscarParcelas()">Buscar</button>
-        </div>
-      </div>
-
-      <!-- Tabela de resultados -->
-      <div class="secao-resultado" id="resultado-parcelas" style="display:none;">
-        <div class="divider"></div>
-        <h6>Informacoes Encontradas</h6>
-        <div class="tabela-resultado">
-          <table class="table table-hover" id="tabela-parcelas">
-            <thead>
-              <tr>
-                <th>Cliente</th>
-                <th>Cod. Promissoria</th>
-                <th>N. Parcela</th>
-                <th>Valor da Parcela</th>
-                <th>Vencimento</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-parcelas"></tbody>
-          </table>
-        </div>
-        <div class="rodape-tabela">
-          <span id="resumo-parcelas" class="text-muted me-3" style="font-size:0.82rem;"></span>
-          <button class="btn-pdf" onclick="gerarPDF('parcelas')">Gerar PDF</button>
-        </div>
-      </div>
-
-      <!-- Mensagem sem resultado -->
-      <div id="vazio-parcelas" class="msg-vazia" style="display:none;">
-        Nenhuma parcela encontrada para o periodo selecionado.
-      </div>
     </div>
-
   </div>
-</div>
 
-<!-- =============================================
+  <!-- =============================================
      FOOTER — RODAPE DA PAGINA
      ============================================= -->
-<footer class="footer">
-  <div class="container text-center">
-    <p class="mb-1">Sistema de Gestao de Vendas</p>
-    <small>© 2026 - Todos os direitos reservados</small>
-  </div>
-</footer>
+  <footer class="footer">
+    <div class="container text-center">
+      <p class="mb-1">Sistema de Gestao de Vendas</p>
+      <small>© 2026 - Todos os direitos reservados</small>
+    </div>
+  </footer>
 
-<!-- =============================================
+  <!-- =============================================
      SCRIPTS — BOOTSTRAP
      ============================================= -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
+  <script>
 
-  // =============================================
-  // CONFIGURACAO DA API
-  // Altere a BASE_URL quando o back-end C# estiver pronto
-  // =============================================
-  const BASE_URL = 'http://localhost:5000/api';
+    // =============================================
+    // CONFIGURACAO DA API
+    // Altere a BASE_URL quando o back-end C# estiver pronto
+    // =============================================
+    const BASE_URL = 'http://localhost:5000/api';
 
-  // =============================================
-  // CARREGAMENTO INICIAL
-  // Popula os selects de Vendedor e Produto ao abrir a pagina
-  // =============================================
+    // =============================================
+    // CARREGAMENTO INICIAL
+    // Popula os selects de Vendedor e Produto ao abrir a pagina
+    // =============================================
 
-  async function carregarVendedores() {
-    try {
-      const res = await fetch(`${BASE_URL}/vendedores`);
-      const data = await res.json();
-      const sel = document.getElementById('sel-vendedor');
-      data.forEach(v => {
-        const opt = document.createElement('option');
-        opt.value = v.codigo;
-        opt.textContent = `${v.codigo} - ${v.nome}`;
-        sel.appendChild(opt);
-      });
-    } catch {
-      console.warn('API de vendedores indisponivel. Conecte o back-end C#.');
-    }
-  }
-
-  async function carregarProdutos() {
-    try {
-      const res = await fetch(`${BASE_URL}/produtos`);
-      const data = await res.json();
-      const sel = document.getElementById('sel-produto');
-      data.forEach(p => {
-        const opt = document.createElement('option');
-        opt.value = p.codigo;
-        opt.textContent = `${p.codigo} - ${p.nome}`;
-        sel.appendChild(opt);
-      });
-    } catch {
-      console.warn('API de produtos indisponivel. Conecte o back-end C#.');
-    }
-  }
-
-  // =============================================
-  // ABA 1 — BUSCA DE VENDAS POR VENDEDOR
-  // Endpoint: GET /api/relatorios/vendedor?codigoVendedor=X&dataInicio=Y&dataFim=Z
-  // Retorno:  [{ codPromissoria, dataVenda, cliente, produtos, parcelas, valorTotal }]
-  // =============================================
-
-  async function buscarVendedor() {
-    const vendedor = document.getElementById('sel-vendedor').value;
-    const dataIni  = document.getElementById('vend-data-ini').value;
-    const dataFim  = document.getElementById('vend-data-fim').value;
-
-    if (!dataIni || !dataFim) {
-      alert('Selecione o periodo de busca (De e Ate).');
-      return;
+    async function carregarVendedores() {
+      try {
+        const res = await fetch(`${BASE_URL}/vendedores`);
+        const data = await res.json();
+        const sel = document.getElementById('sel-vendedor');
+        data.forEach(v => {
+          const opt = document.createElement('option');
+          opt.value = v.codigo;
+          opt.textContent = `${v.codigo} - ${v.nome}`;
+          sel.appendChild(opt);
+        });
+      } catch {
+        console.warn('API de vendedores indisponivel. Conecte o back-end C#.');
+      }
     }
 
-    try {
-      const params = new URLSearchParams({ dataInicio: dataIni, dataFim });
-      if (vendedor) params.append('codigoVendedor', vendedor);
+    async function carregarProdutos() {
+      try {
+        const res = await fetch(`${BASE_URL}/produtos`);
+        const data = await res.json();
+        const sel = document.getElementById('sel-produto');
+        data.forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p.codigo;
+          opt.textContent = `${p.codigo} - ${p.nome}`;
+          sel.appendChild(opt);
+        });
+      } catch {
+        console.warn('API de produtos indisponivel. Conecte o back-end C#.');
+      }
+    }
 
-      const res  = await fetch(`${BASE_URL}/relatorios/vendedor?${params}`);
-      const data = await res.json();
+    // =============================================
+    // ABA 1 — BUSCA DE VENDAS POR VENDEDOR
+    // Endpoint: GET /api/relatorios/vendedor?codigoVendedor=X&dataInicio=Y&dataFim=Z
+    // Retorno:  [{ codPromissoria, dataVenda, cliente, produtos, parcelas, valorTotal }]
+    // =============================================
 
-      const tbody = document.getElementById('tbody-vendedor');
-      tbody.innerHTML = '';
+    async function buscarVendedor() {
+      const vendedor = document.getElementById('sel-vendedor').value;
+      const dataIni = document.getElementById('vend-data-ini').value;
+      const dataFim = document.getElementById('vend-data-fim').value;
 
-      if (!data.length) {
-        document.getElementById('resultado-vendedor').style.display = 'none';
-        document.getElementById('vazio-vendedor').style.display = 'block';
+      if (!dataIni || !dataFim) {
+        alert('Selecione o periodo de busca (De e Ate).');
         return;
       }
 
-      let totalGeral = 0;
-      data.forEach(v => {
-        totalGeral += v.valorTotal;
-        tbody.innerHTML += `
+      try {
+        const params = new URLSearchParams({ dataInicio: dataIni, dataFim });
+        if (vendedor) params.append('codigoVendedor', vendedor);
+
+        const res = await fetch(`${BASE_URL}/relatorios/vendedor?${params}`);
+        const data = await res.json();
+
+        const tbody = document.getElementById('tbody-vendedor');
+        tbody.innerHTML = '';
+
+        if (!data.length) {
+          document.getElementById('resultado-vendedor').style.display = 'none';
+          document.getElementById('vazio-vendedor').style.display = 'block';
+          return;
+        }
+
+        let totalGeral = 0;
+        data.forEach(v => {
+          totalGeral += v.valorTotal;
+          tbody.innerHTML += `
           <tr>
             <td>${v.codPromissoria}</td>
             <td>${formatarData(v.dataVenda)}</td>
@@ -350,55 +352,55 @@
             <td>${v.parcelas}</td>
             <td>R$ ${v.valorTotal.toFixed(2)}</td>
           </tr>`;
-      });
+        });
 
-      document.getElementById('resumo-vendedor').textContent =
-        `${data.length} venda(s) encontrada(s) — Total: R$ ${totalGeral.toFixed(2)}`;
-      document.getElementById('vazio-vendedor').style.display = 'none';
-      document.getElementById('resultado-vendedor').style.display = 'block';
+        document.getElementById('resumo-vendedor').textContent =
+          `${data.length} venda(s) encontrada(s) — Total: R$ ${totalGeral.toFixed(2)}`;
+        document.getElementById('vazio-vendedor').style.display = 'none';
+        document.getElementById('resultado-vendedor').style.display = 'block';
 
-    } catch (err) {
-      console.error(err);
-      alert('Erro ao buscar dados. Verifique se a API C# esta em execucao em ' + BASE_URL);
-    }
-  }
-
-  // =============================================
-  // ABA 2 — BUSCA DE PRODUTOS VENDIDOS
-  // Endpoint: GET /api/relatorios/produtos?codigoProduto=X&dataInicio=Y&dataFim=Z
-  // Retorno:  [{ codProduto, nomeProduto, ultimaVenda, qtdVendida, valorUnit, totalArrecadado }]
-  // =============================================
-
-  async function buscarProdutos() {
-    const produto = document.getElementById('sel-produto').value;
-    const dataIni = document.getElementById('prod-data-ini').value;
-    const dataFim = document.getElementById('prod-data-fim').value;
-
-    if (!dataIni || !dataFim) {
-      alert('Selecione o periodo de busca (De e Ate).');
-      return;
+      } catch (err) {
+        console.error(err);
+        alert('Erro ao buscar dados. Verifique se a API C# esta em execucao em ' + BASE_URL);
+      }
     }
 
-    try {
-      const params = new URLSearchParams({ dataInicio: dataIni, dataFim });
-      if (produto) params.append('codigoProduto', produto);
+    // =============================================
+    // ABA 2 — BUSCA DE PRODUTOS VENDIDOS
+    // Endpoint: GET /api/relatorios/produtos?codigoProduto=X&dataInicio=Y&dataFim=Z
+    // Retorno:  [{ codProduto, nomeProduto, ultimaVenda, qtdVendida, valorUnit, totalArrecadado }]
+    // =============================================
 
-      const res  = await fetch(`${BASE_URL}/relatorios/produtos?${params}`);
-      const data = await res.json();
+    async function buscarProdutos() {
+      const produto = document.getElementById('sel-produto').value;
+      const dataIni = document.getElementById('prod-data-ini').value;
+      const dataFim = document.getElementById('prod-data-fim').value;
 
-      const tbody = document.getElementById('tbody-produtos');
-      tbody.innerHTML = '';
-
-      if (!data.length) {
-        document.getElementById('resultado-produtos').style.display = 'none';
-        document.getElementById('vazio-produtos').style.display = 'block';
+      if (!dataIni || !dataFim) {
+        alert('Selecione o periodo de busca (De e Ate).');
         return;
       }
 
-      let totalGeral = 0;
-      data.forEach(p => {
-        totalGeral += p.totalArrecadado;
-        tbody.innerHTML += `
+      try {
+        const params = new URLSearchParams({ dataInicio: dataIni, dataFim });
+        if (produto) params.append('codigoProduto', produto);
+
+        const res = await fetch(`${BASE_URL}/relatorios/produtos?${params}`);
+        const data = await res.json();
+
+        const tbody = document.getElementById('tbody-produtos');
+        tbody.innerHTML = '';
+
+        if (!data.length) {
+          document.getElementById('resultado-produtos').style.display = 'none';
+          document.getElementById('vazio-produtos').style.display = 'block';
+          return;
+        }
+
+        let totalGeral = 0;
+        data.forEach(p => {
+          totalGeral += p.totalArrecadado;
+          tbody.innerHTML += `
           <tr>
             <td>${p.codProduto}</td>
             <td>${p.nomeProduto}</td>
@@ -407,94 +409,94 @@
             <td>R$ ${p.valorUnit.toFixed(2)}</td>
             <td>R$ ${p.totalArrecadado.toFixed(2)}</td>
           </tr>`;
-      });
+        });
 
-      document.getElementById('resumo-produtos').textContent =
-        `${data.length} produto(s) encontrado(s) — Total arrecadado: R$ ${totalGeral.toFixed(2)}`;
-      document.getElementById('vazio-produtos').style.display = 'none';
-      document.getElementById('resultado-produtos').style.display = 'block';
+        document.getElementById('resumo-produtos').textContent =
+          `${data.length} produto(s) encontrado(s) — Total arrecadado: R$ ${totalGeral.toFixed(2)}`;
+        document.getElementById('vazio-produtos').style.display = 'none';
+        document.getElementById('resultado-produtos').style.display = 'block';
 
-    } catch (err) {
-      console.error(err);
-      alert('Erro ao buscar dados. Verifique se a API C# esta em execucao em ' + BASE_URL);
-    }
-  }
-
-  // =============================================
-  // ABA 3 — PARCELAS A VENCER
-  // Endpoint: GET /api/relatorios/parcelas?dataInicio=X&dataFim=Y
-  // Retorno:  [{ cliente, codPromissoria, numParcela, valorParcela, dataVencimento, status }]
-  // Status possivel: "Em dia" | "Vencendo" | "Atrasado"
-  // =============================================
-
-  let modoVencimento = '';
-
-  // Botoes de atalho: semana, mes ou periodo customizado
-  function atalhoVencimento(modo) {
-    modoVencimento = modo;
-    document.querySelectorAll('.btn-periodo').forEach(b => b.classList.remove('ativo'));
-
-    const hoje = new Date();
-    let dataIni, dataFim;
-
-    if (modo === 'semana') {
-      document.getElementById('btn-semana').classList.add('ativo');
-      document.getElementById('painel-custom').style.display = 'none';
-      dataIni = formatarISO(hoje);
-      const fim = new Date(hoje);
-      fim.setDate(fim.getDate() + 7);
-      dataFim = formatarISO(fim);
-      buscarParcelasComDatas(dataIni, dataFim);
-
-    } else if (modo === 'mes') {
-      document.getElementById('btn-mes').classList.add('ativo');
-      document.getElementById('painel-custom').style.display = 'none';
-      dataIni = formatarISO(new Date(hoje.getFullYear(), hoje.getMonth(), 1));
-      dataFim = formatarISO(new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0));
-      buscarParcelasComDatas(dataIni, dataFim);
-
-    } else {
-      document.getElementById('btn-custom').classList.add('ativo');
-      document.getElementById('painel-custom').style.display = 'flex';
-    }
-  }
-
-  // Busca com periodo customizado inserido manualmente
-  function buscarParcelas() {
-    const dataIni = document.getElementById('parc-data-ini').value;
-    const dataFim = document.getElementById('parc-data-fim').value;
-    if (!dataIni || !dataFim) { alert('Selecione o periodo.'); return; }
-    buscarParcelasComDatas(dataIni, dataFim);
-  }
-
-  // Funcao principal de busca de parcelas
-  async function buscarParcelasComDatas(dataIni, dataFim) {
-    try {
-      const params = new URLSearchParams({ dataInicio: dataIni, dataFim });
-      const res    = await fetch(`${BASE_URL}/relatorios/parcelas?${params}`);
-      const data   = await res.json();
-
-      const tbody = document.getElementById('tbody-parcelas');
-      tbody.innerHTML = '';
-
-      if (!data.length) {
-        document.getElementById('resultado-parcelas').style.display = 'none';
-        document.getElementById('vazio-parcelas').style.display = 'block';
-        return;
+      } catch (err) {
+        console.error(err);
+        alert('Erro ao buscar dados. Verifique se a API C# esta em execucao em ' + BASE_URL);
       }
+    }
 
-      let totalValor = 0;
-      data.forEach(p => {
-        totalValor += p.valorParcela;
+    // =============================================
+    // ABA 3 — PARCELAS A VENCER
+    // Endpoint: GET /api/relatorios/parcelas?dataInicio=X&dataFim=Y
+    // Retorno:  [{ cliente, codPromissoria, numParcela, valorParcela, dataVencimento, status }]
+    // Status possivel: "Em dia" | "Vencendo" | "Atrasado"
+    // =============================================
 
-        // Define a cor do badge conforme o status da parcela
-        const badge = p.status === 'Atrasado'
-          ? `<span class="badge-atrasado">Atrasado</span>`
-          : p.status === 'Vencendo'
-          ? `<span class="badge-vencendo">Vencendo</span>`
-          : `<span class="badge-ok">Em dia</span>`;
+    let modoVencimento = '';
 
-        tbody.innerHTML += `
+    // Botoes de atalho: semana, mes ou periodo customizado
+    function atalhoVencimento(modo) {
+      modoVencimento = modo;
+      document.querySelectorAll('.btn-periodo').forEach(b => b.classList.remove('ativo'));
+
+      const hoje = new Date();
+      let dataIni, dataFim;
+
+      if (modo === 'semana') {
+        document.getElementById('btn-semana').classList.add('ativo');
+        document.getElementById('painel-custom').style.display = 'none';
+        dataIni = formatarISO(hoje);
+        const fim = new Date(hoje);
+        fim.setDate(fim.getDate() + 7);
+        dataFim = formatarISO(fim);
+        buscarParcelasComDatas(dataIni, dataFim);
+
+      } else if (modo === 'mes') {
+        document.getElementById('btn-mes').classList.add('ativo');
+        document.getElementById('painel-custom').style.display = 'none';
+        dataIni = formatarISO(new Date(hoje.getFullYear(), hoje.getMonth(), 1));
+        dataFim = formatarISO(new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0));
+        buscarParcelasComDatas(dataIni, dataFim);
+
+      } else {
+        document.getElementById('btn-custom').classList.add('ativo');
+        document.getElementById('painel-custom').style.display = 'flex';
+      }
+    }
+
+    // Busca com periodo customizado inserido manualmente
+    function buscarParcelas() {
+      const dataIni = document.getElementById('parc-data-ini').value;
+      const dataFim = document.getElementById('parc-data-fim').value;
+      if (!dataIni || !dataFim) { alert('Selecione o periodo.'); return; }
+      buscarParcelasComDatas(dataIni, dataFim);
+    }
+
+    // Funcao principal de busca de parcelas
+    async function buscarParcelasComDatas(dataIni, dataFim) {
+      try {
+        const params = new URLSearchParams({ dataInicio: dataIni, dataFim });
+        const res = await fetch(`${BASE_URL}/relatorios/parcelas?${params}`);
+        const data = await res.json();
+
+        const tbody = document.getElementById('tbody-parcelas');
+        tbody.innerHTML = '';
+
+        if (!data.length) {
+          document.getElementById('resultado-parcelas').style.display = 'none';
+          document.getElementById('vazio-parcelas').style.display = 'block';
+          return;
+        }
+
+        let totalValor = 0;
+        data.forEach(p => {
+          totalValor += p.valorParcela;
+
+          // Define a cor do badge conforme o status da parcela
+          const badge = p.status === 'Atrasado'
+            ? `<span class="badge-atrasado">Atrasado</span>`
+            : p.status === 'Vencendo'
+              ? `<span class="badge-vencendo">Vencendo</span>`
+              : `<span class="badge-ok">Em dia</span>`;
+
+          tbody.innerHTML += `
           <tr>
             <td>${p.cliente}</td>
             <td>${p.codPromissoria}</td>
@@ -503,49 +505,49 @@
             <td>${formatarData(p.dataVencimento)}</td>
             <td>${badge}</td>
           </tr>`;
-      });
+        });
 
-      document.getElementById('resumo-parcelas').textContent =
-        `${data.length} parcela(s) encontrada(s) — Total a receber: R$ ${totalValor.toFixed(2)}`;
-      document.getElementById('vazio-parcelas').style.display = 'none';
-      document.getElementById('resultado-parcelas').style.display = 'block';
+        document.getElementById('resumo-parcelas').textContent =
+          `${data.length} parcela(s) encontrada(s) — Total a receber: R$ ${totalValor.toFixed(2)}`;
+        document.getElementById('vazio-parcelas').style.display = 'none';
+        document.getElementById('resultado-parcelas').style.display = 'block';
 
-    } catch (err) {
-      console.error(err);
-      alert('Erro ao buscar dados. Verifique se a API C# esta em execucao em ' + BASE_URL);
+      } catch (err) {
+        console.error(err);
+        alert('Erro ao buscar dados. Verifique se a API C# esta em execucao em ' + BASE_URL);
+      }
     }
-  }
 
-  // =============================================
-  // GERAR PDF
-  // Abre janela de impressao com a tabela da aba ativa
-  // =============================================
+    // =============================================
+    // GERAR PDF
+    // Abre janela de impressao com a tabela da aba ativa
+    // =============================================
 
-  function gerarPDF(aba) {
-    const titulos = {
-      vendedor: 'Relatorio de Vendas por Vendedor',
-      produtos:  'Relatorio de Produtos Vendidos',
-      parcelas:  'Relatorio de Parcelas a Vencer'
-    };
+    function gerarPDF(aba) {
+      const titulos = {
+        vendedor: 'Relatorio de Vendas por Vendedor',
+        produtos: 'Relatorio de Produtos Vendidos',
+        parcelas: 'Relatorio de Parcelas a Vencer'
+      };
 
-    const tabelas = {
-      vendedor: document.getElementById('tabela-vendedor'),
-      produtos:  document.getElementById('tabela-produtos'),
-      parcelas:  document.getElementById('tabela-parcelas')
-    };
+      const tabelas = {
+        vendedor: document.getElementById('tabela-vendedor'),
+        produtos: document.getElementById('tabela-produtos'),
+        parcelas: document.getElementById('tabela-parcelas')
+      };
 
-    const resumos = {
-      vendedor: document.getElementById('resumo-vendedor').textContent,
-      produtos:  document.getElementById('resumo-produtos').textContent,
-      parcelas:  document.getElementById('resumo-parcelas').textContent
-    };
+      const resumos = {
+        vendedor: document.getElementById('resumo-vendedor').textContent,
+        produtos: document.getElementById('resumo-produtos').textContent,
+        parcelas: document.getElementById('resumo-parcelas').textContent
+      };
 
-    const win = window.open('', '_blank');
-    win.document.write(
-      '<!DOCTYPE html><html><head>' +
-      '<meta charset="UTF-8">' +
-      '<title>' + titulos[aba] + '<\/title>' +
-      '<style>' +
+      const win = window.open('', '_blank');
+      win.document.write(
+        '<!DOCTYPE html><html><head>' +
+        '<meta charset="UTF-8">' +
+        '<title>' + titulos[aba] + '<\/title>' +
+        '<style>' +
         'body { font-family: Arial, sans-serif; padding: 30px; font-size: 13px; }' +
         'h2 { color: #1a2e1a; margin-bottom: 4px; }' +
         '.sub { color: #555; font-size: 11px; margin-bottom: 20px; }' +
@@ -555,41 +557,42 @@
         'tr:nth-child(even) { background-color: #f4f7f4; }' +
         '.resumo { margin-top: 16px; font-weight: bold; color: #1a2e1a; }' +
         '.rodape { margin-top: 30px; font-size: 11px; color: #888; text-align: center; }' +
-      '<\/style><\/head><body>' +
-      '<h2>' + titulos[aba] + '<\/h2>' +
-      '<div class="sub">Gerado em ' + new Date().toLocaleDateString('pt-BR') + ' as ' + new Date().toLocaleTimeString('pt-BR') + '<\/div>' +
-      tabelas[aba].outerHTML +
-      '<div class="resumo">' + resumos[aba] + '<\/div>' +
-      '<div class="rodape">Sistema de Gestao de Vendas - &copy; 2026<\/div>' +
-      '<\/body><\/html>'
-    );
-    win.document.close();
-    win.print();
-  }
+        '<\/style><\/head><body>' +
+        '<h2>' + titulos[aba] + '<\/h2>' +
+        '<div class="sub">Gerado em ' + new Date().toLocaleDateString('pt-BR') + ' as ' + new Date().toLocaleTimeString('pt-BR') + '<\/div>' +
+        tabelas[aba].outerHTML +
+        '<div class="resumo">' + resumos[aba] + '<\/div>' +
+        '<div class="rodape">Sistema de Gestao de Vendas - &copy; 2026<\/div>' +
+        '<\/body><\/html>'
+      );
+      win.document.close();
+      win.print();
+    }
 
-  // =============================================
-  // UTILITARIOS
-  // =============================================
+    // =============================================
+    // UTILITARIOS
+    // =============================================
 
-  // Formata data ISO (yyyy-mm-dd) para o padrao brasileiro (dd/mm/aaaa)
-  function formatarData(iso) {
-    if (!iso) return '-';
-    const d = new Date(iso);
-    return d.toLocaleDateString('pt-BR');
-  }
+    // Formata data ISO (yyyy-mm-dd) para o padrao brasileiro (dd/mm/aaaa)
+    function formatarData(iso) {
+      if (!iso) return '-';
+      const d = new Date(iso);
+      return d.toLocaleDateString('pt-BR');
+    }
 
-  // Converte objeto Date para string no formato ISO (yyyy-mm-dd)
-  function formatarISO(d) {
-    return d.toISOString().split('T')[0];
-  }
+    // Converte objeto Date para string no formato ISO (yyyy-mm-dd)
+    function formatarISO(d) {
+      return d.toISOString().split('T')[0];
+    }
 
-  // =============================================
-  // INICIALIZACAO
-  // Executa ao carregar a pagina
-  // =============================================
-  carregarVendedores();
-  carregarProdutos();
+    // =============================================
+    // INICIALIZACAO
+    // Executa ao carregar a pagina
+    // =============================================
+    carregarVendedores();
+    carregarProdutos();
 
-</script>
+  </script>
 </body>
+
 </html>

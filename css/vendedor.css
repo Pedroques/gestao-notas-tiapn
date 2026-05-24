@@ -22,20 +22,14 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.151);
+    background: rgba(0, 0, 0, 0.65);
     z-index: -1;
 }
 
-h4 {
-
-    font-weight: 600;
-    color: white;
-    margin-bottom: 20px;
-}
-
+/* NAVBAR */
 .navbar {
-    background: rgba(30, 34, 30, 0.594);
-    backdrop-filter: blur(6px);
+    background: rgba(30, 34, 30, 0.60);
+    backdrop-filter: blur(8px);
 }
 
 .navbar-brand {
@@ -59,12 +53,209 @@ h4 {
     filter: invert(1);
 }
 
-.footer {
+/* TITULO */
+.titulo-pagina {
+    color: white;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
 
-    padding: 20px 0;
-    background: rgba(30, 34, 30, 0.594);
-    backdrop-filter: blur(6px);
-    color: #e0e0e0;
+/* CARDS */
+.card-vendedor,
+.card-info,
+.card-dashboard {
+    border-radius: 16px;
+    padding: 28px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.card-info i {
+    color: #4CAF50;
+}
+
+/* LABELS */
+label {
+    color: #d6d6d6;
     font-size: 14px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+/* INPUTS */
+.form-control {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.form-control::placeholder {
+    color: #bdbdbd;
+}
+
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 .15rem rgba(76, 175, 80, .25);
+}
+
+.btn-lupa {
+    width: 100%;
+    height: 46px;
+    border: none;
+    border-radius: 8px;
+    background: #2E7D32;
+    color: white;
+    transition: .25s ease;
+}
+
+.btn-lupa:hover {
+    background: #4CAF50;
+}
+
+/* BOTÕES */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: .25s ease;
+}
+
+
+/* ALTERAR */
+.btn-alterar {
+    background: #2E7D32;
+    color: white;
+    border: none;
+}
+
+.btn-alterar:hover {
+    background: #4CAF50;
+}
+
+/* EXCLUIR */
+.btn-excluir {
+    background: #B71C1C;
+    color: white;
+    border: none;
+}
+
+.btn-excluir:hover {
+    background: #D32F2F;
+}
+
+/* VENDAS */
+.btn-vendas {
+    background: #EF6C00;
+    color: white;
+    border: none;
+}
+
+.btn-vendas:hover {
+    background: #FB8C00;
+}
+
+/* ÁREA BOTÕES */
+.acoes {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* LISTA PRODUTOS */
+.lista-produtos {
+    list-style: none;
+    padding-left: 0;
+}
+
+.lista-produtos li {
+    background: rgba(255, 255, 255, 0.08);
+    margin-bottom: 10px;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+/* KPI */
+.kpi-box {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 22px;
+    border-radius: 14px;
+    text-align: center;
+    height: 100%;
+}
+
+.kpi-box h3 {
+    color: #4CAF50;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.kpi-box span {
+    color: #d6d6d6;
+    font-size: 14px;
+}
+
+/* GRAFICO */
+.grafico-placeholder {
+    border: 2px dashed rgba(255, 255, 255, 0.20);
+    border-radius: 14px;
+    padding: 70px 20px;
+    text-align: center;
+    color: #cfcfcf;
+    font-size: 18px;
+}
+
+.grafico-placeholder i {
+    font-size: 42px;
+    color: #4CAF50;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.grafico-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    padding: 25px;
+    min-height: 420px;
+}
+
+#graficoVendas {
+    width: 100% !important;
+    max-height: 350px;
+}
+
+/* FOOTER */
+.footer {
+    margin-top: auto;
+    padding: 20px 0;
+    background: rgba(30, 34, 30, 0.60);
+    backdrop-filter: blur(8px);
+    color: #e0e0e0;
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+    font-size: 14px;
+}
+
+/* RESPONSIVO */
+@media(max-width:768px) {
+    .acoes {
+        flex-direction: column;
+    }
+
+    .btn {
+
+        width: 100%;
+    }
+
+    .titulo-pagina {
+        text-align: center;
+    }
+
+    .btn-lupa {
+        width: 100%;
+    }
 }

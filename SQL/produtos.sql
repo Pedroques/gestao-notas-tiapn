@@ -1,4 +1,4 @@
-USE PROCONTROL;
+USE ProControl;
 /* Cada produto possui um vendedor relacionado, e este está associado a ele */
 /* codProduto(PK, nn), nomeProduto, valorCompra, valorVenda, quantidade, vendedorRelacionado(FK,nn) */
 INSERT INTO
@@ -18,7 +18,7 @@ VALUES (
         20.00,
         30.00,
         50,
-        15,
+        2,
         50
     ),
     (
@@ -36,7 +36,7 @@ VALUES (
         8.00,
         12.00,
         150,
-        15,
+        2,
         150
     ),
     (

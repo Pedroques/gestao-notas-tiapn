@@ -18,23 +18,20 @@ body {
 body::before {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.151);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.03);
     z-index: -1;
 }
 
 h4 {
-
-    font-weight: 600;
-    color: white;
-    margin-bottom: 20px;
+    color: #172112;
+    font-size: 34px;
+    font-weight: 100px;
+    margin-bottom: 28px;
 }
 
 .navbar {
-    background: rgba(30, 34, 30, 0.594);
+    background: rgb(30, 34, 30);
     backdrop-filter: blur(6px);
 }
 
@@ -43,7 +40,7 @@ h4 {
 }
 
 .navbar a {
-    color: white !important;
+    color: #e1eee3 !important;
     font-size: 14px;
 }
 
@@ -60,9 +57,8 @@ h4 {
 }
 
 .footer {
-
     padding: 20px 0;
-    background: rgba(30, 34, 30, 0.594);
+    background: rgb(30, 34, 30);
     backdrop-filter: blur(6px);
     color: #e0e0e0;
     font-size: 14px;

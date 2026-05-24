@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Cadastrar Vendedor</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/cadastrarVendedor.css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+
+            <a class="navbar-brand text-white" href="/index.html">
+                Gestão de Vendas - Sistema de Notas
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="menu">
+                <ul class="navbar-nav">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index.html">
+                            Página Inicial
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cadastroNotas.html">
+                            Venda
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/clientes.html">
+                            Clientes
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/relatorios.html">
+                            Relatórios
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contasAberto.html">
+                            Contas Aberto
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/vendedor.html">
+                            Vendedor
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-5">
+
+        <h2 id="tituloTela">
+            <i class="fa-solid fa-user-tie"></i>
+            Cadastrar Vendedor
+        </h2>
+
+        <div class="card-cadastro p-4">
+
+            <form id="formVendedor">
+
+                <div class="row g-3">
+
+                    <div class="col-md-3">
+                        <label>Código</label>
+
+                        <input id="codigo" required type="text" class="form-control" placeholder="001">
+
+                    </div>
+
+                    <div class="col-md-9">
+
+                        <label>Nome do Vendedor</label>
+
+                        <input id="nome" required type="text" class="form-control" placeholder="Digite o nome">
+
+                    </div>
+
+                </div>
+
+                <div class="row g-3 mt-2">
+
+                    <div class="col-md-12">
+
+                        <label>Status</label>
+
+                        <select id="status" class="form-select">
+
+                            <option selected>
+
+                                ATIVO
+
+                            </option>
+
+                            <option>
+
+                                INATIVO
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="mt-4">
+
+                    <label>
+
+                        Produtos Responsáveis
+
+                    </label>
+
+                    <input type="text" id="pesquisaProduto" class="form-control mb-3"
+                        placeholder="Pesquisar produto...">
+
+                    <div id="listaProdutos" class="produtos-box">
+
+                        <!-- preenchido via JS -->
+
+                    </div>
+
+                </div>
+
+                <div class="acoes mt-5">
+
+                    <button type="submit" class="btn btn-success">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Salvar
+
+                    </button>
+
+
+                    <button type="reset" class="btn btn-secondary">
+
+                        <i class="fa-solid fa-xmark"></i>
+
+                        Cancelar
+
+                    </button>
+
+                    <a href="/vendedor.html" class="btn btn-retornar">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Retornar
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <footer class="footer mt-5">
+
+        <div class="container text-center">
+            <p class="mb-1">
+
+                Sistema de Gestão de Vendas
+
+            </p>
+
+            <small>
+
+                © 2026 — Todos os direitos reservados
+
+            </small>
+
+        </div>
+
+    </footer>
+
+    <script src="js/cadastrarVendedor.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

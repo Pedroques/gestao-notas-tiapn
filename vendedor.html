@@ -2,15 +2,14 @@
 <html lang="pt-br">
 
 <head>
-
     <meta charset="UTF-8">
 
-    <title>Histórico Mensal</title>
+    <title>Gestão de Vendedores</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="css/vendedor.css">
 
 </head>
@@ -32,37 +31,37 @@
                 <ul class="navbar-nav">
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/index.html">
+                        <a class="nav-link" href="/gestor-notas/index.html">
                             Página Inicial
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/cadastroNotas.html">
+                        <a class="nav-link" href="/gestor-notas/cadastroNotas.html">
                             Venda
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/clientes.html">
-                            Clientes
+                        <a class="nav-link" href="/gestor-notas/clientes.html">
+                             Clientes
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/relatorios.html">
+                        <a class="nav-link" href="/gestor-notas/relatorios.html">
                             Relatórios
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/cotasAberto.html">
-                            Cotas Aberto
+                        <a class="nav-link" href="/gestor-notas/contasAberto.html">
+                            Contas em Aberto
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/vendedor.html">
+                        <a class="nav-link active" href="/gestor-notas/vendedor.html">
                             Vendedor
                         </a>
                     </li>
@@ -78,13 +77,227 @@
             </div>
         </div>
     </nav>
-    <div class="container mt-4">
 
-        <h4>Vendedor</h4>
 
-    </div>
+    <main class="container mt-5">
 
-    <footer class="footer">
+        <h2 class="titulo-pagina">
+            Gestão de Vendedores
+        </h2>
+
+
+        <div class="card-vendedor p-4">
+
+            <div class="row align-items-end">
+
+                <div class="col-md-2">
+
+                    <label>Código</label>
+
+                    <input id="codigoBusca" type="text" class="form-control" placeholder="Ex: 001">
+
+                </div>
+
+
+                <div class="col-md-8">
+
+                    <label>Nome do vendedor</label>
+
+                    <input id="nomeBusca" type="text" class="form-control" placeholder="Digite o nome do vendedor">
+
+                </div>
+
+
+                <div class="col-md-2">
+
+                    <button type="button" id="btnBuscar" class="btn-lupa">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="mt-4 text-end">
+
+                <a href="/cadastrarVendedor.html" class="btn btn-success">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Cadastrar Novo Vendedor
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <section id="infoVendedor" class="card-info mt-5" style="display:none;">
+            <h4 class="mb-4">
+
+                <i class="fa-solid fa-user-tie"></i>
+
+                Informações do Vendedor
+
+            </h4>
+
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <p>
+                        <strong>Código:</strong>
+                        001
+                    </p>
+
+                    <p>
+                        <strong>Nome:</strong>
+                        Ricardo Nunes Souza
+                    </p>
+
+                    <p>
+                        <strong>Data Nascimento:</strong>
+
+                        12/08/1992
+
+                    </p>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <p>
+                        <strong>Data de Admissão:</strong>
+                        15/03/2022
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+
+                        ATIVO
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+
+                <h6>
+
+                    <i class="fa-solid fa-box"></i>
+
+                    Produtos Responsáveis
+                </h6>
+
+                <ul class="lista-produtos">
+
+                    <li>1001 — Camiseta Básica</li>
+
+                    <li>1002 — Camisa Polo Premium</li>
+
+                    <li>1004 — Camisa Manga Curta</li>
+
+                    <li>1005 — Camisa Slim Fit</li>
+
+                </ul>
+
+            </div>
+
+            <div class="acoes mt-4">
+
+                <button id="btnAlterar" class="btn btn-alterar">
+
+                    <i class="fa-solid fa-pen"></i>
+
+                    Alterar
+
+                </button>
+
+                <button id="btnExcluir" class="btn btn-excluir">
+
+                    <i class="fa-solid fa-trash"></i>
+
+                    Excluir
+
+                </button>
+
+
+                <button id="btnVendas" class="btn btn-vendas">
+                    <i class="fa-solid fa-chart-column"></i>
+
+                    Vendas
+
+                </button>
+
+            </div>
+
+        </section>
+
+        <section id="dashboardVendas" class="card-dashboard mt-5" style="display:none;">
+            <h4>
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Desempenho do Vendedor
+            </h4>
+
+            <div class="row mt-4">
+
+                <div class="col-md-4">
+
+                    <div class="kpi-box">
+
+                        <h3>58</h3>
+
+                        <span>Total de Vendas</span>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="kpi-box">
+
+                        <h3>R$ 14.250</h3>
+
+                        <span>Faturamento</span>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="kpi-box">
+
+                        <h3>4</h3>
+
+                        <span>Produtos Ativos</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="grafico-container mt-5">
+
+                <canvas id="graficoVendas"></canvas>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer mt-5">
+
         <div class="container text-center">
 
             <p class="mb-1">
@@ -92,11 +305,17 @@
             </p>
 
             <small>
-                © 2026 - Todos os direitos reservados
+                © 2026 — Todos os direitos reservados
             </small>
 
         </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="js/vendedor.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
