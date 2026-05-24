@@ -1,18 +1,18 @@
-body {
+/* =============================================
+   BASE
+   ============================================= */
+* {
     font-family: 'Poppins', sans-serif;
+}
 
+body {
     background-image: url("../img/fundo-financeiro.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-}
-
-.container {
-    flex: 1;
 }
 
 body::before {
@@ -26,13 +26,13 @@ body::before {
     z-index: -1;
 }
 
-h4 {
-
-    font-weight: 600;
-    color: white;
-    margin-bottom: 20px;
+.container {
+    flex: 1;
 }
 
+/* =============================================
+   NAVBAR
+   ============================================= */
 .navbar {
     background: rgba(30, 34, 30, 0.594);
     backdrop-filter: blur(6px);
@@ -59,12 +59,257 @@ h4 {
     filter: invert(1);
 }
 
+/* =============================================
+   FOOTER
+   ============================================= */
 .footer {
-
     padding: 20px 0;
     background: rgba(30, 34, 30, 0.594);
     backdrop-filter: blur(6px);
     color: #e0e0e0;
     font-size: 14px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto;
+}
+
+/* =============================================
+   TITULO
+   ============================================= */
+h4 {
+    font-weight: 600;
+    color: white;
+    margin-bottom: 20px;
+}
+
+/* =============================================
+   ABAS (TABS)
+   ============================================= */
+.nav-tabs .nav-link {
+    color: #1a2e1a !important;
+    font-weight: 500;
+    border-radius: 6px 6px 0 0;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #2d5a27 !important;
+    color: #fff !important;
+    border-color: #2d5a27 !important;
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+    background-color: #e0ede0;
+}
+
+/* =============================================
+   CARD DO RELATORIO
+   ============================================= */
+.card-relatorio {
+    background: #f0f7f0;
+    border: 1px solid #c8dfc8;
+    border-radius: 0 8px 8px 8px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* =============================================
+   LABELS E INPUTS
+   ============================================= */
+label {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #2d5a27;
+    margin-bottom: 3px;
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+}
+
+.form-control,
+.form-select {
+    border: 1.5px solid #a8c8a8;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    padding: 6px 10px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #2d5a27;
+    box-shadow: 0 0 0 0.2rem rgba(45, 90, 39, 0.15);
+}
+
+/* =============================================
+   BOTOES
+   ============================================= */
+.btn-buscar {
+    background-color: #2d5a27;
+    color: #fff;
+    border: none;
+    padding: 7px 28px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+.btn-buscar:hover {
+    background-color: #1a3d15;
+    color: #fff;
+}
+
+.btn-pdf {
+    background-color: #2d5a27;
+    color: #fff;
+    border: none;
+    padding: 7px 22px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+.btn-pdf:hover {
+    background-color: #1a3d15;
+    color: #fff;
+}
+
+.btn-periodo {
+    border: 1.5px solid #2d5a27;
+    color: #2d5a27;
+    background: #fff;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 5px 14px;
+    transition: all 0.18s;
+    cursor: pointer;
+}
+
+.btn-periodo:hover,
+.btn-periodo.ativo {
+    background-color: #2d5a27;
+    color: #fff;
+}
+
+/* =============================================
+   SECAO DE RESULTADO
+   ============================================= */
+.secao-resultado {
+    margin-top: 22px;
+}
+
+.secao-resultado h6 {
+    font-variant: small-caps;
+    letter-spacing: 0.05em;
+    font-size: 1rem;
+    color: #1a2e1a;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.tabela-resultado {
+    background: #fff;
+    border: 1.5px solid #c8dfc8;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 80px;
+}
+
+/* =============================================
+   TABELA
+   ============================================= */
+.table {
+    margin-bottom: 0;
+    font-size: 0.85rem;
+}
+
+.table thead th {
+    background-color: #2d5a27;
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.82rem;
+    border: none;
+    padding: 10px 12px;
+}
+
+.table tbody tr:hover {
+    background-color: #f0f7f0;
+}
+
+.table tbody td {
+    padding: 9px 12px;
+    vertical-align: middle;
+}
+
+/* =============================================
+   BADGES DE STATUS
+   ============================================= */
+.badge-vencendo {
+    background-color: #e8a020;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-atrasado {
+    background-color: #c0392b;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-ok {
+    background-color: #2d5a27;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* =============================================
+   UTILITARIOS
+   ============================================= */
+.msg-vazia {
+    text-align: center;
+    color: #888;
+    font-size: 0.88rem;
+    padding: 24px 0;
+}
+
+.rodape-tabela {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 14px;
+}
+
+.divider {
+    border-top: 1.5px solid #dceadc;
+    margin: 18px 0;
+}
+
+/* =============================================
+   IMPRESSAO / PDF
+   ============================================= */
+@media print {
+    .navbar,
+    .footer,
+    .btn-buscar,
+    .btn-pdf,
+    .nav-tabs,
+    .btn-periodo {
+        display: none !important;
+    }
+
+    .card-relatorio {
+        box-shadow: none;
+        border: none;
+    }
 }
