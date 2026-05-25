@@ -1,7 +1,7 @@
 body {
     font-family: 'Poppins', sans-serif;
 
-    background-image: url("/gestor-notas/img/fundo-financeiro.jpg");
+    background-image: url("../img/fundo-financeiro.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -18,17 +18,14 @@ body {
 body::before {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.65);
+    inset: 0;
+    background: rgba(0, 0, 0, .03);
     z-index: -1;
 }
 
 /* NAVBAR */
 .navbar {
-    background: rgba(30, 34, 30, 0.594);
+    background: rgb(30, 34, 30);
     backdrop-filter: blur(6px);
 }
 
@@ -54,74 +51,59 @@ body::before {
 }
 
 /* TÍTULO */
-h2 {
-    color: white;
-    font-weight: 600;
-    margin-bottom: 30px;
-}
-
-h2 i {
-    color: #4CAF50;
-    margin-right: 8px;
+#tituloTela {
+    color: #172112;
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 28px;
 }
 
 /* CARD */
 .card-cadastro {
-    background: rgba(0, 0, 0, 0.55);
-    border-radius: 16px;
+    background: transparent;
     border: none;
-    backdrop-filter: blur(8px);
-    color: white;
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+    padding: 28px;
+    color: #172112;
+    box-shadow: none;
 }
 
 /* LABEL */
 label {
-    color: #d7d7d7;
     font-size: 14px;
     font-weight: 500;
+    color: #000;
     margin-bottom: 6px;
 }
 
 /* INPUTS */
 .form-control,
 .form-select {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: white;
+    background: #fff;
     border-radius: 8px;
-    padding: 10px;
+    border: 1px solid #d4d4d4;
     font-size: 14px;
-}
-
-.form-control::placeholder {
-    color: #bbbbbb;
+    color: #1e221e;
+    padding: 10px 12px;
 }
 
 .form-control:focus,
 .form-select:focus {
-    background: rgba(255, 255, 255, 0.12);
     border-color: #4CAF50;
-    color: white;
-    box-shadow: 0 0 0 .15rem rgba(76, 175, 80, 0.25);
+    box-shadow:
+        0 0 0 .15rem rgba(76, 175, 80, .20);
+    background: #fff;
 }
 
-/* SELECT OPTIONS */
-option {
-    background: #1d1d1d;
-    color: white;
+.form-control::placeholder {
+    color: #6d6d6d;
 }
 
 /* PRODUTOS */
 .produtos-box {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, .78);
+    border: 1px solid #d4d4d4;
+    border-radius: 14px;
     padding: 18px;
-    
-    .produtos-box {
-        padding: 18px;
-    }
 }
 
 .form-check {
@@ -129,7 +111,7 @@ option {
 }
 
 .form-check-label {
-    color: #e6e6e6;
+    color: #172112;
     font-size: 14px;
 }
 
@@ -158,33 +140,44 @@ option {
 }
 
 .btn-success {
-    background: #2E7D32;
-    border: none;
+    background: #198754;
+    color: #fff;
+    border: 2px solid #015c08;
 }
 
 .btn-success:hover {
-    background: #4CAF50;
+    background: #baf8cf;
+    color: #198754;
+    border-color: #198754;
 }
 
 .btn-secondary {
-    background: #c62828;
-    color: white;
-    border: none;
+    background: #f44336;
+    color: #fff;
+    border: 2px solid #8a0900;
 }
 
 .btn-secondary:hover {
-    background: #e53935;
+    background:#ffd0d0;
+    color:#f44336;
+    border-color:#f44336;
 }
 
 .btn-retornar {
-    background: transparent;
-    border: 1px solid #4CAF50;
-    color: #4CAF50;
+    background: #0d6efd;
+    color: #fff;
+    border: 2px solid #023b91;
 }
 
 .btn-retornar:hover {
-    background: #4CAF50;
-    color: white;
+    background: #c4dbff;
+    color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn i {
+    color: #fff;
+    margin-right: 8px;
 }
 
 /* FOOTER */
@@ -192,7 +185,7 @@ option {
 
     margin-top: auto;
     padding: 20px 0;
-    background: rgba(30, 34, 30, 0.594);
+    background: rgb(30, 34, 30);
     backdrop-filter: blur(6px);
     color: #e0e0e0;
     font-size: 14px;
@@ -202,7 +195,7 @@ option {
 /* RESPONSIVO */
 @media(max-width:768px) {
 
-    h2 {
+    #tituloTela {
         text-align: center;
     }
 

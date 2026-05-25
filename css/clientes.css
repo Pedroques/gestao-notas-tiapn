@@ -19,22 +19,28 @@ body {
 body::before {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.014);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.03);
     z-index: -1;
 }
 
 /* Fim do corpo */
 
 /* Textos e titulos */
-h4 {
+.form-title {
     color: #172112;
     font-size: 34px;
-    font-weight: 100px;
+    font-weight: 600;
     margin-bottom: 28px;
+}
+
+.section-title {
+    color: #000000;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.25);
 }
 
 /* Fim Texto e titulos */
@@ -50,7 +56,7 @@ h4 {
 }
 
 .navbar a {
-    color: #e1eee3;
+    color: #e1eee3 !important;
     font-size: 14px;
 }
 
@@ -78,61 +84,92 @@ h4 {
     transition: width 0.3s ease;
 }
 
-input:hover {
-    border: 1px solid #1e221e;
+.form-control {
+    background: #ffffff;
+    border: 1px solid #d4d4d4;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #1e221e;
+}
+
+.form-control::placeholder {
+    color: #6d6d6d;
+}
+
+.form-control:hover {
+    border-color: #4CAF50;
+}
+
+.form-control:focus {
+    background: #ffffff;
+    color: #1e221e;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 .15rem rgba(76, 175, 80, .20);
 }
 
 
 /* Botões */
-#btn-action{
-    background: rgb(30, 34, 30);
-    backdrop-filter: blur(6px);
-    color: #e1eee3;
-    border: none;
+.btn-action {
     padding: 10px 20px;
     font-size: 16px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: .25s ease;
 }
-.btnCriar{
+
+.btn-action i {
+    margin-right: 8px;
+    color: #fff;
+    transition: .25s ease;
+}
+
+.btnCriar {
     background: #0d6efd;
     color: #fff;
     border: 2px solid #023b91;
 }
-.btnCriar:hover{
+
+.btnCriar:hover {
     background: #c4dbff;
     color: #0d6efd;
     border: 2px solid #0d6efd;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
-.btnEditar{
+
+.btnEditar {
     background: #eb8a3b;
     color: #fff;
     border: 2px solid #a74b00;
 }
-.btnEditar:hover{
+
+.btnEditar:hover {
     background: #ffe5cf;
     color: #eb8a3b;
     border: 2px solid #eb8a3b;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
-.btnSalvar{
+
+.btnSalvar {
     background: #198754;
     color: #fff;
     border: 2px solid #015c08;
 }
-.btnSalvar:hover{
+
+.btnSalvar:hover {
     background: #baf8cf;
     color: #198754;
     border: 2px solid #198754;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
-.btnCancelar{
+
+.btnCancelar {
     background: #f44336;
     color: #fff;
     border: 2px solid #8a0900;
 }
-.btnCancelar:hover{
+
+.btnCancelar:hover {
     background: #ffd0d0;
     color: #f44336;
     border: 2px solid #f44336;
@@ -140,6 +177,13 @@ input:hover {
 }
 
 /* Fim dos Botões */
+
+.form-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000 !important;
+    margin-bottom: 6px;
+}
 
 /* Fim Body */
 
@@ -149,8 +193,9 @@ input:hover {
     background: rgb(30, 34, 30);
     backdrop-filter: blur(6px);
     color: #e1eee3;
-    font-size: 20px;
+    font-size: 14px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto;
 }
 
 /* Fim Rodapé */
