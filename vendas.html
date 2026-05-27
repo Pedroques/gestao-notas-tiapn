@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Venda - Sistema de Notas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/vendas.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+
+            <a class="navbar-brand text-white" href="/index.html">
+                Gestão de Vendas - Sistema de Notas
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="menu">
+
+                <ul class="navbar-nav">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/index.html">
+                            Página Inicial
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/vendas.html">
+                            Venda
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/clientes.html">
+                            Cliente
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/relatorios.html">
+                            Relatórios
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contasAberto.html">
+                            Contas Aberto
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vendedor.html">
+                            Vendedor
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/produtos.html">
+                            Produtos
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4 mb-5">
+
+        <div class="cabecalho-pagina">
+            <h4>Gerenciar Venda</h4>
+            <p>
+                Registre os dados da venda, produtos, forma de pagamento e parcelas da nota promissória.
+            </p>
+        </div>
+
+        <form id="formVenda">
+
+            <section class="card p-4 mb-4">
+
+                <div class="secao-titulo">
+                    <h5>Dados da Venda</h5>
+                    <span>Informações principais da nota</span>
+                </div>
+
+                <div class="row mt-3">
+
+                    <div class="col-md-3 mb-3">
+                        <label for="codigoPromissoria">Cód. Promissória</label>
+                        <input type="text" class="form-control" id="codigoPromissoria" name="codigoPromissoria" placeholder="Ex: 0001">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="dataVenda">Data da Venda</label>
+                        <input type="date" class="form-control" id="dataVenda" name="dataVenda">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="statusVenda">Status da Venda</label>
+                        <select class="form-control" id="statusVenda" name="statusVenda">
+                            <option value="aberta">Aberta</option>
+                            <option value="paga">Paga</option>
+                            <option value="parcial">Parcial</option>
+                            <option value="cancelada">Cancelada</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="tipoVenda">Tipo da Venda</label>
+                        <select class="form-control" id="tipoVenda" name="tipoVenda">
+                            <option value="nota-promissoria">Nota promissória</option>
+                            <option value="venda-direta">Venda direta</option>
+                            <option value="acordo">Acordo com cliente</option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="card p-4 mb-4">
+
+                <div class="secao-titulo">
+                    <h5>Cliente e Vendedor</h5>
+                    <span>Dados usados para identificar quem comprou e quem realizou a venda</span>
+                </div>
+
+                <div class="row mt-3">
+
+                    <div class="col-md-2 mb-3">
+                        <label for="codigoCliente">Cód. Cliente</label>
+                        <input type="text" class="form-control" id="codigoCliente" name="codigoCliente" placeholder="Ex: 0001">
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="nomeCliente">Nome do Cliente</label>
+                        <input type="text" class="form-control" id="nomeCliente" name="nomeCliente" placeholder="Digite ou busque o cliente">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="telefoneCliente">Telefone</label>
+                        <input type="text" class="form-control" id="telefoneCliente" name="telefoneCliente" placeholder="(00) 00000-0000">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="cpfCliente">CPF</label>
+                        <input type="text" class="form-control" id="cpfCliente" name="cpfCliente" placeholder="000.000.000-00">
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-2 mb-3">
+                        <label for="codigoVendedor">Cód. Vendedor</label>
+                        <input type="text" class="form-control" id="codigoVendedor" name="codigoVendedor" placeholder="Ex: 0007">
+                    </div>
+
+                    <div class="col-md-5 mb-3">
+                        <label for="nomeVendedor">Nome do Vendedor</label>
+                        <input type="text" class="form-control" id="nomeVendedor" name="nomeVendedor" placeholder="Digite ou busque o vendedor">
+                    </div>
+
+                    <div class="col-md-5 mb-3">
+                        <label for="observacaoVenda">Observação da Venda</label>
+                        <input type="text" class="form-control" id="observacaoVenda" name="observacaoVenda" placeholder="Ex: cliente comprou por indicação">
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="card p-4 mb-4">
+
+                <div class="secao-titulo">
+                    <h5>Produtos da Venda</h5>
+                    <span>Adicione um ou mais produtos vendidos ao cliente</span>
+                </div>
+
+                <div class="row mt-3 align-items-end">
+
+                    <div class="col-md-2 mb-3">
+                        <label for="codigoProduto">Cód. Produto</label>
+                        <input type="text" class="form-control" id="codigoProduto" name="codigoProduto" placeholder="Ex: 1234">
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="descricaoProduto">Produto / Descrição</label>
+                        <input type="text" class="form-control" id="descricaoProduto" name="descricaoProduto" placeholder="Ex: Vestido">
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label for="quantidadeProduto">Quantidade</label>
+                        <input type="number" class="form-control" id="quantidadeProduto" name="quantidadeProduto" min="1" value="1">
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label for="valorUnitario">Valor Unitário</label>
+                        <input type="number" class="form-control" id="valorUnitario" name="valorUnitario" min="0" step="0.01" placeholder="0,00">
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <button type="button" class="btn btn-success w-100" id="btnAdicionarProduto">
+                            Adicionar
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="table-responsive mt-2">
+                    <table class="table tabela-venda">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Qtd.</th>
+                                <th>Valor Unitário</th>
+                                <th>Subtotal</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="corpoTabelaProdutos">
+                            <tr class="linha-vazia">
+                                <td colspan="5">
+                                    Nenhum produto adicionado ainda.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+
+            <section class="card p-4 mb-4">
+
+                <div class="secao-titulo">
+                    <h5>Condição de Pagamento</h5>
+                    <span>Defina como o cliente irá pagar a venda</span>
+                </div>
+
+                <div class="row mt-3">
+
+                    <div class="col-md-3 mb-3">
+                        <label for="tipoPagamento">Tipo de Pagamento</label>
+                        <select class="form-control" id="tipoPagamento" name="tipoPagamento">
+                            <option value="">Selecione</option>
+                            <option value="avista">À vista</option>
+                            <option value="parcelado">Parcelado</option>
+                            <option value="mensal-fixo">Mensal fixo</option>
+                            <option value="personalizado">Acordo personalizado</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="formaPagamento">Forma de Pagamento</label>
+                        <select class="form-control" id="formaPagamento" name="formaPagamento">
+                            <option value="">Selecione</option>
+                            <option value="dinheiro">Dinheiro</option>
+                            <option value="pix">Pix</option>
+                            <option value="cartao-debito">Cartão de débito</option>
+                            <option value="cartao-credito">Cartão de crédito</option>
+                            <option value="boleto">Boleto</option>
+                            <option value="promissoria">Nota promissória</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="dataPrimeiroPagamento">Data do Primeiro Pagamento</label>
+                        <input type="date" class="form-control" id="dataPrimeiroPagamento" name="dataPrimeiroPagamento">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="tipoVencimento">Tipo de Vencimento</label>
+                        <select class="form-control" id="tipoVencimento" name="tipoVencimento">
+                            <option value="dia-corrido">Dia corrido</option>
+                            <option value="dia-util">Dia útil</option>
+                            <option value="quinto-dia-util">Quinto dia útil</option>
+                            <option value="data-fixa">Data fixa combinada</option>
+                        </select>
+                    </div>
+
+                </div>
+
+               <div class="row">
+
+    <div class="col-md-3 mb-3">
+        <label for="valorPagoEntrada">Valor Pago no Ato</label>
+        <input type="number" class="form-control" id="valorPagoEntrada" name="valorPagoEntrada" min="0" step="0.01" value="0.00">
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <label for="valorRestante">Valor Restante</label>
+        <input type="number" class="form-control campo-total" id="valorRestante" name="valorRestante" value="0.00" readonly>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <label for="diaPagamento">Dia de Pagamento</label>
+        <input type="number" class="form-control" id="diaPagamento" name="diaPagamento" min="1" max="31" placeholder="Ex: 5">
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <label for="quantidadeParcelas">Nº de Parcelas</label>
+        <input type="number" class="form-control" id="quantidadeParcelas" name="quantidadeParcelas" min="1" placeholder="Ex: 4">
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-3 mb-3">
+        <label for="valorParcela">Valor da Parcela</label>
+        <input type="number" class="form-control" id="valorParcela" name="valorParcela" min="0" step="0.01" placeholder="0,00">
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <label for="intervaloParcelas">Intervalo entre Parcelas</label>
+        <select class="form-control" id="intervaloParcelas" name="intervaloParcelas">
+            <option value="30">30 dias</option>
+            <option value="15">15 dias</option>
+            <option value="7">7 dias</option>
+            <option value="mensal">Mensal</option>
+            <option value="personalizado">Personalizado</option>
+        </select>
+    </div>
+
+</div>
+
+                <div class="row align-items-end">
+
+                    <div class="col-md-9 mb-3">
+                        <label for="observacaoPagamento">Observação do Acordo</label>
+                        <textarea class="form-control" id="observacaoPagamento" name="observacaoPagamento" rows="3" placeholder="Ex: Cliente pagará R$ 197,00 todo quinto dia útil de cada mês."></textarea>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <button type="button" class="btn btn-secondary w-100" id="btnGerarParcelas">
+                            Gerar Parcelas
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="table-responsive mt-2">
+                    <table class="table tabela-venda">
+                        <thead>
+                            <tr>
+                                <th>Parcela</th>
+                                <th>Data Prevista</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>Forma</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="corpoTabelaParcelas">
+                            <tr class="linha-vazia">
+                                <td colspan="5">
+                                    Nenhuma parcela gerada ainda.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+
+            <section class="card p-4 mb-4">
+
+                <div class="secao-titulo">
+                    <h5>Resumo da Venda</h5>
+                    <span>Confira os valores antes de salvar</span>
+                </div>
+
+                <div class="row mt-3">
+
+                    <div class="col-md-3 mb-3">
+                        <label for="valorProdutos">Valor dos Produtos</label>
+                        <input type="number" class="form-control" id="valorProdutos" name="valorProdutos" value="0.00" readonly>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="descontoVenda">Desconto</label>
+                        <input type="number" class="form-control" id="descontoVenda" name="descontoVenda" min="0" step="0.01" value="0.00">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="acrescimoVenda">Acréscimo</label>
+                        <input type="number" class="form-control" id="acrescimoVenda" name="acrescimoVenda" min="0" step="0.01" value="0.00">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="valorTotalVenda">Valor Total</label>
+                        <input type="number" class="form-control campo-total" id="valorTotalVenda" name="valorTotalVenda" value="0.00" readonly>
+                    </div>
+
+                </div>
+
+                <div class="acoes-venda mt-3">
+
+                    <button type="submit" class="btn btn-success" id="btnSalvarVenda">
+                        Salvar Venda
+                    </button>
+
+                    <button type="reset" class="btn btn-secondary" id="btnLimparVenda">
+                        Limpar
+                    </button>
+
+                    <button type="button" class="btn btn-danger" id="btnCancelarVenda">
+                        Cancelar
+                    </button>
+
+                </div>
+
+            </section>
+
+        </form>
+
+    </main>
+
+    <footer class="footer mt-auto">
+        <div class="container text-center">
+
+            <p class="mb-1">
+                Sistema de Gestão de Vendas
+            </p>
+
+            <small>
+                © 2026 - Todos os direitos reservados
+            </small>
+
+        </div>
+    </footer>
+
+    <script src="js/vendas.js"></script>
+
+</body>
+
+</html>

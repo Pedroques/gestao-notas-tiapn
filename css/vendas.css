@@ -138,3 +138,92 @@ button {
     font-size: 14px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
+/* Ajustes específicos da página de vendas */
+
+.cabecalho-pagina {
+    margin-bottom: 25px;
+}
+
+.cabecalho-pagina h4 {
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.cabecalho-pagina p {
+    margin-bottom: 0;
+    color: #263326;
+    font-size: 15px;
+}
+
+.secao-titulo {
+    margin-bottom: 22px;
+}
+
+.secao-titulo h5 {
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.secao-titulo span {
+    font-size: 14px;
+    color: #f1f1f1;
+}
+
+.card {
+    margin-bottom: 26px;
+}
+
+.tabela-venda {
+    margin-top: 12px;
+    margin-bottom: 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tabela-venda th {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111;
+}
+
+.tabela-venda td {
+    font-size: 14px;
+    color: #111;
+    vertical-align: middle;
+}
+
+.linha-vazia td {
+    text-align: center;
+    font-style: italic;
+    padding: 18px;
+}
+
+.acoes-venda {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.campo-total {
+    font-weight: 700;
+}
+
+#btnGerarParcelas {
+    background: #2E7D32;
+    color: white;
+}
+
+#btnGerarParcelas:hover {
+    background: #4CAF50;
+}
+
+@media (max-width: 768px) {
+    .acoes-venda {
+        justify-content: stretch;
+    }
+
+    .acoes-venda .btn {
+        width: 100%;
+    }
+}
