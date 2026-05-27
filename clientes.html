@@ -14,63 +14,22 @@
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-
             <a class="navbar-brand text-white" href="/index.html">
                 Gestão de Vendas - Sistema de Notas
             </a>
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse justify-content-end" id="menu">
-
                 <ul class="navbar-nav">
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/index.html">
-                            Página Inicial
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/cadastroNotas.html">
-                            Venda
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/clientes.html">
-                            Cliente
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/relatorios.html">
-                            Relatórios
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/contasAberto.html">
-                            Contas Aberto
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/vendedor.html">
-                            Vendedor
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/produtos.html">
-                            Produtos
-                        </a>
-                    </li>
-
+                    <li class="nav-item"><a class="nav-link" href="/index.html">Página Inicial</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/cadastroNotas.html">Venda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/clientes.html">Cliente</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/relatorios.html">Relatórios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contasAberto.html">Contas Aberto</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/vendedor.html">Vendedor</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/produtos.html">Produtos</a></li>
                 </ul>
-
             </div>
         </div>
     </nav>
@@ -78,13 +37,13 @@
     <div class="container mt-4 mb-5">
         <h4 class="form-title">Cadastrar Cliente</h4>
 
-        <form class="mt-4">
+        <form id="formCliente" class="mt-4">
             <div class="row mb-3 align-items-end">
                 <div class="col-md-2 col-sm-4">
                     <label class="form-label text-dark">Cód. Cliente</label>
                     <div class="d-flex align-items-center">
-                        <input type="text" class="form-control form-control-custom me-2">
-                        <img src="/img/lupa.png" alt="buscar" class="iconeLupa">
+                        <input type="text" id="txtId" class="form-control form-control-custom me-2" readonly>
+                        <img src="/img/lupa.png" alt="buscar" id="btnBuscar" class="iconeLupa" style="cursor: pointer;">
                     </div>
                 </div>
             </div>
@@ -92,15 +51,15 @@
             <div class="row mb-3">
                 <div class="col-md-5">
                     <label class="form-label text-dark">Nome do Cliente</label>
-                    <input type="text" class="form-control form-control-custom">
+                    <input type="text" id="txtNome" class="form-control form-control-custom">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label text-dark">CPF</label>
-                    <input type="text" class="form-control form-control-custom">
+                    <input type="text" id="txtCpf" class="form-control form-control-custom">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label text-dark">Celular</label>
-                    <input type="text" class="form-control form-control-custom">
+                    <input type="text" id="txtCelular" class="form-control form-control-custom">
                 </div>
             </div>
 
@@ -109,69 +68,92 @@
             <div class="row mb-3">
                 <div class="col-md-8">
                     <label class="form-label text-dark">Rua</label>
-                    <input type="text" class="form-control form-control-custom">
+                    <input type="text" id="txtRua" class="form-control form-control-custom">
                 </div>
                 <div class="col-md-1">
                     <label class="form-label text-dark">Nº</label>
-                    <input type="text" class="form-control form-control-custom">
+                    <input type="text" id="txtNumero" class="form-control form-control-custom">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label text-dark">Complemento</label>
-                    <input type="text" class="form-control form-control-custom">
+                    <input type="text" id="txtComplemento" class="form-control form-control-custom">
                 </div>
             </div>
 
             <div class="row mb-3">
                 <div class="col-md-4">
                     <label class="form-label text-dark">Bairro</label>
-                    <input type="text" class="form-control form-control-custom">
+                    <input type="text" id="txtBairro" class="form-control form-control-custom">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label text-dark">Cidade</label>
-                    <input type="text" class="form-control form-control-custom">
+                    <input type="text" id="txtCidade" class="form-control form-control-custom">
                 </div>
                 <div class="col-md-1">
                     <label class="form-label text-dark">UF</label>
-                    <input type="text" class="form-control form-control-custom">
+                    <input type="text" id="txtUf" class="form-control form-control-custom">
                 </div>
                 <div class="col-md-3">
                     <label class="form-label text-dark">CEP</label>
-                    <input type="text" class="form-control form-control-custom">
+                    <input type="text" id="txtCep" class="form-control form-control-custom">
                 </div>
             </div>
 
             <div class="row mb-5">
                 <div class="col-md-2">
                     <label class="form-label text-dark">Código do Vendedor</label>
-                    <input type="text" class="form-control form-control-custom">
+                    <input type="text" id="txtCodVendedor" class="form-control form-control-custom">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-12 d-flex justify-content-end flex-wrap gap-3">
                     <button type="button" class="btnCriar btn btn-action">
-                        <i class="fa-solid fa-plus"></i>
-                        Criar
+                        <i class="fa-solid fa-plus"></i> Criar
                     </button>
-
                     <button type="button" class="btnEditar btn btn-action">
-                        <i class="fa-solid fa-pen"></i>
-                        Editar
+                        <i class="fa-solid fa-pen"></i> Editar
                     </button>
-
+                    <button type="button" class="btnExcluir btn btn-action">
+                        <i class="fa-solid fa-trash"></i> Excluir
+                    </button>
                     <button type="button" class="btnSalvar btn btn-action">
-                        <i class="fa-solid fa-floppy-disk"></i>
-                        Salvar
+                        <i class="fa-solid fa-floppy-disk"></i> Salvar
                     </button>
-
                     <button type="button" class="btnCancelar btn btn-action">
-                        <i class="fa-solid fa-xmark"></i>
-                        Cancelar
+                        <i class="fa-solid fa-xmark"></i> Cancelar
                     </button>
                 </div>
             </div>
-
         </form>
+    </div>
+
+    <div class="modal fade" id="modalBuscarCliente" tabindex="-1" aria-labelledby="modalBuscarClienteLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalBuscarClienteLabel">Selecione o Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Cód.</th>
+                                    <th>Nome</th>
+                                    <th>CPF</th>
+                                    <th>Cidade/UF</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaClientesCorpo" style="cursor: pointer;">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer class="footer mt-auto">
@@ -181,7 +163,8 @@
         </div>
     </footer>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/cadastroClientes.js"></script>
 </body>
 
 </html>
