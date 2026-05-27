@@ -235,14 +235,14 @@ label {
    ============================================= */
 .table {
     margin-bottom: 0;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
 }
 
 .table thead th {
     background-color: #2d5a27;
     color: #fff;
     font-weight: 500;
-    font-size: 0.82rem;
+    font-size: 0.9rem;
     border: none;
     padding: 10px 12px;
 }

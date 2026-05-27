@@ -29,5 +29,37 @@
       "nome": "Roberto Oliveira"
     }
   ],
+  "parcelas": [
+  {
+    "id": "1",
+    "cliente": "Gabriel Silva",
+    "idVendedor": "10",
+    "codPromissoria": "P001",
+    "numParcela": "1/3",
+    "valorParcela": 200.00,
+    "dataVencimento": "2026-05-30",
+    "status": "Vencendo"
+  },
+  {
+    "id": "2",
+    "cliente": "Maria Silva",
+    "idVendedor": "20",
+    "codPromissoria": "P001",
+    "numParcela": "2/3",
+    "valorParcela": 200.00,
+    "dataVencimento": "2026-06-30",
+    "status": "Em dia"
+  },
+  {
+    "id": "3",
+    "cliente": "Roberto Oliveira",
+    "idVendedor": "30",
+    "codPromissoria": "P002",
+    "numParcela": "1/2",
+    "valorParcela": 350.00,
+    "dataVencimento": "2026-04-15",
+    "status": "Atrasado"
+  }
+],
   "$schema": "./node_modules/json-server/schema.json"
 }
