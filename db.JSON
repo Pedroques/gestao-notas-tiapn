@@ -1,0 +1,33 @@
+{
+  "clientes": [
+    {
+      "nome": "Gabriel Silva a",
+      "cpf": "123.123.124-12",
+      "celular": "(12) 31231-2312",
+      "rua": "Av. Principal",
+      "numero": "150",
+      "complemento": "Apto 202",
+      "bairro": "Centro",
+      "cidade": "Mateus Leme",
+      "uf": "MG",
+      "cep": "35670-000",
+      "codigoVendedor": "10",
+      "id": "1"
+    }
+  ],
+  "vendedor": [
+    {
+      "id": "10",
+      "nome": "Carlos Silva"
+    },
+    {
+      "id": "20",
+      "nome": "Ana Souza"
+    },
+    {
+      "id": "30",
+      "nome": "Roberto Oliveira"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

@@ -137,6 +137,19 @@ body::before {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.btnExcluir {
+    background: #dc3545;
+    color: #fff;
+    border: 2px solid #bd2130;
+}
+
+.btnExcluir:hover {
+    background: #f8d7da;
+    color: #dc3545;
+    border: 2px solid #dc3545;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 .btnEditar {
     background: #eb8a3b;
     color: #fff;
