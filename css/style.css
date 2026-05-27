@@ -21,7 +21,10 @@ body::before {
 
 .container {
     flex: 1;
-    max-width: 1500px;
+    max-width: 1400px;
+
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 /* NAVBAR */
@@ -51,14 +54,6 @@ body::before {
     filter: invert(1);
 }
 
-/* TÍTULO PÁGINA */
-.titulo-pagina {
-    color: #172112;
-    font-size: 34px;
-    font-weight: 700;
-    margin-bottom: 30px;
-}
-
 /* SISTEMA */
 .titulo-sistema {
     font-size: 22px;
@@ -74,14 +69,13 @@ body::before {
 
 /* GRID HOME */
 .grid-home {
-    display: grid;
-    grid-template-columns:
-        repeat(3, 1fr);
-    gap: 35px;
-    margin-top: 35px;
-    max-width: 1350px;
-    margin-left: auto;
-    margin-right: auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+
+    max-width:1180px;
+
+    margin:55px auto 80px auto;
 }
 
 /* CARD HOME */
@@ -89,8 +83,8 @@ body::before {
     background: rgba(0, 0, 0, 0.55);
     backdrop-filter: blur(6px);
 
-    min-height: 270px;
-    padding: 32px;
+    min-height: 260px;
+    padding: 30px;
     border-radius: 16px;
 
     display: flex;
@@ -102,7 +96,7 @@ body::before {
     color: white;
 
     transition: 0.25s;
-    box-shadow: 0 8cm 208x rgba(0, 0, 0, 0.35);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 
     text-align: center;
 }
@@ -124,14 +118,12 @@ body::before {
 }
 
 .card-home p {
-    .card-home p {
     font-size: 15px;
     margin-top: 14px;
     line-height: 1.8;
     color: #ffffff;
     opacity: 0.95;
-    max-width: 95%;
-}
+    max-width: 92%;
 }
 
 /* FOOTER */

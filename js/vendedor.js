@@ -127,38 +127,48 @@ document.addEventListener('DOMContentLoaded', () => {
     async function carregarGrafico() {
 
         /*
-        FUTURA CONSULTA BANCO:
-
+        FUTURA CONSULTA SQL:
+    
         fetch('/api/vendas-vendedor')
         */
 
-        const labels = [
+        const produtos = [
 
-            'Camiseta Básica',
-            'Camisa Polo',
-            'Slim Fit',
-            'Manga Curta'
+            {
+                codigo: '1001',
+                nome: 'Camiseta Básica',
+                vendas: 12
+            },
+
+            {
+                codigo: '1002',
+                nome: 'Camisa Polo Premium',
+                vendas: 8
+            },
+
+            {
+                codigo: '1004',
+                nome: 'Camisa Manga Curta',
+                vendas: 6
+            },
+
+            {
+                codigo: '1005',
+                nome: 'Camisa Slim Fit',
+                vendas: 19
+            }
 
         ];
 
-        const valores = [
-            12,
-            8,
-            19,
-            6
-        ];
-
-        construirGrafico(
-            labels,
-            valores
-        );
+        construirGrafico(produtos);
     }
 
     function construirGrafico(
-        labels,
-        valores
+        produtos
     ) {
 
+        const labels = produtos.map(p => p.nome);
+        const valores = produtos.map(p => p.vendas);
 
         const ctx =
             document
@@ -183,17 +193,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     datasets: [{
 
-                        label:
-                            'Produtos vendidos',
+                        label: 'Produtos vendidos',
 
                         data: valores,
 
-                        borderWidth: 1
+                        backgroundColor: 'rgba(25,135,84,.70)',
 
+                        borderColor: '#198754',
+
+                        borderWidth: 2,
+
+                        hoverBackgroundColor: 'rgba(76,175,80,.90)'
                     }]
                 },
 
                 options: {
+
                     responsive: true,
 
                     plugins: {
@@ -202,31 +217,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             labels: {
 
-                                color: 'white'
+                                color: "#172112"
 
                             }
-
                         }
-
                     },
 
                     scales: {
 
-                        y: {
-
-                            beginAtZero: true,
+                        x: {
 
                             ticks: {
 
-                                color: 'white'
+                                color: "#172112"
+
+                            },
+
+                            grid: {
+
+                                color: "rgba(0,0,0,.10)"
 
                             }
                         },
 
-                        x: {
+                        y: {
 
                             ticks: {
-                                color: 'white'
+
+                                color: "#172112"
+
+                            },
+
+                            grid: {
+
+                                color: "rgba(0,0,0,.10)"
+
                             }
                         }
                     }

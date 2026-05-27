@@ -75,7 +75,7 @@ body::before {
 h4 {
     color: #172112;
     font-size: 34px;
-    font-weight: 100px;
+    font-weight: 700;
     margin-bottom: 28px;
 }
 
@@ -128,71 +128,82 @@ label {
 
 .form-control,
 .form-select {
-    border: 1.5px solid #a8c8a8;
-    border-radius: 6px;
-    font-size: 0.88rem;
-    padding: 6px 10px;
+    background: #fff;
+    border: 1px solid #d4d4d4;
+    border-radius: 8px;
+    font-size: 14px;
+    padding: 10px 12px;
+    color: #1e221e;
 }
 
 .form-control:focus,
 .form-select:focus {
-    border-color: #2d5a27;
-    box-shadow: 0 0 0 0.2rem rgba(45, 90, 39, 0.15);
+    background: #fff;
+    color: #1e221e;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 .15rem rgba(76, 175, 80, .20);
 }
 
 /* =============================================
-   BOTOES
+   BOTÕES
    ============================================= */
+
 .btn-buscar {
-    background-color: #2d5a27;
+    background: #198754;
     color: #fff;
-    border: none;
+    border: 2px solid #015c08;
     padding: 7px 28px;
-    border-radius: 6px;
+    border-radius: 8px;
     font-weight: 600;
-    font-size: 0.9rem;
-    transition: background 0.2s;
+    font-size: .9rem;
     cursor: pointer;
+    transition: all .20s ease;
 }
 
 .btn-buscar:hover {
-    background-color: #1a3d15;
-    color: #fff;
+    background: #baf8cf;
+    color: #198754;
+    border: 2px solid #198754;
+    transform: translateY(-1px);
 }
 
 .btn-pdf {
-    background-color: #2d5a27;
+    background: #198754;
     color: #fff;
-    border: none;
+    border: 2px solid #015c08;
     padding: 7px 22px;
-    border-radius: 6px;
+    border-radius: 8px;
     font-weight: 600;
-    font-size: 0.88rem;
-    transition: background 0.2s;
+    font-size: .88rem;
     cursor: pointer;
+    transition: all .20s ease;
 }
 
 .btn-pdf:hover {
-    background-color: #1a3d15;
-    color: #fff;
+    background: #baf8cf;
+    color: #198754;
+    border: 2px solid #198754;
+    transform: translateY(-1px);
 }
 
 .btn-periodo {
-    border: 1.5px solid #2d5a27;
-    color: #2d5a27;
     background: #fff;
-    border-radius: 6px;
-    font-size: 0.82rem;
-    font-weight: 500;
+    color: #198754;
+    border: 2px solid #198754;
     padding: 5px 14px;
-    transition: all 0.18s;
+    border-radius: 8px;
+    font-size: .82rem;
+    font-weight: 500;
     cursor: pointer;
+    transition: all .20s ease;
 }
 
 .btn-periodo:hover,
 .btn-periodo.ativo {
-    background-color: #2d5a27;
-    color: #fff;
+    background: #baf8cf;
+    color: #198754;
+    border: 2px solid #198754;
+    transform: translateY(-1px);
 }
 
 /* =============================================

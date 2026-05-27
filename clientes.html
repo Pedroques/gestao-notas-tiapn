@@ -7,54 +7,78 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="/css/clientes.css">
 </head>
 
 <body>
-    <!-- NavBar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
+
             <a class="navbar-brand text-white" href="/index.html">
                 Gestão de Vendas - Sistema de Notas
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse justify-content-end" id="menu">
+
                 <ul class="navbar-nav">
+
                     <li class="nav-item">
-                        <a class="nav-link" href="/index.html">Página Inicial</a>
+                        <a class="nav-link" href="/index.html">
+                            Página Inicial
+                        </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="/cadastroNotas.html">Venda</a>
+                        <a class="nav-link" href="/cadastroNotas.html">
+                            Venda
+                        </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="/clientes.html">Clientes</a>
+                        <a class="nav-link" href="/clientes.html">
+                            Cliente
+                        </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="/relatorios.html">Relatórios</a>
+                        <a class="nav-link" href="/relatorios.html">
+                            Relatórios
+                        </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="/cotasAberto.html">Contas Aberto</a>
+                        <a class="nav-link" href="/contasAberto.html">
+                            Contas Aberto
+                        </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="/vendedor.html">Vendedor</a>
+                        <a class="nav-link" href="/vendedor.html">
+                            Vendedor
+                        </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="/produtos.html">Produtos</a>
+                        <a class="nav-link" href="/produtos.html">
+                            Produtos
+                        </a>
                     </li>
+
                 </ul>
+
             </div>
         </div>
     </nav>
-    <!-- Fim NavBar -->
 
-    <!-- Corpo do Projeto -->
     <div class="container mt-4 mb-5">
-        <h2 class="form-title">Cadastrar Cliente</h2>
+        <h4 class="form-title">Cadastrar Cliente</h4>
 
         <form class="mt-4">
-            <!-- Campo do Código do Cliente -->
             <div class="row mb-3 align-items-end">
                 <div class="col-md-2 col-sm-4">
                     <label class="form-label text-dark">Cód. Cliente</label>
@@ -65,7 +89,6 @@
                 </div>
             </div>
 
-            <!-- Campos Nome, CPF e Celular -->
             <div class="row mb-3">
                 <div class="col-md-5">
                     <label class="form-label text-dark">Nome do Cliente</label>
@@ -81,10 +104,8 @@
                 </div>
             </div>
 
-            <!-- Campos de Endereço -->
             <h3 class="section-title mt-4 pt-2">Endereço</h3>
 
-            <!-- Linha 1 -->
             <div class="row mb-3">
                 <div class="col-md-8">
                     <label class="form-label text-dark">Rua</label>
@@ -100,7 +121,6 @@
                 </div>
             </div>
 
-            <!-- Linha 2 -->
             <div class="row mb-3">
                 <div class="col-md-4">
                     <label class="form-label text-dark">Bairro</label>
@@ -119,7 +139,7 @@
                     <input type="text" class="form-control form-control-custom">
                 </div>
             </div>
-            <!-- Código do vendedor principal deste cliente -->
+
             <div class="row mb-5">
                 <div class="col-md-2">
                     <label class="form-label text-dark">Código do Vendedor</label>
@@ -127,27 +147,40 @@
                 </div>
             </div>
 
-            <!-- Botões -->
             <div class="row">
                 <div class="col-12 d-flex justify-content-end flex-wrap gap-3">
-                    <button type="button" class="btnCriar btn btn-action">Criar</button>
-                    <button type="button" class="btnEditar btn btn-action">Editar</button>
-                    <button type="button" class="btnSalvar btn btn-action">Salvar</button>
-                    <button type="button" class="btnCancelar btn btn-action">Cancelar</button>
+                    <button type="button" class="btnCriar btn btn-action">
+                        <i class="fa-solid fa-plus"></i>
+                        Criar
+                    </button>
+
+                    <button type="button" class="btnEditar btn btn-action">
+                        <i class="fa-solid fa-pen"></i>
+                        Editar
+                    </button>
+
+                    <button type="button" class="btnSalvar btn btn-action">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        Salvar
+                    </button>
+
+                    <button type="button" class="btnCancelar btn btn-action">
+                        <i class="fa-solid fa-xmark"></i>
+                        Cancelar
+                    </button>
                 </div>
             </div>
-            <!-- Fim dos Botões -->
+
         </form>
     </div>
 
-    <!-- Rodapé -->
     <footer class="footer mt-auto">
         <div class="container text-center">
             <p class="mb-1">Sistema de Gestão de Vendas</p>
             <small>© 2026 - Todos os direitos reservados</small>
         </div>
     </footer>
-    <!-- Fim do Rodapé -->
+
 
 </body>
 
