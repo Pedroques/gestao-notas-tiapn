@@ -29,5 +29,13 @@
       "nome": "Roberto Oliveira"
     }
   ],
+  "produtos": [
+    {
+      "id": "100",
+      "nome": "Produto Teste",
+      "preco": 50.00
+    }
+  ],
+  "vendas": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
