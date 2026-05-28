@@ -1,7 +1,7 @@
 {
   "clientes": [
     {
-      "nome": "Gabriel Silva a",
+      "nome": "Gabriel Silva",
       "cpf": "123.123.124-12",
       "celular": "(12) 31231-2312",
       "rua": "Av. Principal",
@@ -61,5 +61,85 @@
     "status": "Atrasado"
   }
 ],
+  "produtos": [
+    {
+      "id": "100",
+      "nome": "Produto Teste",
+      "preco": 500
+    }
+  ],
+  "vendas": [
+    {
+      "id": "39d5",
+      "codigoPromissoria": "0001",
+      "dataVenda": "2026-05-28",
+      "idVendedor": "20",
+      "nomeVendedor": "Ana Souza",
+      "idCliente": "1",
+      "cliente": "Gabriel Silva",
+      "produto": "Produto Teste",
+      "parcelas": 3,
+      "valorTotal": 500,
+      "clienteCompleto": {
+        "id": "1",
+        "nome": "Gabriel Silva",
+        "cpf": "123.123.124-12",
+        "celular": "(12) 31231-2312"
+      },
+      "vendedor": {
+        "id": "20",
+        "nome": "Ana Souza"
+      },
+      "produtos": [
+        {
+          "codigo": "100",
+          "nome": "Produto Teste",
+          "quantidade": 1,
+          "valorUnitario": 500,
+          "subtotal": 500
+        }
+      ],
+      "pagamento": {
+        "tipoPagamento": "parcelado",
+        "formaPagamento": "dinheiro",
+        "dataPrimeiroPagamento": "2026-05-28",
+        "tipoVencimento": "quinto-dia-util",
+        "valorPagoHoje": 100,
+        "valorRestante": 400
+      },
+      "parcelasDetalhadas": [
+        {
+          "numero": 1,
+          "dataPrevista": "2026-06-05",
+          "valor": 200,
+          "status": "Pendente",
+          "formaPagamento": "dinheiro"
+        },
+        {
+          "numero": 2,
+          "dataPrevista": "2026-07-07",
+          "valor": 150,
+          "status": "Pendente",
+          "formaPagamento": "dinheiro"
+        },
+        {
+          "numero": 3,
+          "dataPrevista": "2026-08-07",
+          "valor": 50,
+          "status": "Pendente",
+          "formaPagamento": "dinheiro"
+        }
+      ],
+      "resumo": {
+        "valorProdutos": 500,
+        "valorPagoHoje": 100,
+        "valorRestante": 400,
+        "valorTotal": 500,
+        "quantidadeParcelas": 3,
+        "somaParcelas": 400
+      },
+      "dataCadastro": "2026-05-28T15:44:04.242Z"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }
