@@ -1,7 +1,24 @@
+let clientes = [];
+let vendedores = [];
+let produtosDisponiveis = [];
+let vendasHistorico = [];
+
 let produtosVenda = [];
 let parcelasVenda = [];
 
 const formVenda = document.getElementById("formVenda");
+
+const codigoPromissoria = document.getElementById("codigoPromissoria");
+const dataVenda = document.getElementById("dataVenda");
+
+const codigoCliente = document.getElementById("codigoCliente");
+const nomeCliente = document.getElementById("nomeCliente");
+const codigoVendedor = document.getElementById("codigoVendedor");
+const nomeVendedor = document.getElementById("nomeVendedor");
+
+const listaClientes = document.getElementById("listaClientes");
+const listaVendedores = document.getElementById("listaVendedores");
+const listaProdutos = document.getElementById("listaProdutos");
 
 const codigoProduto = document.getElementById("codigoProduto");
 const descricaoProduto = document.getElementById("descricaoProduto");
@@ -10,26 +27,27 @@ const valorUnitario = document.getElementById("valorUnitario");
 const btnAdicionarProduto = document.getElementById("btnAdicionarProduto");
 const corpoTabelaProdutos = document.getElementById("corpoTabelaProdutos");
 
-const valorProdutos = document.getElementById("valorProdutos");
-const descontoVenda = document.getElementById("descontoVenda");
-const acrescimoVenda = document.getElementById("acrescimoVenda");
-const valorTotalVenda = document.getElementById("valorTotalVenda");
-const valorPagoEntrada = document.getElementById("valorPagoEntrada");
-const valorRestante = document.getElementById("valorRestante");
-
 const tipoPagamento = document.getElementById("tipoPagamento");
 const formaPagamento = document.getElementById("formaPagamento");
 const dataPrimeiroPagamento = document.getElementById("dataPrimeiroPagamento");
 const tipoVencimento = document.getElementById("tipoVencimento");
-const diaPagamento = document.getElementById("diaPagamento");
+const valorPagoEntrada = document.getElementById("valorPagoEntrada");
+const valorRestante = document.getElementById("valorRestante");
 const quantidadeParcelas = document.getElementById("quantidadeParcelas");
-const valorParcela = document.getElementById("valorParcela");
-const intervaloParcelas = document.getElementById("intervaloParcelas");
-const observacaoPagamento = document.getElementById("observacaoPagamento");
 const btnGerarParcelas = document.getElementById("btnGerarParcelas");
+const areaParcelasPersonalizadas = document.getElementById("areaParcelasPersonalizadas");
 const corpoTabelaParcelas = document.getElementById("corpoTabelaParcelas");
 
+const valorProdutos = document.getElementById("valorProdutos");
+const valorPagoResumo = document.getElementById("valorPagoResumo");
+const valorRestanteResumo = document.getElementById("valorRestanteResumo");
+const valorTotalVenda = document.getElementById("valorTotalVenda");
+const quantidadeParcelasResumo = document.getElementById("quantidadeParcelasResumo");
+const somaParcelasResumo = document.getElementById("somaParcelasResumo");
+const statusResumo = document.getElementById("statusResumo");
+
 const btnCancelarVenda = document.getElementById("btnCancelarVenda");
+const btnLimparVenda = document.getElementById("btnLimparVenda");
 
 function converterParaNumero(valor) {
     const numero = Number(valor);
@@ -48,8 +66,13 @@ function formatarMoeda(valor) {
     });
 }
 
-function formatarData(data) {
-    return data.toLocaleDateString("pt-BR");
+function dataHojeFormatoInput() {
+    const hoje = new Date();
+    const ano = hoje.getFullYear();
+    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
+    const dia = String(hoje.getDate()).padStart(2, "0");
+
+    return `${ano}-${mes}-${dia}`;
 }
 
 function criarDataLocal(valorData) {
@@ -61,44 +84,215 @@ function criarDataLocal(valorData) {
     return new Date(ano, mes, dia);
 }
 
-function atualizarTotais() {
-    const totalProdutos = produtosVenda.reduce((total, produto) => {
-        return total + produto.subtotal;
-    }, 0);
+function formatarDataInput(data) {
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, "0");
+    const dia = String(data.getDate()).padStart(2, "0");
 
-    const desconto = converterParaNumero(descontoVenda.value);
-    const acrescimo = converterParaNumero(acrescimoVenda.value);
-
-    let totalVenda = totalProdutos - desconto + acrescimo;
-
-    if (totalVenda < 0) {
-        totalVenda = 0;
-    }
-
-    valorProdutos.value = totalProdutos.toFixed(2);
-    valorTotalVenda.value = totalVenda.toFixed(2);
-
-    atualizarValorParcelaAutomatico();
+    return `${ano}-${mes}-${dia}`;
 }
 
-function atualizarValorParcelaAutomatico() {
-    const total = converterParaNumero(valorTotalVenda.value);
-    const qtdParcelas = converterParaNumero(quantidadeParcelas.value);
+async function carregarDbJson() {
+    try {
+        const resposta = await fetch("db.JSON");
 
-    if (total > 0 && qtdParcelas > 0) {
-        valorParcela.value = (total / qtdParcelas).toFixed(2);
+        if (!resposta.ok) {
+            throw new Error("Não foi possível carregar o db.JSON.");
+        }
+
+        const dados = await resposta.json();
+
+        clientes = dados.clientes || [];
+        vendedores = dados.vendedor || [];
+        produtosDisponiveis = dados.produtos || [];
+        vendasHistorico = dados.vendas || [];
+
+        preencherDatalists();
+        gerarCodigoPromissoria();
+
+        console.log("Clientes carregados:", clientes);
+        console.log("Vendedores carregados:", vendedores);
+        console.log("Produtos carregados:", produtosDisponiveis);
+        console.log("Vendas carregadas:", vendasHistorico);
+    } catch (erro) {
+        console.error("Erro ao carregar db.JSON:", erro);
+        alert("Não foi possível carregar os dados do db.JSON. Verifique se a página está aberta pelo Live Server.");
     }
+}
+
+function preencherDatalists() {
+    listaClientes.innerHTML = "";
+    listaVendedores.innerHTML = "";
+    listaProdutos.innerHTML = "";
+
+    clientes.forEach(cliente => {
+        const option = document.createElement("option");
+        option.value = cliente.id;
+        option.label = cliente.nome;
+        listaClientes.appendChild(option);
+    });
+
+    vendedores.forEach(vendedor => {
+        const option = document.createElement("option");
+        option.value = vendedor.id;
+        option.label = vendedor.nome;
+        listaVendedores.appendChild(option);
+    });
+
+    produtosDisponiveis.forEach(produto => {
+        const option = document.createElement("option");
+        option.value = produto.id;
+        option.label = `${produto.nome} - ${formatarMoeda(converterParaNumero(produto.preco))}`;
+        listaProdutos.appendChild(option);
+    });
+}
+
+function gerarCodigoPromissoria() {
+    let maiorCodigo = 0;
+
+    vendasHistorico.forEach(venda => {
+        const codigo = String(venda.codigoPromissoria || venda.id || "0");
+        const numero = parseInt(codigo.replace(/\D/g, ""), 10);
+
+        if (!isNaN(numero) && numero > maiorCodigo) {
+            maiorCodigo = numero;
+        }
+    });
+
+    const proximoCodigo = maiorCodigo + 1;
+    codigoPromissoria.value = String(proximoCodigo).padStart(4, "0");
+}
+
+function buscarClientePorCodigo(codigo) {
+    return clientes.find(cliente => String(cliente.id) === String(codigo).trim());
+}
+
+function buscarVendedorPorCodigo(codigo) {
+    return vendedores.find(vendedor => String(vendedor.id) === String(codigo).trim());
+}
+
+function buscarProdutoPorCodigo(codigo) {
+    return produtosDisponiveis.find(produto => String(produto.id) === String(codigo).trim());
+}
+
+function preencherClientePorCodigo() {
+    const cliente = buscarClientePorCodigo(codigoCliente.value);
+
+    if (!cliente) {
+        nomeCliente.value = "";
+        return;
+    }
+
+    codigoCliente.value = cliente.id;
+    nomeCliente.value = cliente.nome;
+}
+
+function preencherVendedorPorCodigo() {
+    const vendedor = buscarVendedorPorCodigo(codigoVendedor.value);
+
+    if (!vendedor) {
+        nomeVendedor.value = "";
+        return;
+    }
+
+    codigoVendedor.value = vendedor.id;
+    nomeVendedor.value = vendedor.nome;
+}
+
+function preencherProdutoPorCodigo() {
+    const produto = buscarProdutoPorCodigo(codigoProduto.value);
+
+    if (!produto) {
+        descricaoProduto.value = "";
+        valorUnitario.value = "0.00";
+        return;
+    }
+
+    codigoProduto.value = produto.id;
+    descricaoProduto.value = produto.nome;
+    valorUnitario.value = converterParaNumero(produto.preco).toFixed(2);
+}
+
+function calcularTotalProdutos() {
+    return produtosVenda.reduce((total, produto) => {
+        return total + produto.subtotal;
+    }, 0);
+}
+
+function calcularSomaParcelas() {
+    return parcelasVenda.reduce((total, parcela) => {
+        return total + parcela.valor;
+    }, 0);
+}
+
+function calcularValorRestante() {
+    const total = calcularTotalProdutos();
+    const entrada = converterParaNumero(valorPagoEntrada.value);
+
+    let restante = total - entrada;
+
+    if (restante < 0) {
+        restante = 0;
+    }
+
+    valorRestante.value = restante.toFixed(2);
+    return restante;
+}
+
+function atualizarResumo() {
+    const totalProdutos = calcularTotalProdutos();
+    const entrada = converterParaNumero(valorPagoEntrada.value);
+    const restante = calcularValorRestante();
+    const somaParcelas = calcularSomaParcelas();
+
+    valorProdutos.value = totalProdutos.toFixed(2);
+    valorPagoResumo.value = entrada.toFixed(2);
+    valorRestanteResumo.value = restante.toFixed(2);
+    valorTotalVenda.value = totalProdutos.toFixed(2);
+    quantidadeParcelasResumo.value = parcelasVenda.length;
+    somaParcelasResumo.value = somaParcelas.toFixed(2);
+
+    if (totalProdutos === 0) {
+        statusResumo.value = "Aguardando produtos";
+        return;
+    }
+
+    if (entrada > totalProdutos) {
+        statusResumo.value = "Valor pago hoje maior que o total da venda";
+        return;
+    }
+
+    if (tipoPagamento.value === "avista") {
+        statusResumo.value = entrada === totalProdutos ? "Venda à vista fechada" : "À vista exige pagamento total";
+        return;
+    }
+
+    if (tipoPagamento.value === "parcelado") {
+        if (parcelasVenda.length === 0) {
+            statusResumo.value = "Aguardando geração das parcelas";
+            return;
+        }
+
+        if (Math.abs(somaParcelas - restante) <= 0.05) {
+            statusResumo.value = "Parcelas fecham com o valor restante";
+        } else {
+            statusResumo.value = "Soma das parcelas diferente do valor restante";
+        }
+
+        return;
+    }
+
+    statusResumo.value = "Aguardando forma de pagamento";
 }
 
 function adicionarProduto() {
-    const codigo = codigoProduto.value.trim();
-    const descricao = descricaoProduto.value.trim();
+    const produtoEncontrado = buscarProdutoPorCodigo(codigoProduto.value);
     const quantidade = converterParaNumero(quantidadeProduto.value);
     const valor = converterParaNumero(valorUnitario.value);
 
-    if (descricao === "") {
-        alert("Informe a descrição do produto.");
-        descricaoProduto.focus();
+    if (!produtoEncontrado) {
+        alert("Informe um código de produto válido.");
+        codigoProduto.focus();
         return;
     }
 
@@ -109,15 +303,14 @@ function adicionarProduto() {
     }
 
     if (valor <= 0) {
-        alert("Informe um valor unitário válido.");
-        valorUnitario.focus();
+        alert("O produto selecionado não possui preço válido.");
         return;
     }
 
     const produto = {
         idTemporario: Date.now(),
-        codigo: codigo,
-        descricao: descricao,
+        codigo: produtoEncontrado.id,
+        nome: produtoEncontrado.nome,
         quantidade: quantidade,
         valorUnitario: valor,
         subtotal: quantidade * valor
@@ -127,14 +320,14 @@ function adicionarProduto() {
 
     limparCamposProduto();
     renderizarProdutos();
-    atualizarTotais();
+    atualizarResumo();
 }
 
 function limparCamposProduto() {
     codigoProduto.value = "";
     descricaoProduto.value = "";
     quantidadeProduto.value = 1;
-    valorUnitario.value = "";
+    valorUnitario.value = "0.00";
     codigoProduto.focus();
 }
 
@@ -142,7 +335,7 @@ function removerProduto(idTemporario) {
     produtosVenda = produtosVenda.filter(produto => produto.idTemporario !== idTemporario);
 
     renderizarProdutos();
-    atualizarTotais();
+    atualizarResumo();
 }
 
 function renderizarProdutos() {
@@ -151,7 +344,7 @@ function renderizarProdutos() {
     if (produtosVenda.length === 0) {
         corpoTabelaProdutos.innerHTML = `
             <tr class="linha-vazia">
-                <td colspan="5">Nenhum produto adicionado ainda.</td>
+                <td colspan="6">Nenhum produto adicionado ainda.</td>
             </tr>
         `;
         return;
@@ -161,7 +354,8 @@ function renderizarProdutos() {
         const linha = document.createElement("tr");
 
         linha.innerHTML = `
-            <td>${produto.descricao}</td>
+            <td>${produto.codigo}</td>
+            <td>${produto.nome}</td>
             <td>${produto.quantidade}</td>
             <td>${formatarMoeda(produto.valorUnitario)}</td>
             <td>${formatarMoeda(produto.subtotal)}</td>
@@ -178,18 +372,7 @@ function renderizarProdutos() {
 
 function ehDiaUtil(data) {
     const diaSemana = data.getDay();
-
     return diaSemana !== 0 && diaSemana !== 6;
-}
-
-function ajustarParaProximoDiaUtil(data) {
-    const dataAjustada = new Date(data);
-
-    while (!ehDiaUtil(dataAjustada)) {
-        dataAjustada.setDate(dataAjustada.getDate() + 1);
-    }
-
-    return dataAjustada;
 }
 
 function obterQuintoDiaUtil(ano, mes) {
@@ -209,13 +392,6 @@ function obterQuintoDiaUtil(ano, mes) {
     return data;
 }
 
-function obterDataFixaDoMes(ano, mes, diaInformado) {
-    const ultimoDiaDoMes = new Date(ano, mes + 1, 0).getDate();
-    const diaValido = Math.min(diaInformado, ultimoDiaDoMes);
-
-    return new Date(ano, mes, diaValido);
-}
-
 function somarMeses(dataBase, quantidadeMeses) {
     const novaData = new Date(dataBase);
     const diaOriginal = novaData.getDate();
@@ -230,82 +406,83 @@ function somarMeses(dataBase, quantidadeMeses) {
 }
 
 function calcularDataParcela(dataBase, numeroParcela) {
-    const tipo = tipoVencimento.value;
-    const intervalo = intervaloParcelas.value;
-    const diaInformado = converterParaNumero(diaPagamento.value);
+    if (tipoVencimento.value === "quinto-dia-util") {
+        let dataReferencia = somarMeses(dataBase, numeroParcela);
+        let quintoDiaUtil = obterQuintoDiaUtil(dataReferencia.getFullYear(), dataReferencia.getMonth());
 
-    let dataCalculada;
-
-    if (tipo === "quinto-dia-util") {
-        let dataMesReferencia = somarMeses(dataBase, numeroParcela - 1);
-        let ano = dataMesReferencia.getFullYear();
-        let mes = dataMesReferencia.getMonth();
-
-        dataCalculada = obterQuintoDiaUtil(ano, mes);
-
-        if (numeroParcela === 1 && dataCalculada < dataBase) {
-            dataMesReferencia = somarMeses(dataBase, 1);
-            ano = dataMesReferencia.getFullYear();
-            mes = dataMesReferencia.getMonth();
-
-            dataCalculada = obterQuintoDiaUtil(ano, mes);
+        if (numeroParcela === 0 && quintoDiaUtil < dataBase) {
+            dataReferencia = somarMeses(dataBase, 1);
+            quintoDiaUtil = obterQuintoDiaUtil(dataReferencia.getFullYear(), dataReferencia.getMonth());
         }
 
-        return dataCalculada;
-    }
+        if (numeroParcela > 0) {
+            const primeiraData = calcularDataParcela(dataBase, 0);
+            const dataDaParcela = somarMeses(primeiraData, numeroParcela);
 
-    if (tipo === "data-fixa") {
-        if (diaInformado <= 0) {
-            alert("Informe o dia de pagamento para usar data fixa combinada.");
-            diaPagamento.focus();
-            return null;
+            return obterQuintoDiaUtil(dataDaParcela.getFullYear(), dataDaParcela.getMonth());
         }
 
-        const dataMesReferencia = somarMeses(dataBase, numeroParcela - 1);
-        const ano = dataMesReferencia.getFullYear();
-        const mes = dataMesReferencia.getMonth();
-
-        dataCalculada = obterDataFixaDoMes(ano, mes, diaInformado);
-        return dataCalculada;
+        return quintoDiaUtil;
     }
 
-    if (intervalo === "mensal") {
-        dataCalculada = somarMeses(dataBase, numeroParcela - 1);
-    } else {
-        const diasIntervalo = converterParaNumero(intervalo);
-        dataCalculada = new Date(dataBase);
-        dataCalculada.setDate(dataCalculada.getDate() + (diasIntervalo * (numeroParcela - 1)));
+    return somarMeses(dataBase, numeroParcela);
+}
+
+function controlarPagamento() {
+    if (tipoPagamento.value === "avista") {
+        quantidadeParcelas.value = 1;
+        quantidadeParcelas.disabled = true;
+        btnGerarParcelas.disabled = true;
+        areaParcelasPersonalizadas.style.display = "none";
+
+        valorPagoEntrada.value = calcularTotalProdutos().toFixed(2);
+        parcelasVenda = [];
+        renderizarParcelas();
     }
 
-    if (tipo === "dia-util") {
-        dataCalculada = ajustarParaProximoDiaUtil(dataCalculada);
+    if (tipoPagamento.value === "parcelado") {
+        quantidadeParcelas.disabled = false;
+        btnGerarParcelas.disabled = false;
+        areaParcelasPersonalizadas.style.display = "block";
+
+        if (converterParaNumero(valorPagoEntrada.value) === calcularTotalProdutos()) {
+            valorPagoEntrada.value = "0.00";
+        }
     }
 
-    return dataCalculada;
+    atualizarResumo();
 }
 
 function gerarParcelas() {
-    const totalVenda = converterParaNumero(valorTotalVenda.value);
+    const restante = calcularValorRestante();
     const qtdParcelas = converterParaNumero(quantidadeParcelas.value);
-    const valorInformadoParcela = converterParaNumero(valorParcela.value);
     const dataInicial = dataPrimeiroPagamento.value;
     const forma = formaPagamento.value;
-    const tipoPag = tipoPagamento.value;
 
     if (produtosVenda.length === 0) {
         alert("Adicione pelo menos um produto antes de gerar parcelas.");
         return;
     }
 
-    if (tipoPag === "") {
-        alert("Selecione o tipo de pagamento.");
-        tipoPagamento.focus();
+    if (tipoPagamento.value !== "parcelado") {
+        alert("As parcelas só podem ser geradas quando o tipo de pagamento for Parcelado.");
         return;
     }
 
     if (forma === "") {
-        alert("Selecione a forma de pagamento.");
-        formaPagamento.focus();
+    alert("Selecione a forma de pagamento antes de gerar as parcelas.");
+    formaPagamento.focus();
+    return;
+    }
+
+    if (restante <= 0) {
+        alert("Não existe valor restante para parcelar.");
+        return;
+    }
+
+    if (qtdParcelas <= 0) {
+        alert("Informe uma quantidade válida de parcelas.");
+        quantidadeParcelas.focus();
         return;
     }
 
@@ -315,67 +492,36 @@ function gerarParcelas() {
         return;
     }
 
-    if (qtdParcelas <= 0) {
-        alert("Informe a quantidade de parcelas.");
-        quantidadeParcelas.focus();
-        return;
-    }
-
-    if (valorInformadoParcela <= 0) {
-        alert("Informe o valor da parcela.");
-        valorParcela.focus();
-        return;
-    }
-
-    const somaParcelas = valorInformadoParcela * qtdParcelas;
-
-    if (Math.abs(somaParcelas - totalVenda) > 0.05) {
-        const confirmar = confirm(
-            `A soma das parcelas será ${formatarMoeda(somaParcelas)}, mas o total da venda é ${formatarMoeda(totalVenda)}. Deseja continuar mesmo assim?`
-        );
-
-        if (!confirmar) {
-            return;
-        }
-    }
-
     parcelasVenda = [];
 
+    const valorBase = restante / qtdParcelas;
     const dataBase = criarDataLocal(dataInicial);
 
     for (let i = 1; i <= qtdParcelas; i++) {
-        const dataPrevista = calcularDataParcela(dataBase, i);
+        const dataParcela = calcularDataParcela(dataBase, i - 1);
 
-        if (dataPrevista === null) {
-            return;
-        }
-
-        const parcela = {
+        parcelasVenda.push({
             numero: i,
-            dataPrevista: dataPrevista,
-            valor: valorInformadoParcela,
+            dataPrevista: formatarDataInput(dataParcela),
+            valor: Number(valorBase.toFixed(2)),
             status: "Pendente",
-            formaPagamento: obterTextoFormaPagamento(forma)
-        };
-
-        parcelasVenda.push(parcela);
+            formaPagamento: formaPagamento.value
+        });
     }
 
+    ajustarDiferencaCentavos(restante);
     renderizarParcelas();
+    atualizarResumo();
 }
 
-function obterTextoFormaPagamento(valor) {
-    const formas = {
-        "dinheiro": "Dinheiro",
-        "pix": "Pix",
-        "cartao-debito": "Cartão de débito",
-        "cartao-credito": "Cartão de crédito",
-        "boleto": "Boleto",
-        "promissoria": "Nota promissória",
-        "outro": "Outro"
-    };
+function ajustarDiferencaCentavos(totalEsperado) {
+    const somaAtual = calcularSomaParcelas();
+    const diferenca = Number((totalEsperado - somaAtual).toFixed(2));
 
-    return formas[valor] || valor;
+    if (parcelasVenda.length > 0) {
+        const ultimaParcela = parcelasVenda[parcelasVenda.length - 1];
+        ultimaParcela.valor = Number((ultimaParcela.valor + diferenca).toFixed(2));
+    }
 }
 
 function renderizarParcelas() {
@@ -384,7 +530,7 @@ function renderizarParcelas() {
     if (parcelasVenda.length === 0) {
         corpoTabelaParcelas.innerHTML = `
             <tr class="linha-vazia">
-                <td colspan="5">Nenhuma parcela gerada ainda.</td>
+                <td colspan="6">Nenhuma parcela gerada ainda.</td>
             </tr>
         `;
         return;
@@ -395,94 +541,155 @@ function renderizarParcelas() {
 
         linha.innerHTML = `
             <td>${parcela.numero}</td>
-            <td>${formatarData(parcela.dataPrevista)}</td>
-            <td>${formatarMoeda(parcela.valor)}</td>
+            <td>
+                <input type="date" class="form-control input-data-parcela" data-numero="${parcela.numero}" value="${parcela.dataPrevista}">
+            </td>
+            <td>
+                <input type="number" class="form-control input-valor-parcela" data-numero="${parcela.numero}" min="0" step="0.01" value="${parcela.valor.toFixed(2)}">
+            </td>
             <td>${parcela.status}</td>
-            <td>${parcela.formaPagamento}</td>
+            <td>${obterTextoFormaPagamento(parcela.formaPagamento)}</td>
+            <td>
+                <button type="button" class="btn btn-danger btn-sm" onclick="removerParcela(${parcela.numero})">
+                    Remover
+                </button>
+            </td>
         `;
 
         corpoTabelaParcelas.appendChild(linha);
     });
+
+    document.querySelectorAll(".input-data-parcela").forEach(input => {
+        input.addEventListener("input", atualizarParcelasPelaTabela);
+    });
+
+    document.querySelectorAll(".input-valor-parcela").forEach(input => {
+    input.addEventListener("change", atualizarParcelasPelaTabela);
+    });
 }
 
-function montarObjetoVenda() {
-    const venda = {
-        codigoPromissoria: document.getElementById("codigoPromissoria").value.trim(),
-        dataVenda: document.getElementById("dataVenda").value,
-        statusVenda: document.getElementById("statusVenda").value,
-        tipoVenda: document.getElementById("tipoVenda").value,
+function atualizarParcelasPelaTabela(event) {
+    document.querySelectorAll(".input-data-parcela").forEach(input => {
+        const numero = Number(input.dataset.numero);
+        const parcela = parcelasVenda.find(item => item.numero === numero);
 
-        cliente: {
-            codigo: document.getElementById("codigoCliente").value.trim(),
-            nome: document.getElementById("nomeCliente").value.trim(),
-            telefone: document.getElementById("telefoneCliente").value.trim(),
-            cpf: document.getElementById("cpfCliente").value.trim()
-        },
+        if (parcela) {
+            parcela.dataPrevista = input.value;
+        }
+    });
 
-        vendedor: {
-            codigo: document.getElementById("codigoVendedor").value.trim(),
-            nome: document.getElementById("nomeVendedor").value.trim()
-        },
+    if (event && event.target.classList.contains("input-valor-parcela")) {
+        const numeroParcelaAlterada = Number(event.target.dataset.numero);
+        const novoValor = converterParaNumero(event.target.value);
 
-        observacaoVenda: document.getElementById("observacaoVenda").value.trim(),
+        const parcelaAlterada = parcelasVenda.find(parcela => parcela.numero === numeroParcelaAlterada);
 
-        produtos: produtosVenda,
+        if (parcelaAlterada) {
+            parcelaAlterada.valor = novoValor;
+            redistribuirParcelasRestantes(numeroParcelaAlterada);
+            renderizarParcelas();
+            atualizarResumo();
+            return;
+        }
+    }
 
-        pagamento: {
-            tipoPagamento: tipoPagamento.value,
-            formaPagamento: formaPagamento.value,
-            dataPrimeiroPagamento: dataPrimeiroPagamento.value,
-            tipoVencimento: tipoVencimento.value,
-            diaPagamento: diaPagamento.value,
-            quantidadeParcelas: quantidadeParcelas.value,
-            valorParcela: valorParcela.value,
-            intervaloParcelas: intervaloParcelas.value,
-            observacaoPagamento: observacaoPagamento.value.trim()
-        },
+    document.querySelectorAll(".input-valor-parcela").forEach(input => {
+        const numero = Number(input.dataset.numero);
+        const parcela = parcelasVenda.find(item => item.numero === numero);
 
-        parcelas: parcelasVenda.map(parcela => {
-            return {
-                numero: parcela.numero,
-                dataPrevista: parcela.dataPrevista.toISOString().split("T")[0],
-                valor: parcela.valor,
-                status: parcela.status,
-                formaPagamento: parcela.formaPagamento
-            };
-        }),
+        if (parcela) {
+            parcela.valor = converterParaNumero(input.value);
+        }
+    });
 
-        resumo: {
-            valorProdutos: converterParaNumero(valorProdutos.value),
-            desconto: converterParaNumero(descontoVenda.value),
-            acrescimo: converterParaNumero(acrescimoVenda.value),
-            valorTotal: converterParaNumero(valorTotalVenda.value)
-        },
+    atualizarResumo();
+}
 
-        dataCadastro: new Date().toISOString()
+function redistribuirParcelasRestantes(numeroParcelaAlterada) {
+    const valorRestanteTotal = calcularValorRestante();
+
+    const parcelasJaDefinidas = parcelasVenda.filter(parcela => {
+        return parcela.numero <= numeroParcelaAlterada;
+    });
+
+    const parcelasParaRecalcular = parcelasVenda.filter(parcela => {
+        return parcela.numero > numeroParcelaAlterada;
+    });
+
+    const somaParcelasJaDefinidas = parcelasJaDefinidas.reduce((total, parcela) => {
+        return total + parcela.valor;
+    }, 0);
+
+    let saldoParaDistribuir = valorRestanteTotal - somaParcelasJaDefinidas;
+
+    if (saldoParaDistribuir < 0) {
+        saldoParaDistribuir = 0;
+    }
+
+    if (parcelasParaRecalcular.length === 0) {
+        return;
+    }
+
+    const valorBase = saldoParaDistribuir / parcelasParaRecalcular.length;
+
+    parcelasParaRecalcular.forEach(parcela => {
+        parcela.valor = Number(valorBase.toFixed(2));
+    });
+
+    const somaDepoisDaDistribuicao = parcelasParaRecalcular.reduce((total, parcela) => {
+        return total + parcela.valor;
+    }, 0);
+
+    const diferencaCentavos = Number((saldoParaDistribuir - somaDepoisDaDistribuicao).toFixed(2));
+
+    const ultimaParcela = parcelasParaRecalcular[parcelasParaRecalcular.length - 1];
+    ultimaParcela.valor = Number((ultimaParcela.valor + diferencaCentavos).toFixed(2));
+}
+
+function removerParcela(numero) {
+    parcelasVenda = parcelasVenda.filter(parcela => parcela.numero !== numero);
+
+    parcelasVenda = parcelasVenda.map((parcela, index) => {
+        return {
+            ...parcela,
+            numero: index + 1
+        };
+    });
+
+    renderizarParcelas();
+    atualizarResumo();
+}
+
+function obterTextoFormaPagamento(valor) {
+    const formas = {
+        dinheiro: "Dinheiro",
+        pix: "Pix",
+        debito: "Débito",
+        credito: "Crédito"
     };
 
-    return venda;
+    return formas[valor] || valor;
 }
 
 function validarVendaAntesDeSalvar() {
-    const nomeCliente = document.getElementById("nomeCliente").value.trim();
-    const nomeVendedor = document.getElementById("nomeVendedor").value.trim();
-    const dataVenda = document.getElementById("dataVenda").value;
+    const cliente = buscarClientePorCodigo(codigoCliente.value);
+    const vendedor = buscarVendedorPorCodigo(codigoVendedor.value);
 
-    if (dataVenda === "") {
+    if (dataVenda.value === "") {
         alert("Informe a data da venda.");
-        document.getElementById("dataVenda").focus();
+        dataVenda.focus();
         return false;
     }
 
-    if (nomeCliente === "") {
-        alert("Informe o nome do cliente.");
-        document.getElementById("nomeCliente").focus();
+    if (!cliente) {
+        alert("Informe um código de cliente válido.");
+        codigoCliente.focus();
         return false;
     }
 
-    if (nomeVendedor === "") {
-        alert("Informe o nome do vendedor.");
-        document.getElementById("nomeVendedor").focus();
+    if (!vendedor) {
+        alert("Informe um código de vendedor válido.");
+        codigoVendedor.focus();
         return false;
     }
 
@@ -491,15 +698,146 @@ function validarVendaAntesDeSalvar() {
         return false;
     }
 
-    if (parcelasVenda.length === 0) {
-        alert("Gere as parcelas antes de salvar a venda.");
+    if (tipoPagamento.value === "") {
+        alert("Selecione o tipo de pagamento.");
+        tipoPagamento.focus();
         return false;
+    }
+
+    if (formaPagamento.value === "") {
+        alert("Selecione a forma de pagamento.");
+        formaPagamento.focus();
+        return false;
+    }
+
+    const total = calcularTotalProdutos();
+    const entrada = converterParaNumero(valorPagoEntrada.value);
+    const restante = calcularValorRestante();
+
+    if (entrada > total) {
+        alert("O valor pago hoje não pode ser maior que o total da venda.");
+        valorPagoEntrada.focus();
+        return false;
+    }
+
+    if (tipoPagamento.value === "avista") {
+        if (entrada !== total) {
+            alert("Para pagamento à vista, o valor pago hoje precisa ser igual ao total da venda.");
+            valorPagoEntrada.focus();
+            return false;
+        }
+    }
+
+    if (tipoPagamento.value === "parcelado") {
+        if (parcelasVenda.length === 0) {
+            alert("Gere as parcelas antes de salvar uma venda parcelada.");
+            return false;
+        }
+
+        atualizarParcelasPelaTabela();
+
+        const somaParcelas = calcularSomaParcelas();
+
+        if (Math.abs(somaParcelas - restante) > 0.05) {
+            alert(`A soma das parcelas precisa fechar com o valor restante. Restante: ${formatarMoeda(restante)}. Soma das parcelas: ${formatarMoeda(somaParcelas)}.`);
+            return false;
+        }
     }
 
     return true;
 }
 
-function salvarVenda(event) {
+function montarObjetoVenda() {
+    const cliente = buscarClientePorCodigo(codigoCliente.value);
+    const vendedor = buscarVendedorPorCodigo(codigoVendedor.value);
+
+    const total = calcularTotalProdutos();
+    const entrada = converterParaNumero(valorPagoEntrada.value);
+    const restante = calcularValorRestante();
+
+    let parcelas = [];
+
+    if (tipoPagamento.value === "avista") {
+        parcelas = [
+            {
+                numero: 1,
+                dataPrevista: dataPrimeiroPagamento.value,
+                valor: total,
+                status: "Pago",
+                formaPagamento: formaPagamento.value
+            }
+        ];
+    } else {
+        parcelas = parcelasVenda.map(parcela => {
+            return {
+                numero: parcela.numero,
+                dataPrevista: parcela.dataPrevista,
+                valor: parcela.valor,
+                status: parcela.status,
+                formaPagamento: parcela.formaPagamento
+            };
+        });
+    }
+
+    return {
+    codigoPromissoria: codigoPromissoria.value,
+    dataVenda: dataVenda.value,
+
+    idVendedor: vendedor.id,
+    nomeVendedor: vendedor.nome,
+    idCliente: cliente.id,
+    cliente: cliente.nome,
+    produto: produtosVenda.map(produto => produto.nome).join(", "),
+    parcelas: parcelas.length,
+    valorTotal: total,
+
+    clienteCompleto: {
+        id: cliente.id,
+        nome: cliente.nome,
+        cpf: cliente.cpf || "",
+        celular: cliente.celular || ""
+    },
+
+    vendedor: {
+        id: vendedor.id,
+        nome: vendedor.nome
+    },
+
+    produtos: produtosVenda.map(produto => {
+        return {
+            codigo: produto.codigo,
+            nome: produto.nome,
+            quantidade: produto.quantidade,
+            valorUnitario: produto.valorUnitario,
+            subtotal: produto.subtotal
+        };
+    }),
+
+    pagamento: {
+        tipoPagamento: tipoPagamento.value,
+        formaPagamento: formaPagamento.value,
+        dataPrimeiroPagamento: dataPrimeiroPagamento.value,
+        tipoVencimento: tipoVencimento.value,
+        valorPagoHoje: entrada,
+        valorRestante: restante
+    },
+
+    parcelasDetalhadas: parcelas,
+
+    resumo: {
+        valorProdutos: total,
+        valorPagoHoje: entrada,
+        valorRestante: restante,
+        valorTotal: total,
+        quantidadeParcelas: parcelas.length,
+        somaParcelas: parcelas.reduce((totalParcelas, parcela) => totalParcelas + parcela.valor, 0)
+    },
+
+    dataCadastro: new Date().toISOString()
+    };
+}
+
+async function salvarVenda(event) {
     event.preventDefault();
 
     if (!validarVendaAntesDeSalvar()) {
@@ -508,16 +846,32 @@ function salvarVenda(event) {
 
     const venda = montarObjetoVenda();
 
-    const vendasSalvas = JSON.parse(localStorage.getItem("vendas")) || [];
-    vendasSalvas.push(venda);
+    try {
+        const resposta = await fetch("http://localhost:3000/vendas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(venda)
+        });
 
-    localStorage.setItem("vendas", JSON.stringify(vendasSalvas));
+        if (!resposta.ok) {
+            throw new Error("Erro ao salvar venda.");
+        }
 
-    console.log("Venda salva:", venda);
+        const vendaSalva = await resposta.json();
 
-    alert("Venda salva com sucesso!");
+        console.log("Venda salva no db.JSON:", vendaSalva);
 
-    limparVendaCompleta();
+        alert("Venda salva com sucesso!");
+
+        vendasHistorico.push(vendaSalva);
+
+        limparVendaCompleta();
+    } catch (erro) {
+        console.error("Erro ao salvar venda:", erro);
+        alert("Não foi possível salvar a venda. Verifique se o JSON Server estão rodando corretamente.");
+    }
 }
 
 function limparVendaCompleta() {
@@ -526,32 +880,37 @@ function limparVendaCompleta() {
     produtosVenda = [];
     parcelasVenda = [];
 
+    dataVenda.value = dataHojeFormatoInput();
+    dataPrimeiroPagamento.value = dataHojeFormatoInput();
+
+    gerarCodigoPromissoria();
+
+    quantidadeParcelas.disabled = false;
+    btnGerarParcelas.disabled = false;
+    areaParcelasPersonalizadas.style.display = "block";
+
     renderizarProdutos();
     renderizarParcelas();
-    atualizarTotais();
+    atualizarResumo();
 }
 
-function configurarTipoPagamento() {
-    if (tipoPagamento.value === "avista") {
-        quantidadeParcelas.value = 1;
-        intervaloParcelas.value = "30";
-        valorParcela.value = converterParaNumero(valorTotalVenda.value).toFixed(2);
-    }
-
-    if (tipoPagamento.value === "mensal-fixo") {
-        intervaloParcelas.value = "mensal";
-        tipoVencimento.value = "data-fixa";
-    }
-}
+codigoCliente.addEventListener("input", preencherClientePorCodigo);
+codigoVendedor.addEventListener("input", preencherVendedorPorCodigo);
+codigoProduto.addEventListener("input", preencherProdutoPorCodigo);
 
 btnAdicionarProduto.addEventListener("click", adicionarProduto);
 btnGerarParcelas.addEventListener("click", gerarParcelas);
+
+tipoPagamento.addEventListener("change", controlarPagamento);
+valorPagoEntrada.addEventListener("input", atualizarResumo);
+formaPagamento.addEventListener("change", renderizarParcelas);
+quantidadeParcelas.addEventListener("input", atualizarResumo);
+
 formVenda.addEventListener("submit", salvarVenda);
 
-descontoVenda.addEventListener("input", atualizarTotais);
-acrescimoVenda.addEventListener("input", atualizarTotais);
-quantidadeParcelas.addEventListener("input", atualizarValorParcelaAutomatico);
-tipoPagamento.addEventListener("change", configurarTipoPagamento);
+btnLimparVenda.addEventListener("click", function () {
+    setTimeout(limparVendaCompleta, 0);
+});
 
 btnCancelarVenda.addEventListener("click", function () {
     const confirmar = confirm("Deseja cancelar esta venda e limpar os dados preenchidos?");
@@ -561,15 +920,13 @@ btnCancelarVenda.addEventListener("click", function () {
     }
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const hoje = new Date();
-    const ano = hoje.getFullYear();
-    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
-    const dia = String(hoje.getDate()).padStart(2, "0");
+document.addEventListener("DOMContentLoaded", async function () {
+    dataVenda.value = dataHojeFormatoInput();
+    dataPrimeiroPagamento.value = dataHojeFormatoInput();
 
-    document.getElementById("dataVenda").value = `${ano}-${mes}-${dia}`;
+    await carregarDbJson();
 
     renderizarProdutos();
     renderizarParcelas();
-    atualizarTotais();
+    atualizarResumo();
 });
