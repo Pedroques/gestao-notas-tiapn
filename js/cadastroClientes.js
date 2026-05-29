@@ -1,6 +1,8 @@
 const API_URL = "http://localhost:3000/clientes";
 const VENDEDORES_URL = "http://localhost:3000/vendedor";
 const modalBuscar = new bootstrap.Modal(document.getElementById('modalBuscarCliente'));
+let clientesLista = [];
+let vendedoresLista = [];
 
 const inputs = {
     id: document.getElementById('txtId'),
@@ -27,7 +29,18 @@ const tabelaCorpo = document.getElementById('tabelaClientesCorpo');
 document.addEventListener("DOMContentLoaded", () => {
     limparFormulario();
     bloquearCampos(true);
+    const txtPesquisaModal = document.getElementById('txtPesquisaModal');
+    if (txtPesquisaModal) {
+        txtPesquisaModal.addEventListener('input', (e) => {
+            const termo = e.target.value.toLowerCase().trim();
+            const filtrados = clientesLista.filter(cliente =>
+                cliente.nome.toLowerCase().includes(termo)
+            );
+            renderizarClientesNoModal(filtrados);
+        });
+    }
 });
+
 // procura pelo cod do cliente
 inputs.id.addEventListener('change', async (e) => {
     const valor = e.target.value.trim();
@@ -48,6 +61,7 @@ inputs.id.addEventListener('change', async (e) => {
     try {
         const response = await fetch(API_URL);
         const clientes = await response.json();
+
         const clienteEncontrado = clientes.find(c => parseInt(c.codigoExibicao || c.id, 10) === codigoPesquisa);
 
         if (clienteEncontrado) {
@@ -59,7 +73,7 @@ inputs.id.addEventListener('change', async (e) => {
             bloquearCampos(true);
         }
     } catch (error) {
-        console.error("Erro ao buscar cliente:", error);
+        console.error("Erro ao buscar cliente por código:", error);
         alert("Ocorreu um erro ao buscar o cliente no servidor.");
     }
 });
@@ -139,7 +153,7 @@ btnSalvar.addEventListener('click', async () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(clienteData)
             });
-            alert(`Cliente cadastrado com sucesso! Código sequencial gerado: ${proximoCodigo}`);
+            alert(`Cliente cadastrado com sucesso!`);
         }
 
         limparFormulario();
@@ -180,39 +194,53 @@ btnExcluir.addEventListener('click', async () => {
 // --- FUNÇÕES DE APOIO E REQUISIÇÕES ---
 async function carregarClientesNoModal() {
     try {
-        const response = await fetch(API_URL);
-        const clientes = await response.json();
+        const [resClientes, resVendedores] = await Promise.all([
+            fetch(API_URL),
+            fetch(VENDEDORES_URL)
+        ]);
 
-        tabelaCorpo.innerHTML = "";
+        clientesLista = await resClientes.json();
+        vendedoresLista = await resVendedores.json();
 
-        clientes.forEach(cliente => {
-            const tr = document.createElement('tr');
-            const codigoParaMostrar = cliente.codigoExibicao || cliente.id;
+        const txtPesquisaModal = document.getElementById('txtPesquisaModal');
+        if (txtPesquisaModal) txtPesquisaModal.value = "";
 
-            tr.innerHTML = `
-                <td>${codigoParaMostrar}</td>
-                <td>${cliente.nome}</td>
-                <td>${cliente.cpf}</td>
-                <td>${cliente.cidade}/${cliente.uf}</td>
-            `;
-
-            tr.addEventListener('click', () => {
-                preencherFormulario(cliente);
-                bloquearCampos(false);
-                modalBuscar.hide();
-            });
-
-            tabelaCorpo.appendChild(tr);
-        });
+        renderizarClientesNoModal(clientesLista);
     } catch (error) {
         console.error("Erro ao buscar dados do db.json:", error);
         tabelaCorpo.innerHTML = "<tr><td colspan='4' class='text-danger text-center'>Erro ao carregar dados.</td></tr>";
     }
 }
 
+function renderizarClientesNoModal(lista) {
+    tabelaCorpo.innerHTML = "";
+
+    lista.forEach(cliente => {
+        const tr = document.createElement('tr');
+        
+        const vendedor = vendedoresLista.find(v => v.id === cliente.codigoVendedor);
+        const nomeVendedor = vendedor ? vendedor.nome : "Não informado";
+
+        tr.innerHTML = `
+            <td>${cliente.codigoExibicao || cliente.id}</td>
+            <td>${cliente.nome}</td>
+            <td>${cliente.cpf}</td>
+            <td>${nomeVendedor}</td>
+        `;
+
+        tr.addEventListener('click', () => {
+            preencherFormulario(cliente);
+            bloquearCampos(false);
+            modalBuscar.hide();
+        });
+
+        tabelaCorpo.appendChild(tr);
+    });
+}
+
 function preencherFormulario(cliente) {
     inputs.id.value = cliente.codigoExibicao || cliente.id;
-    inputs.id.setAttribute('data-id-real', cliente.id);
+    inputs.id.dataset.idReal = cliente.id;
 
     inputs.nome.value = cliente.nome || '';
     inputs.cpf.value = cliente.cpf || '';
@@ -225,6 +253,11 @@ function preencherFormulario(cliente) {
     inputs.uf.value = cliente.uf || '';
     inputs.cep.value = cliente.cep || '';
     inputs.codigoVendedor.value = cliente.codigoVendedor || '';
+}
+
+function limparFormulario() {
+    Object.values(inputs).forEach(input => input.value = "");
+    inputs.id.removeAttribute('data-id-real'); // Remove o ID oculto ao limpar
 }
 
 function obterDadosDoFormulario() {
@@ -242,7 +275,6 @@ function obterDadosDoFormulario() {
         codigoVendedor: inputs.codigoVendedor.value
     };
 }
-
 function limparFormulario() {
     Object.values(inputs).forEach(input => input.value = "");
     inputs.id.removeAttribute('data-id-real');
