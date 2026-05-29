@@ -108,6 +108,14 @@ body::before {
     box-shadow: 0 0 0 .15rem rgba(76, 175, 80, .20);
 }
 
+.search-card {
+    background-color: rgba(255, 255, 255, 0.75);;
+    border: 1px solid #e1eee3; 
+    border-radius: 12px;       
+    padding: 24px;             
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); 
+    margin-top: 20px;
+}
 
 /* Botões */
 .btn-action {

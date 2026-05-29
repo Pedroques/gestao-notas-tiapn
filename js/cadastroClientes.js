@@ -2,7 +2,6 @@ const API_URL = "http://localhost:3000/clientes";
 const VENDEDORES_URL = "http://localhost:3000/vendedor";
 const modalBuscar = new bootstrap.Modal(document.getElementById('modalBuscarCliente'));
 
-// Seletores dos campos do formulário
 const inputs = {
     id: document.getElementById('txtId'),
     nome: document.getElementById('txtNome'),
@@ -18,7 +17,6 @@ const inputs = {
     codigoVendedor: document.getElementById('txtCodVendedor')
 };
 
-// Seletores dos botões de ação
 const btnBuscar = document.getElementById('btnBuscar');
 const btnCriar = document.querySelector('.btnCriar');
 const btnSalvar = document.querySelector('.btnSalvar');
@@ -30,8 +28,41 @@ document.addEventListener("DOMContentLoaded", () => {
     limparFormulario();
     bloquearCampos(true);
 });
+// procura pelo cod do cliente
+inputs.id.addEventListener('change', async (e) => {
+    const valor = e.target.value.trim();
+    if (!valor) {
+        limparFormulario();
+        bloquearCampos(true);
+        return;
+    }
 
-// --- OPERAÇÕES DA INTERFACE / EVENTOS ---
+    const codigoPesquisa = parseInt(valor, 10);
+    if (isNaN(codigoPesquisa)) {
+        alert("Por favor, insira um código numérico válido.");
+        limparFormulario();
+        bloquearCampos(true);
+        return;
+    }
+
+    try {
+        const response = await fetch(API_URL);
+        const clientes = await response.json();
+        const clienteEncontrado = clientes.find(c => parseInt(c.codigoExibicao || c.id, 10) === codigoPesquisa);
+
+        if (clienteEncontrado) {
+            preencherFormulario(clienteEncontrado);
+            bloquearCampos(false);
+        } else {
+            alert(`Cliente com o código ${codigoPesquisa} não foi encontrado.`);
+            limparFormulario();
+            bloquearCampos(true);
+        }
+    } catch (error) {
+        console.error("Erro ao buscar cliente:", error);
+        alert("Ocorreu um erro ao buscar o cliente no servidor.");
+    }
+});
 
 // Evento da Lupa
 btnBuscar.addEventListener('click', async () => {
@@ -52,7 +83,7 @@ btnCancelar.addEventListener('click', () => {
     bloquearCampos(true);
 });
 
-// Botão Salvar: O "coração" do CRUD com validação de vendedor existente
+// Botão Salvar
 btnSalvar.addEventListener('click', async () => {
     if (!inputs.nome.value.trim()) {
         alert("O nome do cliente é obrigatório!");
@@ -73,22 +104,42 @@ btnSalvar.addEventListener('click', async () => {
             inputs.codigoVendedor.focus();
             return;
         }
+
         const clienteData = obterDadosDoFormulario();
-        const id = inputs.id.value;
-        if (id) {
-            await fetch(`${API_URL}/${id}`, {
+        const idReal = inputs.id.getAttribute('data-id-real');
+
+        if (idReal) {
+            clienteData.codigoExibicao = parseInt(inputs.id.value);
+
+            await fetch(`${API_URL}/${idReal}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(clienteData)
             });
             alert("Cliente atualizado com sucesso!");
         } else {
+            const respostaClientes = await fetch(API_URL);
+            const clientesAtuais = await respostaClientes.json();
+
+            let proximoCodigo = 1;
+            if (clientesAtuais.length > 0) {
+                const codigosAtuais = clientesAtuais
+                    .map(c => parseInt(c.codigoExibicao))
+                    .filter(num => !isNaN(num));
+
+                if (codigosAtuais.length > 0) {
+                    proximoCodigo = Math.max(...codigosAtuais) + 1;
+                }
+            }
+
+            clienteData.codigoExibicao = proximoCodigo;
+
             await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(clienteData)
             });
-            alert("Cliente cadastrado com sucesso!");
+            alert(`Cliente cadastrado com sucesso! Código sequencial gerado: ${proximoCodigo}`);
         }
 
         limparFormulario();
@@ -101,28 +152,24 @@ btnSalvar.addEventListener('click', async () => {
 
 // Botão Excluir
 btnExcluir.addEventListener('click', async () => {
-    const id = inputs.id.value;
+    const idReal = inputs.id.getAttribute('data-id-real');
 
-    if (!id) {
+    if (!idReal) {
         alert("Por favor, selecione um cliente através da busca (lupa) antes de excluir!");
         return;
     }
 
     const nomeCliente = inputs.nome.value;
 
-    if (confirm(`Tem certeza absoluta que deseja excluir o cliente "${nomeCliente}"?`)) {
+    if (confirm(`Tem certeza que deseja excluir o cliente "${nomeCliente}"?`)) {
         try {
-            const response = await fetch(`${API_URL}/${id}`, {
+            await fetch(`${API_URL}/${idReal}`, {
                 method: 'DELETE'
             });
 
-            if (response.ok) {
-                alert("Cliente excluído com sucesso!");
-                limparFormulario();
-                bloquearCampos(true);
-            } else {
-                alert("Não foi possível excluir o cliente no servidor.");
-            }
+            alert("Cliente excluído com sucesso!");
+            limparFormulario();
+            bloquearCampos(true);
         } catch (error) {
             console.error("Erro ao excluir cliente:", error);
             alert("Ocorreu um erro técnico ao tentar excluir o cliente.");
@@ -140,8 +187,10 @@ async function carregarClientesNoModal() {
 
         clientes.forEach(cliente => {
             const tr = document.createElement('tr');
+            const codigoParaMostrar = cliente.codigoExibicao || cliente.id;
+
             tr.innerHTML = `
-                <td>${cliente.id}</td>
+                <td>${codigoParaMostrar}</td>
                 <td>${cliente.nome}</td>
                 <td>${cliente.cpf}</td>
                 <td>${cliente.cidade}/${cliente.uf}</td>
@@ -162,7 +211,9 @@ async function carregarClientesNoModal() {
 }
 
 function preencherFormulario(cliente) {
-    inputs.id.value = cliente.id;
+    inputs.id.value = cliente.codigoExibicao || cliente.id;
+    inputs.id.setAttribute('data-id-real', cliente.id);
+
     inputs.nome.value = cliente.nome || '';
     inputs.cpf.value = cliente.cpf || '';
     inputs.celular.value = cliente.celular || '';
@@ -194,6 +245,7 @@ function obterDadosDoFormulario() {
 
 function limparFormulario() {
     Object.values(inputs).forEach(input => input.value = "");
+    inputs.id.removeAttribute('data-id-real');
 }
 
 function bloquearCampos(status) {
