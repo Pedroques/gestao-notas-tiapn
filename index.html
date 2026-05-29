@@ -2,193 +2,85 @@
 <html lang="pt-br">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <title>Contas em Aberto - Sistema de Notas</title>
+    <title>Gestor de Notas</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/contasAberto.css">
-
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg">
-        <div class="container">
+        <div class="container flex-column text-center">
 
-            <a class="navbar-brand text-white" href="/index.html">
-                Gestão de Vendas - Sistema de Notas
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-end" id="menu">
-
-                <ul class="navbar-nav">
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/index.html">Página Inicial</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/cadastroNotas.html">Venda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/clientes.html">Cliente</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/relatorios.html">Relatórios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/contasAberto.html">Contas Aberto</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/vendedor.html">Vendedor</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/produtos.html">Produtos</a>
-                    </li>
-
-                </ul>
-
+            <div class="navbar-brand text-white titulo-sistema">
+                Sistema Financeiro Gestor de Notas
             </div>
+
+            <small class="frase-motivacional">
+                Organização hoje, segurança financeira amanhã.
+            </small>
+
         </div>
     </nav>
-    
+
+    <!-- CONTEÚDO -->
     <div class="container mt-4">
 
-        <h4>Contas em Aberto</h4>
+        <div class="grid-home">
 
-        <div class="card p-4">
+            <a href="/vendas.html" class="card-home">
+                <i class="bi bi-cart4"></i>
+                <span>Venda</span>
+                <p>Registre notas promissórias, vendas a prazo e informações completas da transação.</p>
+            </a>
 
-            <div class="row">
+            <a href="/clientes.html" class="card-home">
+                <i class="bi bi-person"></i>
+                <span>Clientes</span>
+                <p>Busque, cadastre e gerencie clientes com dados pessoais, endereço e histórico financeiro.</p>
+            </a>
 
-                <div class="col-md-4">
-                    <label for="buscaCliente">Buscar Cliente</label>
-                    <input type="text" id="buscaCliente" class="form-control" placeholder="Digite o nome">
-                </div>
+            <a href="/relatorios.html" class="card-home">
+                <i class="bi bi-bar-chart"></i>
+                <span>Relatórios</span>
+                <p>Gere relatórios e análises para apoiar decisões financeiras estratégicas.</p>
+            </a>
 
-                <div class="col-md-3">
-                    <label for="filtroMes">Mês da Compra</label>
-                    <select id="filtroMes" class="form-control">
-                        <option value="">Todos</option>
-                        <option value="01">Janeiro</option>
-                        <option value="02">Fevereiro</option>
-                        <option value="03">Março</option>
-                        <option value="04">Abril</option>
-                        <option value="05">Maio</option>
-                        <option value="06">Junho</option>
-                        <option value="07">Julho</option>
-                        <option value="08">Agosto</option>
-                        <option value="09">Setembro</option>
-                        <option value="10">Outubro</option>
-                        <option value="11">Novembro</option>
-                        <option value="12">Dezembro</option>
-                    </select>
-                </div>
+            <a href="/contasAberto.html" class="card-home">
+                <i class="bi bi-clock-history"></i>
+                <span>Em Aberto</span>
+                <p>Visualize parcelas pendentes, atrasos e controle de inadimplência.</p>
+            </a>
 
-                <div class="col-md-2">
-                    <label for="filtroAno">Ano</label>
-                    <select id="filtroAno" class="form-control">
-                        <option value="">Todos</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="2026" selected>2026</option>
-                    </select>
-                </div>
+            <a href="/vendedor.html" class="card-home">
+                <i class="bi bi-people"></i>
+                <span>Vendedor</span>
+                <p>Gerencie vendedores e acompanhe desempenho e histórico de vendas.</p>
+            </a>
 
-                <div class="col-md-3 d-flex align-items-end">
-                    <button id="btnBuscar" class="btn btn-success me-2 w-100">
-                        Filtrar
-                    </button>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="mt-4">
-
-            <table class="table table-white text-center align-middle">
-
-                <thead>
-                    <tr>
-                        <th>Cliente</th>
-                        <th>Produto(s)</th>
-                        <th>Valor Total</th>
-                        <th>Nº Parcelas</th>
-                        <th>Data da Compra</th>
-                        <th>Status</th>
-                        <th>Detalhes</th>
-                    </tr>
-                </thead>
-
-                <tbody id="corpoTabelaContas">
-                    <!-- As linhas serão inseridas dinamicamente pelo JavaScript -->
-                    <tr><td colspan="7">Carregando contas...</td></tr>
-                </tbody>
-
-            </table>
+            <a href="/produtos.html" class="card-home">
+                <i class="bi bi-box-seam"></i>
+                <span>Produtos</span>
+                <p>Controle estoque, cadastre produtos e organize o catálogo da empresa.</p>
+            </a>
 
         </div>
 
     </div>
 
-    <footer class="footer mt-auto">
+    <!-- FOOTER -->
+    <footer class="footer">
         <div class="container text-center">
             <p class="mb-1">Sistema de Gestão de Vendas</p>
             <small>© 2026 - Todos os direitos reservados</small>
         </div>
     </footer>
 
-    <!-- Modal de Parcelas (Fica oculto até clicar em "Ver parcelas") -->
-    <div class="modal fade" id="modalParcelas" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Gestão de Parcelas</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div id="infoVendaModal" class="mb-3 p-3 bg-light rounded border">
-                <!-- Preenchido pelo JS -->
-            </div>
-            
-            <div class="table-responsive">
-                <table class="table table-bordered text-center align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Nº</th>
-                            <th>Vencimento</th>
-                            <th>Valor</th>
-                            <th>Forma</th>
-                            <th>Status Atual</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody id="corpoTabelaModal">
-                        <!-- Preenchido pelo JS -->
-                    </tbody>
-                </table>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bootstrap JS (Necessário para o Modal funcionar) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Script de Lógica desta página -->
-    <script src="js/contasAberto.js"></script>
-
 </body>
-
 </html>
