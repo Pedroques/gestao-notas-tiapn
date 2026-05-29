@@ -111,10 +111,10 @@
 
                 <div class="row mt-3">
 
-                    <div class="col-md-3 mb-3">
-                        <label for="codigoCliente">Cód. Cliente</label>
-                        <input type="text" class="form-control" id="codigoCliente" name="codigoCliente" list="listaClientes" placeholder="Digite ou selecione">
-                        <datalist id="listaClientes"></datalist>
+                    <div class="col-md-3 mb-3 campo-busca">
+                        <label for="codigoCliente">Cliente</label>
+                        <input type="text" class="form-control" id="codigoCliente" name="codigoCliente" placeholder="Digite código ou nome">
+                        <div class="lista-busca" id="listaClientes"></div>
                     </div>
 
                     <div class="col-md-3 mb-3">
@@ -122,11 +122,11 @@
                         <input type="text" class="form-control" id="nomeCliente" name="nomeCliente" readonly>
                     </div>
 
-                    <div class="col-md-3 mb-3">
-                        <label for="codigoVendedor">Cód. Vendedor</label>
-                        <input type="text" class="form-control" id="codigoVendedor" name="codigoVendedor" list="listaVendedores" placeholder="Digite ou selecione">
-                        <datalist id="listaVendedores"></datalist>
-                    </div>
+                    <div class="col-md-3 mb-3 campo-busca">
+    <label for="codigoVendedor">Vendedor</label>
+    <input type="text" class="form-control" id="codigoVendedor" name="codigoVendedor" placeholder="Digite código ou nome">
+    <div class="lista-busca" id="listaVendedores"></div>
+</div>
 
                     <div class="col-md-3 mb-3">
                         <label for="nomeVendedor">Nome do Vendedor</label>
@@ -146,11 +146,11 @@
 
                 <div class="row mt-3 align-items-end">
 
-                    <div class="col-md-2 mb-3">
-                        <label for="codigoProduto">Cód. Produto</label>
-                        <input type="text" class="form-control" id="codigoProduto" name="codigoProduto" list="listaProdutos" placeholder="Digite ou selecione">
-                        <datalist id="listaProdutos"></datalist>
-                    </div>
+                    <div class="col-md-2 mb-3 campo-busca">
+    <label for="codigoProduto">Produto</label>
+    <input type="text" class="form-control" id="codigoProduto" name="codigoProduto" placeholder="Digite código ou nome">
+    <div class="lista-busca" id="listaProdutos"></div>
+</div>
 
                     <div class="col-md-4 mb-3">
                         <label for="descricaoProduto">Produto</label>

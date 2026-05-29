@@ -121,30 +121,155 @@ async function carregarDbJson() {
 }
 
 function preencherDatalists() {
-    listaClientes.innerHTML = "";
-    listaVendedores.innerHTML = "";
-    listaProdutos.innerHTML = "";
+    renderizarListaBusca("cliente", clientes, "");
+    renderizarListaBusca("vendedor", vendedores, "");
+    renderizarListaBusca("produto", produtosDisponiveis, "");
+}
 
-    clientes.forEach(cliente => {
-        const option = document.createElement("option");
-        option.value = cliente.id;
-        option.label = cliente.nome;
-        listaClientes.appendChild(option);
+function normalizarTexto(texto) {
+    return String(texto)
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+}
+
+function renderizarListaBusca(tipo, lista, termoBusca) {
+    let container;
+
+    if (tipo === "cliente") {
+        container = listaClientes;
+    }
+
+    if (tipo === "vendedor") {
+        container = listaVendedores;
+    }
+
+    if (tipo === "produto") {
+        container = listaProdutos;
+    }
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+
+    const termo = normalizarTexto(termoBusca);
+
+    const resultados = lista.filter(item => {
+        const id = normalizarTexto(item.id);
+        const nome = normalizarTexto(item.nome);
+
+        return id.includes(termo) || nome.includes(termo);
     });
 
-    vendedores.forEach(vendedor => {
-        const option = document.createElement("option");
-        option.value = vendedor.id;
-        option.label = vendedor.nome;
-        listaVendedores.appendChild(option);
+    if (resultados.length === 0) {
+        container.innerHTML = `
+            <div class="item-busca">
+                Nenhum resultado encontrado
+            </div>
+        `;
+        return;
+    }
+
+    resultados.forEach(item => {
+        const div = document.createElement("div");
+        div.classList.add("item-busca");
+
+        if (tipo === "produto") {
+            div.innerHTML = `
+                <strong>${item.id}</strong> - ${item.nome}
+                <span>${formatarMoeda(converterParaNumero(item.preco))}</span>
+            `;
+        } else {
+            div.innerHTML = `
+                <strong>${item.id}</strong> - ${item.nome}
+            `;
+        }
+
+        div.addEventListener("mousedown", function () {
+            selecionarItemBusca(tipo, item);
+        });
+
+        container.appendChild(div);
+    });
+}
+
+function abrirListaBusca(tipo) {
+    if (tipo === "cliente") {
+        renderizarListaBusca("cliente", clientes, codigoCliente.value);
+        listaClientes.style.display = "block";
+    }
+
+    if (tipo === "vendedor") {
+        renderizarListaBusca("vendedor", vendedores, codigoVendedor.value);
+        listaVendedores.style.display = "block";
+    }
+
+    if (tipo === "produto") {
+        renderizarListaBusca("produto", produtosDisponiveis, codigoProduto.value);
+        listaProdutos.style.display = "block";
+    }
+}
+
+function fecharListasBusca() {
+    listaClientes.style.display = "none";
+    listaVendedores.style.display = "none";
+    listaProdutos.style.display = "none";
+}
+
+function selecionarItemBusca(tipo, item) {
+    if (tipo === "cliente") {
+        codigoCliente.value = item.id;
+        nomeCliente.value = item.nome;
+        listaClientes.style.display = "none";
+    }
+
+    if (tipo === "vendedor") {
+        codigoVendedor.value = item.id;
+        nomeVendedor.value = item.nome;
+        listaVendedores.style.display = "none";
+    }
+
+    if (tipo === "produto") {
+        codigoProduto.value = item.id;
+        descricaoProduto.value = item.nome;
+        valorUnitario.value = converterParaNumero(item.preco).toFixed(2);
+        listaProdutos.style.display = "none";
+    }
+}
+
+function selecionarPrimeiroResultado(tipo) {
+    let lista;
+    let termo;
+
+    if (tipo === "cliente") {
+        lista = clientes;
+        termo = codigoCliente.value;
+    }
+
+    if (tipo === "vendedor") {
+        lista = vendedores;
+        termo = codigoVendedor.value;
+    }
+
+    if (tipo === "produto") {
+        lista = produtosDisponiveis;
+        termo = codigoProduto.value;
+    }
+
+    const termoNormalizado = normalizarTexto(termo);
+
+    const resultado = lista.find(item => {
+        const id = normalizarTexto(item.id);
+        const nome = normalizarTexto(item.nome);
+
+        return id.includes(termoNormalizado) || nome.includes(termoNormalizado);
     });
 
-    produtosDisponiveis.forEach(produto => {
-        const option = document.createElement("option");
-        option.value = produto.id;
-        option.label = `${produto.nome} - ${formatarMoeda(converterParaNumero(produto.preco))}`;
-        listaProdutos.appendChild(option);
-    });
+    if (resultado) {
+        selecionarItemBusca(tipo, resultado);
+    }
 }
 
 function gerarCodigoPromissoria() {
@@ -894,9 +1019,62 @@ function limparVendaCompleta() {
     atualizarResumo();
 }
 
-codigoCliente.addEventListener("input", preencherClientePorCodigo);
-codigoVendedor.addEventListener("input", preencherVendedorPorCodigo);
-codigoProduto.addEventListener("input", preencherProdutoPorCodigo);
+codigoCliente.addEventListener("focus", function () {
+    abrirListaBusca("cliente");
+});
+
+codigoCliente.addEventListener("input", function () {
+    renderizarListaBusca("cliente", clientes, codigoCliente.value);
+    listaClientes.style.display = "block";
+    preencherClientePorCodigo();
+});
+
+codigoCliente.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        selecionarPrimeiroResultado("cliente");
+    }
+});
+
+codigoVendedor.addEventListener("focus", function () {
+    abrirListaBusca("vendedor");
+});
+
+codigoVendedor.addEventListener("input", function () {
+    renderizarListaBusca("vendedor", vendedores, codigoVendedor.value);
+    listaVendedores.style.display = "block";
+    preencherVendedorPorCodigo();
+});
+
+codigoVendedor.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        selecionarPrimeiroResultado("vendedor");
+    }
+});
+
+codigoProduto.addEventListener("focus", function () {
+    abrirListaBusca("produto");
+});
+
+codigoProduto.addEventListener("input", function () {
+    renderizarListaBusca("produto", produtosDisponiveis, codigoProduto.value);
+    listaProdutos.style.display = "block";
+    preencherProdutoPorCodigo();
+});
+
+codigoProduto.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        selecionarPrimeiroResultado("produto");
+    }
+});
+
+document.addEventListener("click", function (event) {
+    if (!event.target.closest(".campo-busca")) {
+        fecharListasBusca();
+    }
+});
 
 btnAdicionarProduto.addEventListener("click", adicionarProduto);
 btnGerarParcelas.addEventListener("click", gerarParcelas);
