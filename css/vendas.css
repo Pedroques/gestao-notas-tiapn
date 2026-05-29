@@ -247,3 +247,60 @@ button,
         width: 100%;
     }
 }
+.card {
+    position: relative;
+    overflow: visible;
+}
+
+.card:has(.campo-busca input:focus) {
+    z-index: 999;
+}
+
+.campo-busca {
+    position: relative;
+}
+
+.lista-busca {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 12px;
+    right: 12px;
+    z-index: 9999;
+
+    background: #ffffff;
+    border: 1px solid #d4d4d4;
+    border-radius: 8px;
+    margin-top: 4px;
+
+    max-height: 180px;
+    overflow-y: auto;
+
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+}
+
+.item-busca {
+    padding: 10px 12px;
+    cursor: pointer;
+    color: #1e221e;
+    font-size: 14px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.item-busca:last-child {
+    border-bottom: none;
+}
+
+.item-busca:hover {
+    background: #e9f5ea;
+}
+
+.item-busca strong {
+    color: #2E7D32;
+}
+
+.item-busca span {
+    display: block;
+    font-size: 12px;
+    color: #666666;
+}
