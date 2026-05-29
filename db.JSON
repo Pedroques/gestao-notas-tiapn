@@ -197,21 +197,21 @@
           "numero": 1,
           "dataPrevista": "2026-06-05",
           "valor": 300,
-          "status": "Pago",
+          "status": "Pendente",
           "formaPagamento": "dinheiro"
         },
         {
           "numero": 2,
           "dataPrevista": "2026-07-07",
           "valor": 550,
-          "status": "Pago",
+          "status": "Pendente",
           "formaPagamento": "dinheiro"
         },
         {
           "numero": 3,
           "dataPrevista": "2026-08-07",
           "valor": 750,
-          "status": "Pago",
+          "status": "Pendente",
           "formaPagamento": "dinheiro"
         }
       ],
