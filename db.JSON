@@ -34,15 +34,28 @@
   "vendedor": [
     {
       "id": "10",
-      "nome": "Carlos Silva"
+      "codigo": "001",
+      "nome": "Carlos Silva",
+      "status": "ATIVO",
+      "produtosResponsaveis": [
+        "100"
+      ]
     },
     {
       "id": "20",
-      "nome": "Ana Souza"
+      "codigo": "002",
+      "nome": "Ana Souza",
+      "status": "ATIVO",
+      "produtosResponsaveis": [
+        "100"
+      ]
     },
     {
       "id": "30",
-      "nome": "Roberto Oliveira"
+      "codigo": "003",
+      "nome": "Roberto Oliveira",
+      "status": "INATIVO",
+      "produtosResponsaveis": []
     }
   ],
   "parcelas": [

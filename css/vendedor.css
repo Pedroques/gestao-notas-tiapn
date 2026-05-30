@@ -215,6 +215,10 @@ label {
     border: 2px solid #eb8a3b;
 }
 
+.btn-alterar:hover i {
+    color: #eb8a3b;
+}
+
 /* EXCLUIR */
 .btn-excluir {
     background: #f44336;
@@ -228,6 +232,10 @@ label {
     border: 2px solid #f44336;
 }
 
+.btn-excluir:hover i {
+    color: #f44336;
+}
+
 /* VENDAS */
 .btn-vendas {
     background: #0d6efd;
@@ -239,6 +247,10 @@ label {
     background: #c4dbff;
     color: #0d6efd;
     border: 2px solid #0d6efd;
+}
+
+.btn-vendas:hover i {
+    color: #0d6efd;
 }
 
 /* ÁREA BOTÕES */

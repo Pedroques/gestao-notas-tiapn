@@ -94,7 +94,7 @@ function formatarDataInput(data) {
 
 async function carregarDbJson() {
     try {
-        const resposta = await fetch("db.JSON");
+        const resposta = await fetch("../db.JSON");
 
         if (!resposta.ok) {
             throw new Error("Não foi possível carregar o db.JSON.");
@@ -485,8 +485,9 @@ function renderizarProdutos() {
             <td>${formatarMoeda(produto.valorUnitario)}</td>
             <td>${formatarMoeda(produto.subtotal)}</td>
             <td>
-                <button type="button" class="btn btn-danger btn-sm" onclick="removerProduto(${produto.idTemporario})">
-                    Remover
+                <button type="button" class="btn btn-danger btn-sm"
+                    onclick="removerProduto(${produto.idTemporario})">
+                    <i class="bi bi-trash"></i>Remover
                 </button>
             </td>
         `;
@@ -595,9 +596,9 @@ function gerarParcelas() {
     }
 
     if (forma === "") {
-    alert("Selecione a forma de pagamento antes de gerar as parcelas.");
-    formaPagamento.focus();
-    return;
+        alert("Selecione a forma de pagamento antes de gerar as parcelas.");
+        formaPagamento.focus();
+        return;
     }
 
     if (restante <= 0) {
@@ -675,8 +676,9 @@ function renderizarParcelas() {
             <td>${parcela.status}</td>
             <td>${obterTextoFormaPagamento(parcela.formaPagamento)}</td>
             <td>
-                <button type="button" class="btn btn-danger btn-sm" onclick="removerParcela(${parcela.numero})">
-                    Remover
+                <button type="button" class="btn btn-danger btn-sm"
+                    onclick="removerParcela(${parcela.numero})">
+                    <i class="bi bi-trash"></i>Remover
                 </button>
             </td>
         `;
@@ -689,7 +691,7 @@ function renderizarParcelas() {
     });
 
     document.querySelectorAll(".input-valor-parcela").forEach(input => {
-    input.addEventListener("change", atualizarParcelasPelaTabela);
+        input.addEventListener("change", atualizarParcelasPelaTabela);
     });
 }
 
@@ -905,60 +907,60 @@ function montarObjetoVenda() {
     }
 
     return {
-    codigoPromissoria: codigoPromissoria.value,
-    dataVenda: dataVenda.value,
+        codigoPromissoria: codigoPromissoria.value,
+        dataVenda: dataVenda.value,
 
-    idVendedor: vendedor.id,
-    nomeVendedor: vendedor.nome,
-    idCliente: cliente.id,
-    cliente: cliente.nome,
-    produto: produtosVenda.map(produto => produto.nome).join(", "),
-    parcelas: parcelas.length,
-    valorTotal: total,
-
-    clienteCompleto: {
-        id: cliente.id,
-        nome: cliente.nome,
-        cpf: cliente.cpf || "",
-        celular: cliente.celular || ""
-    },
-
-    vendedor: {
-        id: vendedor.id,
-        nome: vendedor.nome
-    },
-
-    produtos: produtosVenda.map(produto => {
-        return {
-            codigo: produto.codigo,
-            nome: produto.nome,
-            quantidade: produto.quantidade,
-            valorUnitario: produto.valorUnitario,
-            subtotal: produto.subtotal
-        };
-    }),
-
-    pagamento: {
-        tipoPagamento: tipoPagamento.value,
-        formaPagamento: formaPagamento.value,
-        dataPrimeiroPagamento: dataPrimeiroPagamento.value,
-        tipoVencimento: tipoVencimento.value,
-        valorPagoHoje: entrada,
-        valorRestante: restante
-    },
-
-    parcelasDetalhadas: parcelas,
-
-    resumo: {
-        valorProdutos: total,
-        valorPagoHoje: entrada,
-        valorRestante: restante,
+        idVendedor: vendedor.id,
+        nomeVendedor: vendedor.nome,
+        idCliente: cliente.id,
+        cliente: cliente.nome,
+        produto: produtosVenda.map(produto => produto.nome).join(", "),
+        parcelas: parcelas.length,
         valorTotal: total,
-        quantidadeParcelas: parcelas.length,
-        somaParcelas: parcelas.reduce((totalParcelas, parcela) => totalParcelas + parcela.valor, 0)
-    },
 
-    dataCadastro: new Date().toISOString()
+        clienteCompleto: {
+            id: cliente.id,
+            nome: cliente.nome,
+            cpf: cliente.cpf || "",
+            celular: cliente.celular || ""
+        },
+
+        vendedor: {
+            id: vendedor.id,
+            nome: vendedor.nome
+        },
+
+        produtos: produtosVenda.map(produto => {
+            return {
+                codigo: produto.codigo,
+                nome: produto.nome,
+                quantidade: produto.quantidade,
+                valorUnitario: produto.valorUnitario,
+                subtotal: produto.subtotal
+            };
+        }),
+
+        pagamento: {
+            tipoPagamento: tipoPagamento.value,
+            formaPagamento: formaPagamento.value,
+            dataPrimeiroPagamento: dataPrimeiroPagamento.value,
+            tipoVencimento: tipoVencimento.value,
+            valorPagoHoje: entrada,
+            valorRestante: restante
+        },
+
+        parcelasDetalhadas: parcelas,
+
+        resumo: {
+            valorProdutos: total,
+            valorPagoHoje: entrada,
+            valorRestante: restante,
+            valorTotal: total,
+            quantidadeParcelas: parcelas.length,
+            somaParcelas: parcelas.reduce((totalParcelas, parcela) => totalParcelas + parcela.valor, 0)
+        },
+
+        dataCadastro: new Date().toISOString()
     };
 }
 

@@ -1,15 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    const API_VENDEDOR =
+        'http://localhost:3000/vendedor';
+
+    const API_PRODUTOS =
+        'http://localhost:3000/produtos';
+
     const form =
-        document.getElementById('formVendedor');
+        document.getElementById(
+            'formVendedor'
+        );
 
     const titulo =
-        document.getElementById('tituloTela');
+        document.getElementById(
+            'tituloTela'
+        );
 
     const listaProdutos =
-        document.getElementById('listaProdutos');
+        document.getElementById(
+            'listaProdutos'
+        );
 
     const pesquisaProduto =
-        document.getElementById('pesquisaProduto');
+        document.getElementById(
+            'pesquisaProduto'
+        );
 
     const params =
         new URLSearchParams(
@@ -29,50 +44,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (id) {
 
-            titulo.innerHTML = `
-
-                <i class="fa-solid fa-pen"></i>
-
-                Alterar Vendedor
-
-            `;
+            titulo.textContent =
+                'Alterar Vendedor';
 
             await carregarModoEdicao();
+
         }
+
     }
 
     /* ---------- PRODUTOS ---------- */
+
     async function carregarProdutos() {
+
         try {
-            /*
-            FUTURO BACKEND:
 
-            fetch('/api/produtos')
-            */
+            const resposta =
+                await fetch(
+                    API_PRODUTOS
+                );
 
-            produtosCache = [
-
-                {
-                    codigo: '1001',
-                    nome: 'Camiseta Básica'
-                },
-
-                {
-                    codigo: '1002',
-                    nome: 'Camisa Polo Premium'
-                },
-
-                {
-                    codigo: '1004',
-                    nome: 'Slim Fit'
-                },
-
-                {
-                    codigo: '1007',
-                    nome: 'Manga Curta'
-                }
-
-            ];
+            produtosCache =
+                await resposta.json();
 
             renderizarProdutos(
                 produtosCache
@@ -81,14 +74,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         catch (error) {
+
             console.error(error);
+
+            alert(
+                'Erro ao carregar produtos.'
+            );
+
         }
 
     }
 
-    function renderizarProdutos(lista) {
+    function renderizarProdutos(
+        lista
+    ) {
 
         listaProdutos.innerHTML =
+
             lista.map(produto => `
 
             <div class="form-check">
@@ -96,11 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <input
                     class="form-check-input produtoCheck"
                     type="checkbox"
-                    value="${produto.codigo}">
+                    value="${produto.id}">
 
                 <label class="form-check-label">
 
-                    ${produto.codigo}
+                    ${produto.id}
                     —
                     ${produto.nome}
 
@@ -112,39 +114,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    /* ---------- PESQUISA ---------- */
+
     pesquisaProduto.addEventListener(
         'input',
+
         () => {
+
             const selecionados = [
 
                 ...document.querySelectorAll(
                     '.produtoCheck:checked'
                 )
 
-            ].map(p => p.value);
+            ].map(
+                p => p.value
+            );
 
             const termo =
+
                 pesquisaProduto
                     .value
                     .toLowerCase();
 
             const filtrados =
-                produtosCache.filter(p => {
 
-                    return (
+                produtosCache.filter(
 
-                        p.nome
+                    produto =>
+
+                        produto.nome
                             .toLowerCase()
                             .includes(termo)
 
                         ||
 
-                        p.codigo
+                        produto.id
                             .includes(termo)
 
-                    );
-
-                });
+                );
 
             renderizarProdutos(
                 filtrados
@@ -155,13 +163,20 @@ document.addEventListener('DOMContentLoaded', () => {
             );
 
         }
+
     );
+
+    /* ---------- RESET ---------- */
 
     form.addEventListener(
         'reset',
+
         () => {
 
             setTimeout(() => {
+
+                pesquisaProduto.value =
+                    '';
 
                 renderizarProdutos(
                     produtosCache
@@ -169,36 +184,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
             }, 0);
 
-        });
+        }
+
+    );
 
     /* ---------- EDIÇÃO ---------- */
+
     async function carregarModoEdicao() {
 
         try {
 
-            /*
-            FUTURO:
+            const resposta =
 
+                await fetch(
 
-            fetch(`/api/vendedor/${id}`)
-            */
+                    `${API_VENDEDOR}/${id}`
 
-            const vendedor = {
+                );
 
-                codigo: '001',
+            const vendedor =
 
-                nome: 'Ricardo Alves',
-
-                status: 'ATIVO',
-
-                produtos: [
-
-                    '1001',
-                    '1004'
-
-                ]
-
-            };
+                await resposta.json();
 
             preencherFormulario(
                 vendedor
@@ -207,7 +213,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         catch (error) {
+
             console.error(error);
+
+            alert(
+                'Erro ao carregar vendedor.'
+            );
 
         }
 
@@ -215,123 +226,196 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function preencherFormulario(
         vendedor
-
     ) {
 
         document
-            .getElementById('codigo')
-            .value =
+            .getElementById(
+                'codigo'
+            ).value =
             vendedor.codigo;
 
         document
-            .getElementById('nome')
-            .value =
+            .getElementById(
+                'nome'
+            ).value =
             vendedor.nome;
 
         document
-            .getElementById('status')
-            .value =
+            .getElementById(
+                'status'
+            ).value =
             vendedor.status;
 
         marcarProdutos(
-            vendedor.produtos
+
+            vendedor
+                .produtosResponsaveis || []
+
         );
 
     }
 
     function marcarProdutos(
-
-        produtos
-
+        produtos = []
     ) {
 
         const checks =
+
             document.querySelectorAll(
                 '.produtoCheck'
             );
 
-        checks.forEach(check => {
+        checks.forEach(
 
-            if (
+            check => {
 
-                produtos.includes(
-                    check.value
-                )
+                check.checked =
 
-            ) {
-
-                check.checked = true;
+                    produtos.includes(
+                        check.value
+                    );
 
             }
 
-        });
+        );
+
     }
 
     /* ---------- SUBMIT ---------- */
+
     form.addEventListener(
         'submit',
         salvarVendedor
     );
 
     async function salvarVendedor(
-
         event
-
     ) {
 
         event.preventDefault();
 
-        const produtosSelecionados = [
-
-            ...document.querySelectorAll(
-                '.produtoCheck:checked'
-            )
-
-        ].map(
-
-            p => p.value
-
-        );
-
-        const payload = {
-
-            codigo:
-                document
-                    .getElementById('codigo')
-                    .value
-                    .trim(),
-
-            nome:
-                document
-                    .getElementById('nome')
-                    .value
-                    .trim(),
-
-            status:
-
-                document
-                    .getElementById('status')
-                    .value,
-
-            produtos:
-
-                produtosSelecionados
-
-        };
-
         try {
+
+            const produtosSelecionados = [
+
+                ...document.querySelectorAll(
+                    '.produtoCheck:checked'
+                )
+
+            ].map(
+
+                produto =>
+                    produto.value
+
+            );
+
+            const codigoDigitado =
+
+                document
+                    .getElementById(
+                        'codigo'
+                    )
+                    .value
+                    .trim();
+
+            const nomeDigitado =
+
+                document
+                    .getElementById(
+                        'nome'
+                    )
+                    .value
+                    .trim();
+
+            const resposta =
+                await fetch(
+                    API_VENDEDOR
+                );
+
+            const vendedores =
+                await resposta.json();
+
+            const codigoExistente =
+
+                vendedores.find(
+
+                    vendedor =>
+
+                        vendedor.codigo ===
+                        codigoDigitado
+
+                        &&
+
+                        vendedor.id !== id
+
+                );
+
+            if (codigoExistente) {
+
+                alert(
+
+                    `Não foi possível salvar.\n\n` +
+
+                    `O código "${codigoDigitado}" ` +
+
+                    `já pertence ao vendedor ` +
+
+                    `"${codigoExistente.nome}".`
+
+                );
+
+                return;
+
+            }
+
+            const payload = {
+
+                codigo:
+                    codigoDigitado,
+
+                nome:
+                    nomeDigitado,
+
+                status:
+
+                    document
+                        .getElementById(
+                            'status'
+                        )
+                        .value,
+
+                produtosResponsaveis:
+
+                    produtosSelecionados
+
+            };
 
             if (id) {
 
-                /*
-                FUTURO UPDATE
-                */
+                await fetch(
 
-                console.log(
+                    `${API_VENDEDOR}/${id}`,
 
-                    'UPDATE',
+                    {
 
-                    payload
+                        method: 'PUT',
+
+                        headers: {
+
+                            'Content-Type':
+                                'application/json'
+
+                        },
+
+                        body: JSON.stringify({
+
+                            id,
+
+                            ...payload
+
+                        })
+
+                    }
 
                 );
 
@@ -339,82 +423,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
             else {
 
-                /*
-                FUTURO INSERT
-                */
+                await fetch(
 
-                console.log(
+                    API_VENDEDOR,
 
-                    'INSERT',
+                    {
 
-                    payload
+                        method: 'POST',
+
+                        headers: {
+
+                            'Content-Type':
+                                'application/json'
+
+                        },
+
+                        body: JSON.stringify({
+
+                            id:
+                                Date.now()
+                                    .toString(),
+
+                            ...payload
+
+                        })
+
+                    }
 
                 );
 
             }
 
             alert(
-                'Vendedor salvo.'
+
+                id
+
+                    ? 'Vendedor atualizado com sucesso.'
+
+                    : 'Vendedor cadastrado com sucesso.'
+
             );
+
+            window.location.href =
+                '../html/vendedor.html';
+
         }
 
         catch (error) {
+
             console.error(error);
+
+            alert(
+                'Erro ao salvar vendedor.'
+            );
+
         }
-    }
-
-    const btnAlterar =
-        document.getElementById(
-            'btnAlterar'
-        );
-
-    if (btnAlterar) {
-
-        btnAlterar.addEventListener(
-
-            'click',
-
-            () => {
-
-                const codigo = '001';
-
-                window.location.href =
-                    `cadastrarVendedor.html?id=${codigo}`;
-
-            }
-
-        );
 
     }
 
-    const btnExcluir =
-        document.getElementById(
-            'btnExcluir'
-        );
-
-    if (btnExcluir) {
-
-        btnExcluir.addEventListener(
-
-            'click',
-
-            () => {
-
-                const confirmar =
-
-                    confirm(
-                        'Marcar vendedor como INATIVO?'
-                    );
-
-                if (!confirmar) return;
-
-                alert(
-                    'Vendedor alterado para INATIVO.'
-                );
-
-            }
-
-        );
-
-    }
 });
