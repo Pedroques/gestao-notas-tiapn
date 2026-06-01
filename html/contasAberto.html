@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Sistema de Notas - Contas em Aberto</title>
+    <title>Contas em Aberto - Sistema de Notas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/contasAberto.css">
@@ -13,7 +13,7 @@
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand text-white" href="../html/index.html">
+            <a class="navbar-brand text-white" href="/index.html">
                 Gestão de Vendas - Sistema de Notas
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
@@ -22,33 +22,36 @@
             <div class="collapse navbar-collapse justify-content-end" id="menu">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/index.html">Página Inicial</a>
+                        <a class="nav-link" href="/index.html">Página Inicial</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/vendas.html">Venda</a>
+                        <a class="nav-link" href="/cadastroNotas.html">Venda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/clientes.html">Cliente</a>
+                        <a class="nav-link" href="/clientes.html">Cliente</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/relatorios.html">Relatórios</a>
+                        <a class="nav-link" href="/relatorios.html">Relatórios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="../html/contasAberto.html">Contas em Aberto</a>
+                        <a class="nav-link active" href="/contasAberto.html">Contas Aberto</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/vendedor.html">Vendedor</a>
+                        <a class="nav-link" href="/vendedor.html">Vendedor</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/produtos.html">Produtos</a>
+                        <a class="nav-link" href="/produtos.html">Produtos</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-
+    
     <div class="container mt-4">
         <h4>Contas em Aberto</h4>
+
+        <!-- Área de mensagens e feedback do sistema (evita usar alerts invasivos) -->
+        <div id="areaFeedback" class="mb-3" style="display: none;"></div>
 
         <div class="card p-4">
             <div class="row">
@@ -122,6 +125,46 @@
         </div>
     </div>
 
+    <!-- Modal de Registro de Pagamento Parcial -->
+    <div class="modal fade" id="modalPagamentoParcial" tabindex="-1" aria-labelledby="modalPagamentoParcialLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPagamentoParcialLabel">Registrar Pagamento Parcial</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4 p-3 bg-light rounded border">
+                        <p class="mb-1"><strong>Cliente:</strong> <span id="modalCliente"></span></p>
+                        <p class="mb-1"><strong>Vendedor:</strong> <span id="modalVendedor"></span></p>
+                        <p class="mb-1"><strong>Compra:</strong> #<span id="modalCompra"></span></p>
+                        <p class="mb-1"><strong>Parcela:</strong> <span id="modalNumeroParcela"></span></p>
+                        <p class="mb-1"><strong>Saldo Atual:</strong> <span id="modalValorAtual" class="fw-bold text-dark"></span></p>
+                    </div>
+                    
+                    <form id="formPagamentoParcial" onsubmit="event.preventDefault();">
+                        <div class="mb-3">
+                            <label for="valorPagamentoParcial" class="form-label">Valor a Pagar (R$)</label>
+                            <input type="number" step="0.01" min="0.01" class="form-control" id="valorPagamentoParcial" required placeholder="0.00">
+                            
+                            <!-- Alertas internos do Modal para validação imediata -->
+                            <div class="form-text text-danger mt-2" id="erroValorExcedente" style="display: none;">
+                                O valor pago não pode ser maior que o saldo atual da parcela.
+                            </div>
+                            <div class="form-text text-danger mt-2" id="erroValorInvalido" style="display: none;">
+                                Digite um valor de pagamento válido e maior que zero.
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" id="btnConfirmarPagamentoParcial">Confirmar Pagamento</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer mt-auto">
         <div class="container text-center">
             <p class="mb-1">Sistema de Gestão de Vendas</p>
@@ -131,6 +174,7 @@
 
     <!-- Biblioteca jsPDF necessária para geração dinâmica dos PDFs de recibos -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Script de Lógica principal da tela -->
     <script src="../js/contasAberto.js"></script>
 </body>
