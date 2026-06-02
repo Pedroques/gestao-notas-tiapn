@@ -16,15 +16,22 @@
 </head>
 
 <body>
+
     <nav class="navbar navbar-expand-lg">
+
         <div class="container">
 
             <a class="navbar-brand text-white" href="../html/index.html">
                 Gestão de Vendas - Sistema de Notas
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#menu">
+
                 <span class="navbar-toggler-icon"></span>
+
             </button>
 
             <div class="collapse navbar-collapse justify-content-end" id="menu">
@@ -32,45 +39,284 @@
                 <ul class="navbar-nav">
 
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/index.html">Página Inicial</a>
+                        <a class="nav-link" href="../html/index.html">
+                            Página Inicial
+                        </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="../html/vendas.html">Venda</a>
+                        <a class="nav-link active" href="../html/vendas.html">
+                            Venda
+                        </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/clientes.html">Cliente</a>
+                        <a class="nav-link" href="../html/clientes.html">
+                            Cliente
+                        </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/relatorios.html">Relatórios</a>
+                        <a class="nav-link" href="../html/relatorios.html">
+                            Relatórios
+                        </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/contasAberto.html">Contas em Aberto</a>
+                        <a class="nav-link" href="../html/contasAberto.html">
+                            Contas em Aberto
+                        </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/vendedor.html">Vendedor</a>
+                        <a class="nav-link" href="../html/vendedor.html">
+                            Vendedor
+                        </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/produtos.html">Produtos</a>
+                        <a class="nav-link" href="../html/produtos.html">
+                            Produtos
+                        </a>
                     </li>
 
                 </ul>
 
             </div>
-        </div>
-    </nav>
-    <div class="container mt-4">
 
-        <h4>Produtos</h4>
+        </div>
+
+    </nav>
+
+    <div class="container mt-4 mb-4">
+
+        <h4 class="page-title">Produto</h4>
+
+        <form id="produto-form" class="form-produto" novalidate>
+
+            <div class="row g-3 mb-3">
+
+                <div class="col-md-2 col-sm-4">
+
+                    <label for="codigo" class="form-label">
+                        Código do produto
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           id="codigo"
+                           name="codigo"
+                           readonly>
+
+                </div>
+
+                <div class="col-md-10 col-sm-8">
+
+                    <label for="nome" class="form-label">
+                        Nome do Produto
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           id="nome"
+                           name="nome"
+                           required>
+
+                </div>
+
+            </div>
+
+            <div class="row g-3 mb-3 align-items-end">
+
+                <div class="col-md-3">
+
+                    <label for="valorCompra" class="form-label">
+                        Valor de compra
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           id="valorCompra"
+                           name="valorCompra"
+                           placeholder="0,00"
+                           required>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label for="valorVenda" class="form-label">
+                        Valor de venda
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           id="valorVenda"
+                           name="valorVenda"
+                           placeholder="0,00"
+                           required>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <label for="codigoVendedor" class="form-label">
+                        A quem pertence | código do vendedor
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           id="codigoVendedor"
+                           name="codigoVendedor"
+                           placeholder="Ex: 101">
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label for="estoque" class="form-label">
+                        Quantidade em estoque
+                    </label>
+
+                    <input type="number"
+                           class="form-control"
+                           id="estoque"
+                           name="estoque"
+                           min="0"
+                           step="1"
+                           value="0"
+                           required>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-12 d-flex justify-content-center flex-wrap gap-3 acoes-principais">
+
+                    <button type="button"
+                            class="btn btn-acao"
+                            id="btn-buscar">
+
+                        Buscar
+
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-acao"
+                            id="btn-criar">
+
+                        Criar
+
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-acao"
+                            id="btn-editar">
+
+                        Editar
+
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-acao"
+                            id="btn-salvar">
+
+                        Salvar
+
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-remover"
+                            id="btn-remover">
+
+                        Remover
+
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-acao"
+                            id="btn-cancelar">
+
+                        Cancelar
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+        <div id="mensagem"
+             class="mensagem d-none"
+             role="alert">
+        </div>
+
+    </div>
+
+    <div class="modal fade"
+         id="modalBuscarProduto"
+         tabindex="-1"
+         aria-labelledby="modalBuscarProdutoLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title"
+                        id="modalBuscarProdutoLabel">
+
+                        Buscar produto
+
+                    </h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Fechar">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover table-sm align-middle mb-0">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Cód.</th>
+                                    <th>Nome</th>
+                                    <th>Tipo</th>
+                                    <th>Venda</th>
+                                    <th>Estoque</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="produtos-tbody"></tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
     <footer class="footer">
+
         <div class="container text-center">
 
             <p class="mb-1">
@@ -82,8 +328,14 @@
             </small>
 
         </div>
+
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="../js/produtos.js"></script>
 
 </body>
 
 </html>
+
