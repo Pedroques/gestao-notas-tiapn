@@ -30,8 +30,6 @@ body::before {
 .navbar {
     background: rgb(30, 34, 30);
     backdrop-filter: blur(6px);
-    padding-top: 18px;
-    padding-bottom: 18px;
 }
 
 .navbar-brand {
@@ -75,13 +73,13 @@ body::before {
 
 /* CARDS */
 .card {
-    background: rgba(0, 0, 0, 0.55);
+    background: hsla(0, 0%, 100%, 0.75);
     backdrop-filter: blur(6px);
 
     border: none;
     border-radius: 16px;
 
-    color: #ffffff;
+    color: #000;
     margin-bottom: 30px;
 
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
@@ -93,14 +91,14 @@ body::before {
 }
 
 .secao-titulo h5 {
-    color: #ffffff;
+    color: #000;
     font-weight: 700;
     margin-bottom: 4px;
 }
 
 .secao-titulo span {
     font-size: 14px;
-    color: #e1eee3;
+    color: #000;
     opacity: 0.95;
 }
 
@@ -108,7 +106,7 @@ body::before {
 label {
     font-size: 14px;
     font-weight: 500;
-    color: #f1f1f1;
+    color: #000;
     margin-bottom: 6px;
 }
 

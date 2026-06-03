@@ -80,7 +80,8 @@ body::before {
 
 /* CARD HOME */
 .card-home {
-    background: rgba(0, 0, 0, 0.55);
+    background: hsla(0, 0%, 100%, 0.75);
+    border: 1px solid #d4d4d4;
     backdrop-filter: blur(6px);
 
     min-height: 260px;
@@ -93,7 +94,7 @@ body::before {
     justify-content: center;
 
     text-decoration: none;
-    color: white;
+    color: #1e221e;
 
     transition: 0.25s;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
@@ -103,7 +104,7 @@ body::before {
 
 .card-home:hover {
     transform: translateY(-5px);
-    background: rgba(0, 0, 0, 0.7);
+    background: #fff;
 }
 
 .card-home i {
@@ -121,7 +122,7 @@ body::before {
     font-size: 15px;
     margin-top: 14px;
     line-height: 1.8;
-    color: #ffffff;
+    color: #1e221e;
     opacity: 0.95;
     max-width: 92%;
 }
