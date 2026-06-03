@@ -25,6 +25,6 @@ O objetivo central é otimizar o fluxo operacional de um comércio local, automa
 - Pedro Martins Assunção de Oliveira
 
 ## Como inicializar
-Abra o arquivo pelo terminal e digite o comando:
-- npx json-server --watch db.JSON
+Abra o index.html na pasta html e pelo terminal digite o comando:
+- npx json-server db.JSON
 Em seguida, abra o projeto pelo live server

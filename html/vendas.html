@@ -7,13 +7,14 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Venda - Sistema de Notas</title>
+    <title>Sistema de Notas - Vendas</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="css/vendas.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/vendas.css">
 
 </head>
 
@@ -22,7 +23,7 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container">
 
-            <a class="navbar-brand text-white" href="/index.html">
+            <a class="navbar-brand text-white" href="../html/index.html">
                 Gestão de Vendas - Sistema de Notas
             </a>
 
@@ -35,31 +36,31 @@
                 <ul class="navbar-nav">
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/index.html">Página Inicial</a>
+                        <a class="nav-link" href="../html/index.html">Página Inicial</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="/vendas.html">Venda</a>
+                        <a class="nav-link active" href="../html/vendas.html">Venda</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/clientes.html">Cliente</a>
+                        <a class="nav-link" href="../html/clientes.html">Cliente</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/relatorios.html">Relatórios</a>
+                        <a class="nav-link" href="../html/relatorios.html">Relatórios</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/contasAberto.html">Contas em Aberto</a>
+                        <a class="nav-link" href="../html/contasAberto.html">Contas em Aberto</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/vendedor.html">Vendedor</a>
+                        <a class="nav-link" href="../html/vendedor.html">Vendedor</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/produtos.html">Produtos</a>
+                        <a class="nav-link" href="../html/produtos.html">Produtos</a>
                     </li>
 
                 </ul>
@@ -90,7 +91,8 @@
 
                     <div class="col-md-3 mb-3">
                         <label for="codigoPromissoria">Cód. Promissória</label>
-                        <input type="text" class="form-control" id="codigoPromissoria" name="codigoPromissoria" readonly>
+                        <input type="text" class="form-control" id="codigoPromissoria" name="codigoPromissoria"
+                            readonly>
                     </div>
 
                     <div class="col-md-3 mb-3">
@@ -113,7 +115,8 @@
 
                     <div class="col-md-3 mb-3 campo-busca">
                         <label for="codigoCliente">Cliente</label>
-                        <input type="text" class="form-control" id="codigoCliente" name="codigoCliente" placeholder="Digite código ou nome">
+                        <input type="text" class="form-control" id="codigoCliente" name="codigoCliente"
+                            placeholder="Digite código ou nome">
                         <div class="lista-busca" id="listaClientes"></div>
                     </div>
 
@@ -123,10 +126,11 @@
                     </div>
 
                     <div class="col-md-3 mb-3 campo-busca">
-    <label for="codigoVendedor">Vendedor</label>
-    <input type="text" class="form-control" id="codigoVendedor" name="codigoVendedor" placeholder="Digite código ou nome">
-    <div class="lista-busca" id="listaVendedores"></div>
-</div>
+                        <label for="codigoVendedor">Vendedor</label>
+                        <input type="text" class="form-control" id="codigoVendedor" name="codigoVendedor"
+                            placeholder="Digite código ou nome">
+                        <div class="lista-busca" id="listaVendedores"></div>
+                    </div>
 
                     <div class="col-md-3 mb-3">
                         <label for="nomeVendedor">Nome do Vendedor</label>
@@ -147,10 +151,11 @@
                 <div class="row mt-3 align-items-end">
 
                     <div class="col-md-2 mb-3 campo-busca">
-    <label for="codigoProduto">Produto</label>
-    <input type="text" class="form-control" id="codigoProduto" name="codigoProduto" placeholder="Digite código ou nome">
-    <div class="lista-busca" id="listaProdutos"></div>
-</div>
+                        <label for="codigoProduto">Produto</label>
+                        <input type="text" class="form-control" id="codigoProduto" name="codigoProduto"
+                            placeholder="Digite código ou nome">
+                        <div class="lista-busca" id="listaProdutos"></div>
+                    </div>
 
                     <div class="col-md-4 mb-3">
                         <label for="descricaoProduto">Produto</label>
@@ -159,17 +164,22 @@
 
                     <div class="col-md-2 mb-3">
                         <label for="quantidadeProduto">Quantidade</label>
-                        <input type="number" class="form-control" id="quantidadeProduto" name="quantidadeProduto" min="1" value="1">
+                        <input type="number" class="form-control" id="quantidadeProduto" name="quantidadeProduto"
+                            min="1" value="1">
                     </div>
 
                     <div class="col-md-2 mb-3">
                         <label for="valorUnitario">Valor Unitário</label>
-                        <input type="number" class="form-control" id="valorUnitario" name="valorUnitario" min="0" step="0.01" value="0.00" readonly>
+                        <input type="number" class="form-control" id="valorUnitario" name="valorUnitario" min="0"
+                            step="0.01" value="0.00" readonly>
                     </div>
 
                     <div class="col-md-2 mb-3">
                         <button type="button" class="btn btn-success w-100" id="btnAdicionarProduto">
+
+                            <i class="bi bi-plus-circle"></i>
                             Adicionar
+
                         </button>
                     </div>
 
@@ -248,22 +258,28 @@
 
                     <div class="col-md-3 mb-3">
                         <label for="valorPagoEntrada">Valor Pago Hoje</label>
-                        <input type="number" class="form-control" id="valorPagoEntrada" name="valorPagoEntrada" min="0" step="0.01" value="0.00">
+                        <input type="number" class="form-control" id="valorPagoEntrada" name="valorPagoEntrada" min="0"
+                            step="0.01" value="0.00">
                     </div>
 
                     <div class="col-md-3 mb-3">
                         <label for="valorRestante">Valor Restante</label>
-                        <input type="number" class="form-control campo-total" id="valorRestante" name="valorRestante" value="0.00" readonly>
+                        <input type="number" class="form-control campo-total" id="valorRestante" name="valorRestante"
+                            value="0.00" readonly>
                     </div>
 
                     <div class="col-md-3 mb-3">
                         <label for="quantidadeParcelas">Nº de Parcelas</label>
-                        <input type="number" class="form-control" id="quantidadeParcelas" name="quantidadeParcelas" min="1" value="1">
+                        <input type="number" class="form-control" id="quantidadeParcelas" name="quantidadeParcelas"
+                            min="1" value="1">
                     </div>
 
                     <div class="col-md-3 mb-3">
                         <button type="button" class="btn btn-secondary w-100 mt-4" id="btnGerarParcelas">
+
+                            <i class="bi bi-calendar-check"></i>
                             Gerar Parcelas
+
                         </button>
                     </div>
 
@@ -305,22 +321,26 @@
 
                     <div class="col-md-3 mb-3">
                         <label for="valorProdutos">Valor dos Produtos</label>
-                        <input type="number" class="form-control" id="valorProdutos" name="valorProdutos" value="0.00" readonly>
+                        <input type="number" class="form-control" id="valorProdutos" name="valorProdutos" value="0.00"
+                            readonly>
                     </div>
 
                     <div class="col-md-3 mb-3">
                         <label for="valorPagoResumo">Valor Pago Hoje</label>
-                        <input type="number" class="form-control" id="valorPagoResumo" name="valorPagoResumo" value="0.00" readonly>
+                        <input type="number" class="form-control" id="valorPagoResumo" name="valorPagoResumo"
+                            value="0.00" readonly>
                     </div>
 
                     <div class="col-md-3 mb-3">
                         <label for="valorRestanteResumo">Valor Restante</label>
-                        <input type="number" class="form-control" id="valorRestanteResumo" name="valorRestanteResumo" value="0.00" readonly>
+                        <input type="number" class="form-control" id="valorRestanteResumo" name="valorRestanteResumo"
+                            value="0.00" readonly>
                     </div>
 
                     <div class="col-md-3 mb-3">
                         <label for="valorTotalVenda">Valor Total</label>
-                        <input type="number" class="form-control campo-total" id="valorTotalVenda" name="valorTotalVenda" value="0.00" readonly>
+                        <input type="number" class="form-control campo-total" id="valorTotalVenda"
+                            name="valorTotalVenda" value="0.00" readonly>
                     </div>
 
                 </div>
@@ -329,17 +349,20 @@
 
                     <div class="col-md-3 mb-3">
                         <label for="quantidadeParcelasResumo">Parcelas Geradas</label>
-                        <input type="number" class="form-control" id="quantidadeParcelasResumo" name="quantidadeParcelasResumo" value="0" readonly>
+                        <input type="number" class="form-control" id="quantidadeParcelasResumo"
+                            name="quantidadeParcelasResumo" value="0" readonly>
                     </div>
 
                     <div class="col-md-3 mb-3">
                         <label for="somaParcelasResumo">Soma das Parcelas</label>
-                        <input type="number" class="form-control" id="somaParcelasResumo" name="somaParcelasResumo" value="0.00" readonly>
+                        <input type="number" class="form-control" id="somaParcelasResumo" name="somaParcelasResumo"
+                            value="0.00" readonly>
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <label for="statusResumo">Status do Resumo</label>
-                        <input type="text" class="form-control" id="statusResumo" name="statusResumo" value="Aguardando preenchimento" readonly>
+                        <input type="text" class="form-control" id="statusResumo" name="statusResumo"
+                            value="Aguardando preenchimento" readonly>
                     </div>
 
                 </div>
@@ -347,15 +370,24 @@
                 <div class="acoes-venda mt-3">
 
                     <button type="submit" class="btn btn-success" id="btnSalvarVenda">
+
+                        <i class="bi bi-floppy"></i>
                         Salvar Venda
+
                     </button>
 
                     <button type="reset" class="btn btn-secondary" id="btnLimparVenda">
+
+                        <i class="bi bi-eraser"></i>
                         Limpar
+
                     </button>
 
                     <button type="button" class="btn btn-danger" id="btnCancelarVenda">
+
+                        <i class="bi bi-x-circle"></i>
                         Cancelar
+
                     </button>
 
                 </div>
@@ -380,7 +412,7 @@
         </div>
     </footer>
 
-    <script src="js/vendas.js"></script>
+    <script src="../js/vendas.js"></script>
 
 </body>
 

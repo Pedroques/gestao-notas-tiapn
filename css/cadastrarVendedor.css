@@ -123,6 +123,8 @@ label {
 }
 
 /* BOTÕES */
+/* BOTÕES */
+
 .acoes {
     display: flex;
     gap: 14px;
@@ -134,48 +136,97 @@ label {
     padding: 10px 18px;
     font-size: 14px;
     font-weight: 500;
-    transition: .25s ease;
+
+    transition:
+        background-color .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        transform .18s ease;
 }
 
-.btn-success {
-    background: #198754;
-    color: #fff;
-    border: 2px solid #015c08;
-}
-
-.btn-success:hover {
-    background: #baf8cf;
-    color: #198754;
-    border-color: #198754;
-}
-
-.btn-secondary {
-    background: #f44336;
-    color: #fff;
-    border: 2px solid #8a0900;
-}
-
-.btn-secondary:hover {
-    background:#ffd0d0;
-    color:#f44336;
-    border-color:#f44336;
-}
-
-.btn-retornar {
-    background: #0d6efd;
-    color: #fff;
-    border: 2px solid #023b91;
-}
-
-.btn-retornar:hover {
-    background: #c4dbff;
-    color: #0d6efd;
-    border-color: #0d6efd;
+.btn:hover {
+    transform: translateY(-1px);
 }
 
 .btn i {
+
     color: #fff;
     margin-right: 8px;
+
+    transition: color .25s ease;
+
+}
+
+/* SALVAR */
+
+.btn-success {
+
+    background: #198754;
+    color: #fff;
+    border: 2px solid #015c08;
+
+}
+
+.btn-success:hover {
+
+    background: #baf8cf;
+    color: #198754;
+    border-color: #198754;
+
+}
+
+.btn-success:hover i {
+
+    color: #198754;
+
+}
+
+/* CANCELAR */
+
+.btn-secondary {
+
+    background: #f44336;
+    color: #fff;
+    border: 2px solid #8a0900;
+
+}
+
+.btn-secondary:hover {
+
+    background: #ffd0d0;
+    color: #f44336;
+    border-color: #f44336;
+
+}
+
+.btn-secondary:hover i {
+
+    color: #f44336;
+
+}
+
+/* RETORNAR */
+
+.btn-retornar {
+
+    background: #0d6efd;
+    color: #fff;
+    border: 2px solid #023b91;
+
+}
+
+.btn-retornar:hover {
+
+    background: #c4dbff;
+    color: #0d6efd;
+    border-color: #0d6efd;
+
+}
+
+.btn-retornar:hover i {
+
+    color: #0d6efd;
+
 }
 
 /* FOOTER */
