@@ -63,4 +63,142 @@ h4 {
     color: #e0e0e0;
     font-size: 14px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    .page-title {
+    margin-bottom: 30px;
+}
+
+.form-produto .row {
+    align-items: end;
+    margin-bottom: 18px;
+}
+
+.form-control {
+    height: 42px;
+    border: 1px solid #666;
+}
+
+#codigo {
+    max-width: 220px;
+}
+
+#nome {
+    width: 100%;
+}
+
+.estoque-botoes {
+    margin-top: 24px;
+}
+
+.btn-adicionar {
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    height: 42px;
+    font-weight: 500;
+}
+
+.btn-adicionar:hover {
+    background-color: #256628;
+}
+
+.btn-remover {
+    background-color: #e53935;
+    color: white;
+    border: none;
+    height: 42px;
+    font-weight: 500;
+}
+
+.btn-remover:hover {
+    background-color: #c62828;
+}
+
+.btn-acao {
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    min-width: 140px;
+    height: 44px;
+    font-weight: 500;
+}
+
+.btn-acao:hover {
+    background-color: #256628;
+    color: white;
+}
+
+.acoes-principais {
+    margin-top: 30px;
+}
+}
+.page-title {
+    margin-bottom: 30px;
+}
+
+.form-produto .row {
+    align-items: end;
+    margin-bottom: 18px;
+}
+
+.form-control {
+    height: 42px;
+    border: 1px solid #666;
+}
+
+#codigo {
+    max-width: 220px;
+}
+
+#nome {
+    width: 100%;
+}
+
+.estoque-botoes {
+    margin-top: 24px;
+}
+
+.btn-adicionar {
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    height: 42px;
+    font-weight: 500;
+}
+
+.btn-adicionar:hover {
+    background-color: #256628;
+}
+
+.btn-remover {
+    background-color: #e53935;
+    color: white;
+    border: none;
+    height: 42px;
+    font-weight: 500;
+}
+
+.btn-remover:hover {
+    background-color: #c62828;
+}
+
+.btn-acao {
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    min-width: 140px;
+    height: 44px;
+    font-weight: 500;
+}
+
+.btn-acao:hover {
+    background-color: #256628;
+    color: white;
+}
+
+.acoes-principais {
+    margin-top: 30px;
+}
+.btn-remover {
+    min-width: 140px;
+    height: 44px;
 }

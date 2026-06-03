@@ -2,6 +2,10 @@
 let vendas = [];
 let todasParcelas = [];
 
+// Estado temporário para o pagamento parcial
+let vendaIdSelecionada = null;
+let numeroParcelaSelecionada = null;
+
 // Elementos da DOM mapeados para interações
 const corpoTabelaContas = document.getElementById("corpoTabelaContas");
 const buscaCliente = document.getElementById("buscaCliente");
@@ -9,6 +13,18 @@ const buscaVendedor = document.getElementById("buscaVendedor");
 const filtroMes = document.getElementById("filtroMes");
 const filtroAno = document.getElementById("filtroAno");
 const btnBuscar = document.getElementById("btnBuscar");
+const areaFeedback = document.getElementById("areaFeedback");
+
+// Elementos do Modal de Pagamento Parcial
+const modalCliente = document.getElementById("modalCliente");
+const modalVendedor = document.getElementById("modalVendedor");
+const modalCompra = document.getElementById("modalCompra");
+const modalNumeroParcela = document.getElementById("modalNumeroParcela");
+const modalValorAtual = document.getElementById("modalValorAtual");
+const valorPagamentoParcial = document.getElementById("valorPagamentoParcial");
+const btnConfirmarPagamentoParcial = document.getElementById("btnConfirmarPagamentoParcial");
+const erroValorExcedente = document.getElementById("erroValorExcedente");
+const erroValorInvalido = document.getElementById("erroValorInvalido");
 
 // Formata valores numéricos para formato de moeda corrente brasileira (R$)
 function formatarMoeda(valor) {
@@ -25,6 +41,21 @@ function formatarDataBR(dataString) {
     return dataString;
 }
 
+// Mostra notificações na tela de forma visual e elegante (substitui os alerts do navegador)
+function exibirMensagemFeedback(mensagem, tipo = "danger") {
+    areaFeedback.className = `alert alert-${tipo} alert-dismissible fade show text-center`;
+    areaFeedback.innerHTML = `
+        ${mensagem}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+    areaFeedback.style.display = "block";
+    
+    // Auto-oculta após 5 segundos
+    setTimeout(() => {
+        areaFeedback.style.display = "none";
+    }, 5000);
+}
+
 // Procura e carrega os dados de vendas contidos no json-server local
 async function carregarVendas() {
     try {
@@ -38,7 +69,6 @@ async function carregarVendas() {
     } catch (erro) {
         console.error("Erro ao carregar dados do servidor. Tentando recuperar dados estáticos locais do db.JSON:", erro);
         try {
-            // Caso o json-server não esteja online, realiza fallback de leitura simples no db.JSON
             const respostaDb = await fetch("db.JSON");
             const dados = await respostaDb.json();
             vendas = dados.vendas || [];
@@ -49,7 +79,7 @@ async function carregarVendas() {
     }
 }
 
-// Transforma a estrutura hierárquica de vendas numa lista plana onde cada linha é uma prestação independente
+// Transforma a estrutura de vendas em uma lista de parcelas individuais prontas para a tabela
 function processarPrestacoes() {
     todasParcelas = [];
     
@@ -74,14 +104,14 @@ function processarPrestacoes() {
     filtrarParcelas();
 }
 
-// Filtra as parcelas usando as informações inseridas na busca e nos seletores de data
+// Filtra as parcelas usando os inputs de busca e seletores salvos
 function filtrarParcelas() {
     const textoBuscaCliente = buscaCliente.value.toLowerCase().trim();
     const textoBuscaVendedor = buscaVendedor.value.toLowerCase().trim();
     const mesSelecionado = filtroMes.value;
     const anoSelecionado = filtroAno.value;
 
-    // Persiste os filtros no sessionStorage para mantê-los aplicados após o auto-reload do Live Server
+    // Persiste os filtros no sessionStorage
     sessionStorage.setItem("filtro_buscaCliente", buscaCliente.value);
     sessionStorage.setItem("filtro_buscaVendedor", buscaVendedor.value);
     sessionStorage.setItem("filtro_mes", mesSelecionado);
@@ -102,13 +132,13 @@ function filtrarParcelas() {
         return bateCliente && bateVendedor && bateMes && bateAno;
     });
 
-    // Ordena as prestações pela data de vencimento (das mais antigas às mais recentes)
+    // Ordena as parcelas de forma cronológica (vencimentos mais antigos aparecem primeiro)
     parcelasFiltradas.sort((a, b) => new Date(a.dataPrevista) - new Date(b.dataPrevista));
 
     renderizarTabela(parcelasFiltradas);
 }
 
-// Renderiza as linhas na tabela de prestações
+// Desenha a lista de prestações diretamente na tabela (Removido botão manual do recibo)
 function renderizarTabela(parcelasParaRenderizar) {
     corpoTabelaContas.innerHTML = "";
 
@@ -119,15 +149,20 @@ function renderizarTabela(parcelasParaRenderizar) {
 
     parcelasParaRenderizar.forEach(parcela => {
         const isPago = parcela.status === "Pago";
-        const btnClass = isPago ? "btn-outline-danger" : "btn-success";
-        const btnTexto = isPago ? "Desfazer" : "Marcar Pago";
         const statusColor = isPago ? "text-success fw-bold" : "text-warning fw-bold";
 
-        // Criação dos botões de controle na linha de cada prestação
-        let acoesHtml = `<button type="button" class="btn btn-sm ${btnClass}" onclick="alternarStatusParcela(event, '${parcela.vendaId}', ${parcela.numero})">${btnTexto}</button>`;
+        // Criação dos botões baseados no estado atual da prestação (Sem o botão Recibo manual)
+        let acoesHtml = "";
         
         if (isPago) {
-            acoesHtml += ` <button type="button" class="btn btn-sm btn-secondary ms-1 mt-1 mt-md-0" onclick="gerarReciboPDF(event, '${parcela.vendaId}', ${parcela.numero})">Recibo</button>`;
+            acoesHtml = `
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="alternarStatusParcela(event, '${parcela.vendaId}', ${parcela.numero})">Desfazer</button>
+            `;
+        } else {
+            acoesHtml = `
+                <button type="button" class="btn btn-sm btn-success" onclick="alternarStatusParcela(event, '${parcela.vendaId}', ${parcela.numero})">Marcar Pago</button>
+                <button type="button" class="btn btn-sm btn-warning ms-1" onclick="abrirModalPagamentoParcial(event, '${parcela.vendaId}', ${parcela.numero})">Pagar Parcial</button>
+            `;
         }
 
         const linha = document.createElement("tr");
@@ -147,51 +182,193 @@ function renderizarTabela(parcelasParaRenderizar) {
     });
 }
 
-// Altera o status da parcela específica no banco de dados e atualiza a interface
+// Altera o status geral (Quitação Total de uma Parcela ou estorno)
 async function alternarStatusParcela(event, vendaId, numeroParcela) {
     if (event) event.preventDefault();
 
     const venda = vendas.find(v => String(v.id) === String(vendaId));
     if (!venda) return;
 
-    // Encontra a parcela de referência dentro da lista detalhada de parcelas da venda original
     const parcela = venda.parcelasDetalhadas.find(p => p.numero === numeroParcela);
     if (!parcela) return;
 
-    // Altera o estado local da parcela
-    parcela.status = parcela.status === "Pago" ? "Pendente" : "Pago";
+    const valorAnterior = parcela.valor;
+    let emitirReciboImediato = false;
+
+    if (parcela.status === "Pago") {
+        parcela.status = "Pendente";
+        // Atualiza os resumos da venda de volta ao estado de pendente
+        venda.pagamento.valorRestante = parseFloat((venda.pagamento.valorRestante + valorAnterior).toFixed(2));
+        if (venda.resumo) {
+            venda.resumo.valorRestante = parseFloat((venda.resumo.valorRestante + valorAnterior).toFixed(2));
+            venda.resumo.somaParcelas = parseFloat((venda.resumo.somaParcelas + valorAnterior).toFixed(2));
+        }
+    } else {
+        parcela.status = "Pago";
+        emitirReciboImediato = true; // Sinaliza que devemos imprimir o recibo deste pagamento integral
+        // Zera o saldo pendente restante desta parcela nos totais
+        venda.pagamento.valorRestante = parseFloat(Math.max(0, venda.pagamento.valorRestante - valorAnterior).toFixed(2));
+        if (venda.resumo) {
+            venda.resumo.valorRestante = parseFloat(Math.max(0, venda.resumo.valorRestante - valorAnterior).toFixed(2));
+            venda.resumo.somaParcelas = parseFloat(Math.max(0, venda.resumo.somaParcelas - valorAnterior).toFixed(2));
+        }
+    }
 
     try {
         const resposta = await fetch(`http://localhost:3000/vendas/${vendaId}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ parcelasDetalhadas: venda.parcelasDetalhadas })
+            body: JSON.stringify({
+                parcelasDetalhadas: venda.parcelasDetalhadas,
+                pagamento: venda.pagamento,
+                resumo: venda.resumo
+            })
         });
 
-        if (!resposta.ok) throw new Error("Não foi possível enviar a atualização ao servidor");
+        if (!resposta.ok) throw new Error("Não foi possível salvar no banco de dados.");
 
-        // Atualiza as parcelas locais e recarrega os filtros
+        exibirMensagemFeedback("Status da parcela atualizado com sucesso!", "success");
+        
+        // Se foi efetuada uma quitação total, gera o recibo automaticamente do valor pago
+        if (emitirReciboImediato) {
+            gerarReciboPDF(null, vendaId, numeroParcela, valorAnterior);
+        }
+
         processarPrestacoes();
 
     } catch (erro) {
-        console.error("Erro durante a atualização do status:", erro);
-        alert("Ocorreu um erro ao modificar o estado de pagamento desta prestação. Verifique se o JSON-Server está executando.");
-        // Reverte as alterações em caso de erro na comunicação externa
+        console.error("Erro ao alternar status da parcela:", erro);
+        exibirMensagemFeedback("Erro ao atualizar o status da prestação. Verifique o servidor.");
+        // Desfaz a alteração local
         parcela.status = parcela.status === "Pago" ? "Pendente" : "Pago";
     }
 }
 
-// Gera um documento de recibo de pagamento em formato PDF via jsPDF
-function gerarReciboPDF(event, vendaId, numeroParcela) {
+// Configura e exibe o modal para registrar um pagamento parcial
+function abrirModalPagamentoParcial(event, vendaId, numeroParcela) {
     if (event) event.preventDefault();
 
-    const parcelaFlat = todasParcelas.find(p => String(p.vendaId) === String(vendaId) && p.numero === numeroParcela);
-    if (!parcelaFlat) return;
+    const venda = vendas.find(v => String(v.id) === String(vendaId));
+    if (!venda) return;
+
+    const parcela = venda.parcelasDetalhadas.find(p => p.numero === numeroParcela);
+    if (!parcela) return;
+
+    // Guarda referências globais
+    vendaIdSelecionada = vendaId;
+    numeroParcelaSelecionada = numeroParcela;
+
+    // Limpa alertas do modal
+    erroValorExcedente.style.display = "none";
+    erroValorInvalido.style.display = "none";
+
+    // Insere os dados informativos do cliente no modal
+    modalCliente.textContent = venda.cliente;
+    modalVendedor.textContent = venda.nomeVendedor || (venda.vendedor && venda.vendedor.nome) || "Não Informado";
+    modalCompra.textContent = venda.codigoPromissoria || venda.id;
+    modalNumeroParcela.textContent = `${parcela.numero} / ${venda.parcelas}`;
+    modalValorAtual.textContent = formatarMoeda(parcela.valor);
+
+    // Configura o campo numérico de entrada
+    valorPagamentoParcial.value = "";
+    valorPagamentoParcial.max = parcela.valor;
+    valorPagamentoParcial.placeholder = `Máx: ${parcela.valor.toFixed(2)}`;
+
+    // Abre o modal de pagamento do Bootstrap
+    const modalEl = document.getElementById("modalPagamentoParcial");
+    const modalInstance = bootstrap.Modal.getOrCreateInstance(modalEl);
+    modalInstance.show();
+}
+
+// Trata a confirmação e faz a subtração da parcela correspondente no banco de dados
+async function submeterPagamentoParcial() {
+    erroValorExcedente.style.display = "none";
+    erroValorInvalido.style.display = "none";
+
+    const venda = vendas.find(v => String(v.id) === String(vendaIdSelecionada));
+    if (!venda) return;
+
+    const parcela = venda.parcelasDetalhadas.find(p => p.numero === numeroParcelaSelecionada);
+    if (!parcela) return;
+
+    const valorPago = parseFloat(valorPagamentoParcial.value);
+
+    // Validações de inserção
+    if (isNaN(valorPago) || valorPago <= 0) {
+        erroValorInvalido.style.display = "block";
+        return;
+    }
+
+    if (valorPago > parcela.valor) {
+        erroValorExcedente.style.display = "block";
+        return;
+    }
+
+    // Processamento financeiro da subtração
+    const valorOriginal = parcela.valor;
+    const novoValorParcela = parseFloat((valorOriginal - valorPago).toFixed(2));
+
+    if (novoValorParcela === 0) {
+        parcela.status = "Pago";
+    } else {
+        parcela.valor = novoValorParcela;
+    }
+
+    // Ajusta o resumo financeiro de venda correspondente
+    venda.pagamento.valorRestante = parseFloat(Math.max(0, venda.pagamento.valorRestante - valorPago).toFixed(2));
+    if (venda.resumo) {
+        venda.resumo.valorRestante = parseFloat(Math.max(0, venda.resumo.valorRestante - valorPago).toFixed(2));
+        venda.resumo.somaParcelas = parseFloat(Math.max(0, venda.resumo.somaParcelas - valorPago).toFixed(2));
+    }
+
+    try {
+        const resposta = await fetch(`http://localhost:3000/vendas/${vendaIdSelecionada}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                parcelasDetalhadas: venda.parcelasDetalhadas,
+                pagamento: venda.pagamento,
+                resumo: venda.resumo
+            })
+        });
+
+        if (!resposta.ok) throw new Error("Não foi possível enviar a atualização ao servidor");
+
+        // Fecha o modal e exibe feedback de sucesso
+        const modalEl = document.getElementById("modalPagamentoParcial");
+        const modalInstance = bootstrap.Modal.getInstance(modalEl);
+        modalInstance.hide();
+
+        exibirMensagemFeedback(`Pagamento parcial de ${formatarMoeda(valorPago)} registrado com sucesso!`, "success");
+        
+        // Gera o recibo da transação parcial instantaneamente
+        gerarReciboPDF(null, vendaIdSelecionada, numeroParcelaSelecionada, valorPago);
+
+        // Recarrega todos os dados
+        await carregarVendas();
+
+    } catch (erro) {
+        console.error("Erro ao registrar pagamento parcial:", erro);
+        exibirMensagemFeedback("Ocorreu uma falha ao tentar registar o pagamento parcial no servidor.");
+    }
+}
+
+// Gera o recibo de pagamento em formato PDF via jsPDF com o valor exato da transação
+function gerarReciboPDF(event, vendaId, numeroParcela, valorRecebido) {
+    if (event) event.preventDefault();
+
+    const venda = vendas.find(v => String(v.id) === String(vendaId));
+    if (!venda) return;
+
+    const parcela = venda.parcelasDetalhadas.find(p => p.numero === numeroParcela);
+    if (!parcela) return;
+
+    const vendedorNome = venda.nomeVendedor || (venda.vendedor && venda.vendedor.nome) || "Não Informado";
+    const codigoPromissoria = venda.codigoPromissoria || venda.id;
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // Título Centralizado do documento de Recibo Provisório
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
     doc.text("RECIBO DE PAGAMENTO PROVISÓRIO", 105, 20, { align: "center" });
@@ -199,66 +376,64 @@ function gerarReciboPDF(event, vendaId, numeroParcela) {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
 
-    doc.text(`Nº do Recibo: ${parcelaFlat.codigoPromissoria}-${parcelaFlat.numero}`, 20, 40);
+    doc.text(`Nº do Recibo: ${codigoPromissoria}-${parcela.numero}`, 20, 40);
     
-    // Seção dos dados cadastrais do cliente
     doc.setFont("helvetica", "bold");
     doc.text("Dados do Cliente", 20, 55);
     doc.setFont("helvetica", "normal");
-    doc.text(`Nome do Pagador: ${parcelaFlat.cliente}`, 20, 65);
-    if (parcelaFlat.clienteCompleto && parcelaFlat.clienteCompleto.cpf) {
-        doc.text(`CPF: ${parcelaFlat.clienteCompleto.cpf}`, 20, 75);
+    doc.text(`Nome do Pagador: ${venda.cliente}`, 20, 65);
+    if (venda.clienteCompleto && venda.clienteCompleto.cpf) {
+        doc.text(`CPF: ${venda.clienteCompleto.cpf}`, 20, 75);
     }
     
-    // Seção contendo os dados detalhados da prestação que está sendo quitada
     doc.setFont("helvetica", "bold");
     doc.text("Especificações da Prestação Quitada", 20, 95);
     doc.setFont("helvetica", "normal");
-    doc.text(`Produto(s): ${parcelaFlat.produto}`, 20, 105);
-    doc.text(`Vendedor Responsável: ${parcelaFlat.vendedorNome}`, 20, 115);
-    doc.text(`Identificação da Parcela: ${parcelaFlat.numero} de ${parcelaFlat.qtdParcelas}`, 20, 125);
-    doc.text(`Valor Recebido: ${formatarMoeda(parcelaFlat.valor)}`, 20, 135);
-    doc.text(`Forma de Pagamento: ${parcelaFlat.formaPagamento.toUpperCase()}`, 20, 145);
+    doc.text(`Produto(s): ${venda.produto}`, 20, 105);
+    doc.text(`Vendedor Responsável: ${vendedorNome}`, 20, 115);
+    doc.text(`Identificação da Parcela: ${parcela.numero} de ${venda.parcelas}`, 20, 125);
+    
+    // Mostra especificamente o valor pago nesta transação (Seja integral ou parcial)
+    doc.setFont("helvetica", "bold");
+    doc.text(`Valor Recebido: ${formatarMoeda(valorRecebido)}`, 20, 135);
+    
+    // Mostra o saldo restante na parcela (se ainda houver)
+    doc.setFont("helvetica", "normal");
+    const saldoRestanteParcela = parcela.status === "Pago" ? 0 : parcela.valor;
+    doc.text(`Saldo Restante da Parcela: ${formatarMoeda(saldoRestanteParcela)}`, 20, 145);
+    doc.text(`Forma de Pagamento: ${(parcela.formaPagamento || 'Dinheiro').toUpperCase()}`, 20, 155);
 
     const dataAtual = new Date().toLocaleDateString('pt-BR');
-    doc.text(`Data de Recebimento do Valor: ${dataAtual}`, 20, 165);
+    doc.text(`Data de Recebimento do Valor: ${dataAtual}`, 20, 175);
 
-    // Linha e espaço reservado para preenchimento de assinatura física
-    doc.text("_____________________________________________________", 105, 205, { align: "center" });
-    doc.text("Assinatura do Recebedor (Gestão de Vendas)", 105, 215, { align: "center" });
+    doc.text("_____________________________________________________", 105, 215, { align: "center" });
+    doc.text("Assinatura do Recebedor (Gestão de Vendas)", 105, 225, { align: "center" });
 
-    // Informação de rodapé para fins burocráticos
     doc.setFontSize(10);
     doc.setTextColor(150);
-    doc.text("Este documento constitui um recibo provisório que atesta a quitação física da prestação.", 105, 280, { align: "center" });
+    doc.text("Este documento constitui um recibo provisório que atesta a quitação física do valor acima mencionado.", 105, 280, { align: "center" });
 
-    // Inicia o processo de download do recibo PDF no navegador
-    const nomeArquivo = `Recibo_${parcelaFlat.cliente.replace(/\s+/g, '_')}_Parcela_${parcelaFlat.numero}.pdf`;
+    const nomeArquivo = `Recibo_${venda.cliente.replace(/\s+/g, '_')}_Parcela_${parcela.numero}.pdf`;
     doc.save(nomeArquivo);
 }
 
-// Adiciona os eventos de escuta aos campos de controle e filtro
+// Associação dos gatilhos de eventos e submissão
 btnBuscar.addEventListener("click", filtrarParcelas);
 buscaCliente.addEventListener("input", filtrarParcelas);
 buscaVendedor.addEventListener("input", filtrarParcelas);
 filtroMes.addEventListener("change", filtrarParcelas);
 filtroAno.addEventListener("change", filtrarParcelas);
+btnConfirmarPagamentoParcial.addEventListener("click", submeterPagamentoParcial);
 
 // Executado imediatamente ao inicializar o carregamento da página
 document.addEventListener("DOMContentLoaded", () => {
-    // Restaura filtros de busca salvos na sessão (evita que a pesquisa se desfaça ao alterar status)
     const buscaSalva = sessionStorage.getItem("filtro_buscaCliente");
     const vendedorSalvo = sessionStorage.getItem("filtro_buscaVendedor");
     const mesSalvo = sessionStorage.getItem("filtro_mes");
     const anoSalvo = sessionStorage.getItem("filtro_ano");
 
-    if (buscaSalva !== null) {
-        buscaCliente.value = buscaSalva;
-    }
-    
-    if (vendedorSalvo !== null) {
-        buscaVendedor.value = vendedorSalvo;
-    }
+    if (buscaSalva !== null) buscaCliente.value = buscaSalva;
+    if (vendedorSalvo !== null) buscaVendedor.value = vendedorSalvo;
 
     if (mesSalvo !== null) {
         filtroMes.value = mesSalvo;
