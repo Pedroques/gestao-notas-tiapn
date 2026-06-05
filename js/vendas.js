@@ -133,6 +133,33 @@ function normalizarTexto(texto) {
         .replace(/[\u0300-\u036f]/g, "");
 }
 
+function obterCodigoExibicao(tipo, item) {
+    if (tipo === "cliente") {
+        return item.codigoExibicao ?? item.id;
+    }
+
+    if (tipo === "vendedor") {
+        return item.codigo ?? item.id;
+    }
+
+    if (tipo === "produto") {
+        return item.codigo ?? item.id;
+    }
+
+    return item.id;
+}
+
+function itemCorrespondeAoTermo(tipo, item, termoBusca) {
+    const termo = normalizarTexto(termoBusca);
+    const codigoExibicao = normalizarTexto(obterCodigoExibicao(tipo, item));
+    const idInterno = normalizarTexto(item.id);
+    const nome = normalizarTexto(item.nome);
+
+    return codigoExibicao.includes(termo)
+        || idInterno.includes(termo)
+        || nome.includes(termo);
+}
+
 function renderizarListaBusca(tipo, lista, termoBusca) {
     let container;
 
@@ -154,13 +181,8 @@ function renderizarListaBusca(tipo, lista, termoBusca) {
 
     container.innerHTML = "";
 
-    const termo = normalizarTexto(termoBusca);
-
     const resultados = lista.filter(item => {
-        const id = normalizarTexto(item.id);
-        const nome = normalizarTexto(item.nome);
-
-        return id.includes(termo) || nome.includes(termo);
+        return itemCorrespondeAoTermo(tipo, item, termoBusca);
     });
 
     if (resultados.length === 0) {
@@ -173,19 +195,21 @@ function renderizarListaBusca(tipo, lista, termoBusca) {
     }
 
     resultados.forEach(item => {
-        const div = document.createElement("div");
-        div.classList.add("item-busca");
+    const div = document.createElement("div");
+    div.classList.add("item-busca");
 
-        if (tipo === "produto") {
-            div.innerHTML = `
-                <strong>${item.id}</strong> - ${item.nome}
-                <span>${formatarMoeda(converterParaNumero(item.preco))}</span>
-            `;
-        } else {
-            div.innerHTML = `
-                <strong>${item.id}</strong> - ${item.nome}
-            `;
-        }
+    const codigoExibicao = obterCodigoExibicao(tipo, item);
+
+    if (tipo === "produto") {
+        div.innerHTML = `
+            <strong>${codigoExibicao}</strong> - ${item.nome}
+            <span>${formatarMoeda(converterParaNumero(item.valorVenda))}</span>
+        `;
+    } else {
+        div.innerHTML = `
+            <strong>${codigoExibicao}</strong> - ${item.nome}
+        `;
+    }
 
         div.addEventListener("mousedown", function () {
             selecionarItemBusca(tipo, item);
@@ -220,21 +244,21 @@ function fecharListasBusca() {
 
 function selecionarItemBusca(tipo, item) {
     if (tipo === "cliente") {
-        codigoCliente.value = item.id;
+        codigoCliente.value = obterCodigoExibicao("cliente", item);
         nomeCliente.value = item.nome;
         listaClientes.style.display = "none";
     }
 
     if (tipo === "vendedor") {
-        codigoVendedor.value = item.id;
+        codigoVendedor.value = obterCodigoExibicao("vendedor", item);
         nomeVendedor.value = item.nome;
         listaVendedores.style.display = "none";
     }
 
     if (tipo === "produto") {
-        codigoProduto.value = item.id;
+        codigoProduto.value = obterCodigoExibicao("produto", item);
         descricaoProduto.value = item.nome;
-        valorUnitario.value = converterParaNumero(item.preco).toFixed(2);
+        valorUnitario.value = converterParaNumero(item.valorVenda).toFixed(2);
         listaProdutos.style.display = "none";
     }
 }
@@ -258,13 +282,8 @@ function selecionarPrimeiroResultado(tipo) {
         termo = codigoProduto.value;
     }
 
-    const termoNormalizado = normalizarTexto(termo);
-
     const resultado = lista.find(item => {
-        const id = normalizarTexto(item.id);
-        const nome = normalizarTexto(item.nome);
-
-        return id.includes(termoNormalizado) || nome.includes(termoNormalizado);
+        return itemCorrespondeAoTermo(tipo, item, termo);
     });
 
     if (resultado) {
@@ -289,7 +308,12 @@ function gerarCodigoPromissoria() {
 }
 
 function buscarClientePorCodigo(codigo) {
-    return clientes.find(cliente => String(cliente.id) === String(codigo).trim());
+    const codigoBuscado = String(codigo).trim();
+
+    return clientes.find(cliente => {
+        return String(cliente.codigoExibicao ?? cliente.id) === codigoBuscado
+            || String(cliente.id) === codigoBuscado;
+    });
 }
 
 function buscarVendedorPorCodigo(codigo) {
@@ -335,7 +359,7 @@ function preencherProdutoPorCodigo() {
 
     codigoProduto.value = produto.id;
     descricaoProduto.value = produto.nome;
-    valorUnitario.value = converterParaNumero(produto.preco).toFixed(2);
+    valorUnitario.value = converterParaNumero(produto.valorVenda).toFixed(2);
 }
 
 function calcularTotalProdutos() {

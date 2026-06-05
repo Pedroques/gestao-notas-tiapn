@@ -370,6 +370,63 @@
         "somaParcelas": 380
       },
       "dataCadastro": "2026-05-28T15:44:04.242Z"
+    },
+    {
+      "id": "d89b",
+      "codigoPromissoria": "0002",
+      "dataVenda": "2026-06-05",
+      "idVendedor": "1",
+      "nomeVendedor": "Carlos Silva",
+      "idCliente": "BhYjgFc-4wk",
+      "cliente": "Gabriel Silva",
+      "produto": "Notebook Pro",
+      "parcelas": 1,
+      "valorTotal": 4200,
+      "clienteCompleto": {
+        "id": "BhYjgFc-4wk",
+        "nome": "Gabriel Silva",
+        "cpf": "123.123.124-12",
+        "celular": "(12) 31231-2312"
+      },
+      "vendedor": {
+        "id": "1",
+        "nome": "Carlos Silva"
+      },
+      "produtos": [
+        {
+          "codigo": "2",
+          "nome": "Notebook Pro",
+          "quantidade": 1,
+          "valorUnitario": 4200,
+          "subtotal": 4200
+        }
+      ],
+      "pagamento": {
+        "tipoPagamento": "avista",
+        "formaPagamento": "pix",
+        "dataPrimeiroPagamento": "2026-06-05",
+        "tipoVencimento": "data-fixa",
+        "valorPagoHoje": 4200,
+        "valorRestante": 0
+      },
+      "parcelasDetalhadas": [
+        {
+          "numero": 1,
+          "dataPrevista": "2026-06-05",
+          "valor": 4200,
+          "status": "Pago",
+          "formaPagamento": "pix"
+        }
+      ],
+      "resumo": {
+        "valorProdutos": 4200,
+        "valorPagoHoje": 4200,
+        "valorRestante": 0,
+        "valorTotal": 4200,
+        "quantidadeParcelas": 1,
+        "somaParcelas": 4200
+      },
+      "dataCadastro": "2026-06-05T19:48:50.779Z"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
