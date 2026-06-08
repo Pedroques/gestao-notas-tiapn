@@ -60,36 +60,20 @@ body::before {
 
 /* CARDS */
 .card-vendedor {
-    background: transparent;
-    border: none;
+    background: #fff;
+    border-radius: 15px;
     box-shadow: none;
     padding: 28px;
     color: #172112;
 }
 
-.card-info {
-    background: rgba(255, 255, 255, .58);
-    backdrop-filter: blur(8px);
-
-    border: 1px solid rgba(255, 255, 255, .45);
-    border-radius: 18px;
-
-    padding: 28px;
-    color: #172112;
-
-    box-shadow: 0 8px 22px rgba(0, 0, 0, .10);
-}
-
+.card-info,
 .card-dashboard {
-    background: rgba(255, 255, 255, .62);
-
-    border: 1px solid #d4d4d4;
-    border-radius: 18px;
-
+    background: #fff;
+    border-radius: 15px;
+    border: none;
+    box-shadow: none;
     padding: 28px;
-    color: #172112;
-
-    box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
 }
 
 .card-dashboard h4 i {

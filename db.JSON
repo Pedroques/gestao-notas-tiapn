@@ -171,7 +171,7 @@
       "id": "1",
       "codigo": "1",
       "nome": "Carlos Silva",
-      "status": "ATIVO",
+      "status": "INATIVO",
       "produtosResponsaveis": []
     },
     {
@@ -180,7 +180,9 @@
       "nome": "Ana Souza",
       "status": "ATIVO",
       "produtosResponsaveis": [
-        "100"
+        "1",
+        "2",
+        "7"
       ]
     },
     {
@@ -189,7 +191,9 @@
       "nome": "Roberto Oliveira",
       "status": "ATIVO",
       "produtosResponsaveis": [
-        "100"
+        "3",
+        "6",
+        "9"
       ]
     }
   ],
@@ -304,7 +308,7 @@
       "id": "39d5",
       "codigoPromissoria": "0001",
       "dataVenda": "2026-05-28",
-      "idVendedor": "20",
+      "idVendedor": "2",
       "nomeVendedor": "Ana Souza",
       "idCliente": "1",
       "cliente": "Gabriel Silva",
@@ -318,16 +322,23 @@
         "celular": "(12) 31231-2312"
       },
       "vendedor": {
-        "id": "20",
+        "id": "2",
         "nome": "Ana Souza"
       },
       "produtos": [
         {
-          "codigo": "100",
-          "nome": "Produto Teste",
-          "quantidade": 1,
+          "codigo": "1",
+          "nome": "Smartphone Alfa",
+          "quantidade": 3,
           "valorUnitario": 500,
-          "subtotal": 500
+          "subtotal": 1.500
+        },
+        {
+          "codigo": "7",
+          "nome": "Cadeira Ergonômica",
+          "quantidade": 1,
+          "valorUnitario": 850,
+          "subtotal": 850
         }
       ],
       "pagamento": {
@@ -427,6 +438,33 @@
         "somaParcelas": 4200
       },
       "dataCadastro": "2026-06-05T19:48:50.779Z"
+    },
+    {
+      "id": "r001",
+      "codigoPromissoria": "0003",
+      "dataVenda": "2026-06-06",
+      "idVendedor": "3",
+      "nomeVendedor": "Roberto Oliveira",
+      "idCliente": "Pl0mKj-7xCd",
+      "cliente": "Ana Beatriz Costa",
+      "parcelas": 2,
+      "valorTotal": 1076,
+      "produtos": [
+        {
+          "codigo": "3",
+          "nome": "Fone de Ouvido Bluetooth",
+          "quantidade": 2,
+          "valorUnitario": 199,
+          "subtotal": 398
+        },
+        {
+          "codigo": "9",
+          "nome": "Mesa Digitalizadora",
+          "quantidade": 1,
+          "valorUnitario": 678,
+          "subtotal": 678
+        }
+      ]
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

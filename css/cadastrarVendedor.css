@@ -58,8 +58,8 @@ body::before {
 
 /* CARD */
 .card-cadastro {
-    background: transparent;
-    border: none;
+    background: #fff;
+    border-radius: 15px;
     padding: 28px;
     color: #172112;
     box-shadow: none;
@@ -123,8 +123,6 @@ label {
 }
 
 /* BOTÕES */
-/* BOTÕES */
-
 .acoes {
     display: flex;
     gap: 14px;
@@ -149,89 +147,64 @@ label {
 }
 
 .btn i {
-
     color: #fff;
     margin-right: 8px;
-
     transition: color .25s ease;
-
 }
 
 /* SALVAR */
-
 .btn-success {
-
     background: #198754;
     color: #fff;
     border: 2px solid #015c08;
-
 }
 
 .btn-success:hover {
-
     background: #baf8cf;
     color: #198754;
     border-color: #198754;
-
 }
 
 .btn-success:hover i {
-
     color: #198754;
-
 }
 
 /* CANCELAR */
-
 .btn-secondary {
-
     background: #f44336;
     color: #fff;
     border: 2px solid #8a0900;
-
 }
 
 .btn-secondary:hover {
-
     background: #ffd0d0;
     color: #f44336;
     border-color: #f44336;
-
 }
 
 .btn-secondary:hover i {
-
     color: #f44336;
-
 }
 
 /* RETORNAR */
-
 .btn-retornar {
-
     background: #0d6efd;
     color: #fff;
     border: 2px solid #023b91;
-
 }
 
 .btn-retornar:hover {
-
     background: #c4dbff;
     color: #0d6efd;
     border-color: #0d6efd;
-
 }
 
 .btn-retornar:hover i {
-
     color: #0d6efd;
-
 }
 
 /* FOOTER */
 .footer {
-
     margin-top: auto;
     padding: 20px 0;
     background: rgb(30, 34, 30);

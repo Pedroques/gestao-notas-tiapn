@@ -51,6 +51,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
 
+        else {
+
+            gerarProximoCodigo();
+
+        }
+
+    }
+
+    async function gerarProximoCodigo() {
+
+        try {
+
+            const resposta =
+                await fetch(API_VENDEDOR);
+
+            const vendedores =
+                await resposta.json();
+
+            const maiorCodigo = Math.max(
+                ...vendedores.map(v =>
+                    Number(v.codigo)
+                ),
+                0
+            );
+
+            document
+                .getElementById('codigo')
+                .value =
+                (maiorCodigo + 1).toString();
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+        }
+
     }
 
     /* ---------- PRODUTOS ---------- */
@@ -227,6 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function preencherFormulario(
         vendedor
     ) {
+
+        console.log(vendedor);
 
         document
             .getElementById(

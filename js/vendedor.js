@@ -198,6 +198,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             }
 
+            campoCodigo.value =
+                vendedorAtual.codigo;
+
+            campoNome.value =
+                vendedorAtual.nome;
+
             infoCodigo.textContent =
                 vendedorAtual.codigo;
 
@@ -208,13 +214,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 vendedorAtual.status;
 
             if (
-
                 vendedorAtual.status ===
                 'INATIVO'
-
             ) {
 
                 secaoProdutos.style.display =
+                    'none';
+
+                btnVendas.style.display =
                     'none';
 
             }
@@ -224,6 +231,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 secaoProdutos.style.display =
                     'block';
 
+                btnVendas.style.display =
+                    'inline-block';
             }
 
             await carregarProdutosResponsaveis();
@@ -235,7 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 'none';
 
             dashboardAberto = false;
-
         }
 
         catch (error) {
@@ -271,19 +279,20 @@ document.addEventListener('DOMContentLoaded', () => {
             listaProdutosVendedor.innerHTML =
                 '';
 
-            vendedorAtual
-                .produtosResponsaveis
+            (vendedorAtual.produtosResponsaveis || [])
                 .forEach(idProduto => {
+
+                    console.log(idProduto);
 
                     const produto =
                         produtos.find(
 
                             p =>
-
-                                p.id ===
-                                idProduto
+                                String(p.id) === String(idProduto)
 
                         );
+
+                    console.log(produto);
 
                     if (produto) {
 
@@ -608,6 +617,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             secaoProdutos.style.display =
                 'none';
+
+            btnVendas.style.display = 'none';
 
             alert(
                 'Vendedor atualizado.'
