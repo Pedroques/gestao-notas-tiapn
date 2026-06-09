@@ -58,6 +58,35 @@ body::before {
     margin-bottom: 28px;
 }
 
+/* BUSCA */
+.campo-busca {
+    position: relative;
+}
+
+.btn-limpar {
+    position: absolute;
+
+    right: 10px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+    background: transparent;
+
+    color: #888;
+
+    display: none;
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+.btn-limpar:hover {
+    color: #dc3545;
+}
+
 /* CARDS */
 .card-vendedor {
     background: #fff;
@@ -256,6 +285,12 @@ label {
     margin-bottom: 10px;
     padding: 12px 16px;
     border-radius: 12px;
+}
+
+.produto-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* KPI */

@@ -56,6 +56,157 @@ h4 {
     filter: invert(1);
 }
 
+.card-produto {
+    background: #fff;
+    border-radius: 15px;
+    padding: 28px;
+    box-shadow: none;
+}
+
+.form-produto .row {
+    align-items: end;
+    margin-bottom: 18px;
+}
+
+.form-control {
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #d4d4d4;
+    font-size: 14px;
+    color: #1e221e;
+}
+
+.form-control:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 .15rem rgba(76, 175, 80, .20);
+}
+
+#codigo {
+    max-width: 220px;
+}
+
+#nome {
+    width: 100%;
+}
+
+.estoque-botoes {
+    margin-top: 24px;
+}
+
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+
+    transition:
+        background-color .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        transform .18s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn i {
+    margin-right: 8px;
+}
+
+.btn-acao {
+    background: #198754;
+    color: #fff;
+    border: 2px solid #015c08;
+
+    min-width: 140px;
+    height: 44px;
+}
+
+.btn-acao:hover {
+    background: #baf8cf;
+    color: #198754;
+    border-color: #198754;
+}
+
+.btn-acao:hover i {
+    color: #198754;
+}
+
+.btn-editar {
+    background: #eb8a3b;
+    color: #fff;
+    border: 2px solid #a74b00;
+
+    min-width: 140px;
+    height: 44px;
+}
+
+.btn-editar:hover {
+    background: #ffe5cf;
+    color: #eb8a3b;
+    border-color: #eb8a3b;
+}
+
+.btn-editar:hover i {
+    color: #eb8a3b;
+}
+
+.btn-salvar {
+    background: #0d6efd;
+    color: #fff;
+    border: 2px solid #023b91;
+
+    min-width: 140px;
+    height: 44px;
+}
+
+.btn-salvar:hover {
+    background: #c4dbff;
+    color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-salvar:hover i {
+    color: #0d6efd;
+}
+
+.btn-cancelar {
+    background: #6c757d;
+    color: #fff;
+    border: 2px solid #495057;
+
+    min-width: 140px;
+    height: 44px;
+}
+
+.btn-cancelar:hover {
+    background: #e9ecef;
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-cancelar:hover i {
+    color: #6c757d;
+}
+
+.btn-remover {
+    background: #f44336;
+    color: #fff;
+    border: 2px solid #8a0900;
+
+    min-width: 140px;
+    height: 44px;
+}
+
+.btn-remover:hover {
+    background: #ffd0d0;
+    color: #f44336;
+    border-color: #f44336;
+}
+
+.btn-remover:hover i {
+    color: #f44336;
+}
+
 .footer {
     padding: 20px 0;
     background: rgb(30, 34, 30);
@@ -63,142 +214,4 @@ h4 {
     color: #e0e0e0;
     font-size: 14px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    .page-title {
-    margin-bottom: 30px;
-}
-
-.form-produto .row {
-    align-items: end;
-    margin-bottom: 18px;
-}
-
-.form-control {
-    height: 42px;
-    border: 1px solid #666;
-}
-
-#codigo {
-    max-width: 220px;
-}
-
-#nome {
-    width: 100%;
-}
-
-.estoque-botoes {
-    margin-top: 24px;
-}
-
-.btn-adicionar {
-    background-color: #2e7d32;
-    color: white;
-    border: none;
-    height: 42px;
-    font-weight: 500;
-}
-
-.btn-adicionar:hover {
-    background-color: #256628;
-}
-
-.btn-remover {
-    background-color: #e53935;
-    color: white;
-    border: none;
-    height: 42px;
-    font-weight: 500;
-}
-
-.btn-remover:hover {
-    background-color: #c62828;
-}
-
-.btn-acao {
-    background-color: #2e7d32;
-    color: white;
-    border: none;
-    min-width: 140px;
-    height: 44px;
-    font-weight: 500;
-}
-
-.btn-acao:hover {
-    background-color: #256628;
-    color: white;
-}
-
-.acoes-principais {
-    margin-top: 30px;
-}
-}
-.page-title {
-    margin-bottom: 30px;
-}
-
-.form-produto .row {
-    align-items: end;
-    margin-bottom: 18px;
-}
-
-.form-control {
-    height: 42px;
-    border: 1px solid #666;
-}
-
-#codigo {
-    max-width: 220px;
-}
-
-#nome {
-    width: 100%;
-}
-
-.estoque-botoes {
-    margin-top: 24px;
-}
-
-.btn-adicionar {
-    background-color: #2e7d32;
-    color: white;
-    border: none;
-    height: 42px;
-    font-weight: 500;
-}
-
-.btn-adicionar:hover {
-    background-color: #256628;
-}
-
-.btn-remover {
-    background-color: #e53935;
-    color: white;
-    border: none;
-    height: 42px;
-    font-weight: 500;
-}
-
-.btn-remover:hover {
-    background-color: #c62828;
-}
-
-.btn-acao {
-    background-color: #2e7d32;
-    color: white;
-    border: none;
-    min-width: 140px;
-    height: 44px;
-    font-weight: 500;
-}
-
-.btn-acao:hover {
-    background-color: #256628;
-    color: white;
-}
-
-.acoes-principais {
-    margin-top: 30px;
-}
-.btn-remover {
-    min-width: 140px;
-    height: 44px;
 }

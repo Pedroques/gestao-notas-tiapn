@@ -64,6 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
             'nomeBusca'
         );
 
+    const btnLimparBusca =
+        document.getElementById(
+            'btnLimparBusca'
+        );
+
     const kpiTotalVendas =
         document.getElementById(
             'kpiTotalVendas'
@@ -93,6 +98,52 @@ document.addEventListener('DOMContentLoaded', () => {
     btnVendas.addEventListener(
         'click',
         alternarDashboard
+    );
+
+    function atualizarBotaoLimpar() {
+
+        btnLimparBusca.style.display =
+
+            campoNome.value.trim() ||
+                campoCodigo.value.trim()
+
+                ? 'block'
+                : 'none';
+
+    }
+
+    campoNome.addEventListener(
+        'input',
+        atualizarBotaoLimpar
+    );
+
+    campoCodigo.addEventListener(
+        'input',
+        atualizarBotaoLimpar
+    );
+
+    btnLimparBusca.addEventListener(
+
+        'click',
+
+        () => {
+
+            campoNome.value = '';
+
+            campoCodigo.value = '';
+
+            btnLimparBusca.style.display = 'none';
+
+            infoVendedor.style.display = 'none';
+
+            dashboard.style.display = 'none';
+
+            vendedorAtual = null;
+
+            campoNome.focus();
+
+        }
+
     );
 
     async function buscarVendedor() {
@@ -300,10 +351,14 @@ document.addEventListener('DOMContentLoaded', () => {
                             .innerHTML +=
 
                             `
-                            <li>
-                                ${produto.id}
-                                —
-                                ${produto.nome}
+                            <li class="produto-item">
+                                <span>
+                                    ${produto.id} — ${produto.nome}
+                                </span>
+
+                                <span class="badge bg-success">
+                                    Estoque: ${produto.estoque}
+                                </span>
                             </li>
                         `;
 
