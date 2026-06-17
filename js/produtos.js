@@ -1,5 +1,3 @@
-const form = document.getElementById("produto-form");
-
 const codigo = document.getElementById("codigo");
 const nome = document.getElementById("nome");
 const valorCompra = document.getElementById("valorCompra");
@@ -12,15 +10,17 @@ const btnSalvar = document.getElementById("btn-salvar");
 const btnEditar = document.getElementById("btn-editar");
 const btnBuscar = document.getElementById("btn-buscar");
 const btnCancelar = document.getElementById("btn-cancelar");
+const btnRemover = document.getElementById("btn-remover");
+
+const API_URL = "http://localhost:3000/produtos";
 
 let produtoEditando = null;
 
 function gerarCodigo() {
-    return Date.now();
+    return Date.now().toString();
 }
 
 function limparFormulario() {
-
     codigo.value = "";
     nome.value = "";
     valorCompra.value = "";
@@ -31,119 +31,180 @@ function limparFormulario() {
     produtoEditando = null;
 }
 
-function obterProdutos() {
+async function obterProdutos() {
+    const response = await fetch(API_URL);
 
-    return JSON.parse(localStorage.getItem("produtos")) || [];
+    if (!response.ok) {
+        throw new Error("Erro ao buscar produtos");
+    }
+
+    return await response.json();
 }
 
-function salvarProdutos(produtos) {
+async function criarProduto(produto) {
+    const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(produto)
+    });
 
-    localStorage.setItem("produtos", JSON.stringify(produtos));
+    if (!response.ok) {
+        throw new Error("Erro ao salvar produto");
+    }
+
+    return await response.json();
+}
+
+async function atualizarProduto(id, produto) {
+    const response = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(produto)
+    });
+
+    if (!response.ok) {
+        throw new Error("Erro ao atualizar produto");
+    }
+}
+
+async function excluirProduto(id) {
+    const response = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE"
+    });
+
+    if (!response.ok) {
+        throw new Error("Erro ao excluir produto");
+    }
 }
 
 btnCriar.addEventListener("click", () => {
-
     limparFormulario();
-
     codigo.value = gerarCodigo();
 });
 
-btnSalvar.addEventListener("click", () => {
+btnSalvar.addEventListener("click", async () => {
 
     if (
         nome.value.trim() === "" ||
         valorCompra.value.trim() === "" ||
         valorVenda.value.trim() === ""
     ) {
-
         alert("Preencha os campos obrigatórios.");
         return;
     }
 
-    let produtos = obterProdutos();
-
     const produto = {
-
+        id: codigo.value,
         codigo: codigo.value,
         nome: nome.value,
         valorCompra: valorCompra.value,
         valorVenda: valorVenda.value,
         codigoVendedor: codigoVendedor.value,
-        estoque: estoque.value
+        estoque: Number(estoque.value)
     };
 
-    if (produtoEditando !== null) {
+    try {
 
-        produtos[produtoEditando] = produto;
+        if (produtoEditando) {
 
-        alert("Produto atualizado com sucesso!");
+            await atualizarProduto(produto.id, produto);
 
-    } else {
+            alert("Produto atualizado com sucesso!");
 
-        produtos.push(produto);
+        } else {
 
-        alert("Produto salvo com sucesso!");
+            await criarProduto(produto);
+
+            alert("Produto salvo com sucesso!");
+        }
+
+        limparFormulario();
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao salvar produto.");
     }
-
-    salvarProdutos(produtos);
-
-    limparFormulario();
 });
 
-btnBuscar.addEventListener("click", () => {
+btnBuscar.addEventListener("click", async () => {
 
-    const produtos = obterProdutos();
+    try {
 
-    const tbody = document.getElementById("produtos-tbody");
+        const produtos = await obterProdutos();
 
-    tbody.innerHTML = "";
+        const tbody =
+            document.getElementById("produtos-tbody");
 
-    produtos.forEach((produto, index) => {
+        tbody.innerHTML = "";
 
-        const tr = document.createElement("tr");
+        produtos.forEach((produto) => {
 
-        tr.innerHTML = `
-            <td>${produto.codigo}</td>
-            <td>${produto.nome}</td>
-            <td>Produto</td>
-            <td>${produto.valorVenda}</td>
-            <td>${produto.estoque}</td>
-        `;
+            const tr = document.createElement("tr");
 
-        tr.style.cursor = "pointer";
+            tr.innerHTML = `
+                <td>${produto.codigo || produto.id}</td>
+                <td>${produto.nome}</td>
+                <td>Produto</td>
+                <td>${produto.valorVenda}</td>
+                <td>${produto.estoque}</td>
+            `;
 
-        tr.addEventListener("click", () => {
+            tr.style.cursor = "pointer";
 
-            codigo.value = produto.codigo;
-            nome.value = produto.nome;
-            valorCompra.value = produto.valorCompra;
-            valorVenda.value = produto.valorVenda;
-            codigoVendedor.value = produto.codigoVendedor;
-            estoque.value = produto.estoque;
+            tr.addEventListener("click", () => {
 
-            produtoEditando = index;
+                codigo.value =
+                    produto.codigo || produto.id;
 
-            const modal =
-                bootstrap.Modal.getInstance(
-                    document.getElementById("modalBuscarProduto")
-                );
+                nome.value = produto.nome;
+                valorCompra.value = produto.valorCompra;
+                valorVenda.value = produto.valorVenda;
+                codigoVendedor.value =
+                    produto.codigoVendedor;
+                estoque.value = produto.estoque;
 
-            modal.hide();
+                produtoEditando = produto.id;
+
+                const modal =
+                    bootstrap.Modal.getInstance(
+                        document.getElementById(
+                            "modalBuscarProduto"
+                        )
+                    );
+
+                if (modal) {
+                    modal.hide();
+                }
+            });
+
+            tbody.appendChild(tr);
         });
 
-        tbody.appendChild(tr);
-    });
+        const modal = new bootstrap.Modal(
+            document.getElementById(
+                "modalBuscarProduto"
+            )
+        );
 
-    const modal = new bootstrap.Modal(
-        document.getElementById("modalBuscarProduto")
-    );
+        modal.show();
 
-    modal.show();
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao buscar produtos.");
+    }
 });
 
 btnEditar.addEventListener("click", () => {
 
-    if (codigo.value === "") {
+    if (!codigo.value) {
 
         alert("Busque um produto primeiro.");
         return;
@@ -153,32 +214,32 @@ btnEditar.addEventListener("click", () => {
 });
 
 btnCancelar.addEventListener("click", () => {
-
     limparFormulario();
 });
 
-document
-    .getElementById("btn-remover")
-    .addEventListener("click", () => {
+btnRemover.addEventListener("click", async () => {
 
-        if (codigo.value === "") {
+    if (!codigo.value) {
 
-            alert("Selecione um produto.");
-            return;
-        }
+        alert("Selecione um produto.");
+        return;
+    }
 
-        let produtos = obterProdutos();
+    try {
 
-        produtos = produtos.filter(
-            p => p.codigo != codigo.value
-        );
+        await excluirProduto(codigo.value);
 
-        salvarProdutos(produtos);
-
-        alert("Produto removido.");
+        alert("Produto removido com sucesso.");
 
         limparFormulario();
-    });
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao remover produto.");
+    }
+});
 
 function formatarMoeda(input) {
 
@@ -190,7 +251,10 @@ function formatarMoeda(input) {
 
         valor = valor.replace(".", ",");
 
-        valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        valor = valor.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            "."
+        );
 
         input.value = valor;
     });
@@ -198,4 +262,3 @@ function formatarMoeda(input) {
 
 formatarMoeda(valorCompra);
 formatarMoeda(valorVenda);
-
