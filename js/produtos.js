@@ -16,8 +16,20 @@ const API_URL = "http://localhost:3000/produtos";
 
 let produtoEditando = null;
 
-function gerarCodigo() {
-    return Date.now().toString();
+async function gerarCodigo() {
+    const produtos = await obterProdutos();
+
+    if (produtos.length === 0) {
+        return "0001";
+    }
+
+    const maiorCodigo = Math.max(
+        ...produtos.map(produto =>
+            parseInt(produto.codigo || produto.id)
+        )
+    );
+
+    return String(maiorCodigo + 1).padStart(4, "0");
 }
 
 function limparFormulario() {
@@ -81,9 +93,15 @@ async function excluirProduto(id) {
     }
 }
 
-btnCriar.addEventListener("click", () => {
+btnCriar.addEventListener("click", async () => {
     limparFormulario();
-    codigo.value = gerarCodigo();
+
+    try {
+        codigo.value = await gerarCodigo();
+    } catch (erro) {
+        console.error(erro);
+        alert("Erro ao gerar código do produto.");
+    }
 });
 
 btnSalvar.addEventListener("click", async () => {
@@ -138,8 +156,7 @@ btnBuscar.addEventListener("click", async () => {
 
         const produtos = await obterProdutos();
 
-        const tbody =
-            document.getElementById("produtos-tbody");
+        const tbody = document.getElementById("produtos-tbody");
 
         tbody.innerHTML = "";
 
@@ -159,24 +176,18 @@ btnBuscar.addEventListener("click", async () => {
 
             tr.addEventListener("click", () => {
 
-                codigo.value =
-                    produto.codigo || produto.id;
-
+                codigo.value = produto.codigo || produto.id;
                 nome.value = produto.nome;
                 valorCompra.value = produto.valorCompra;
                 valorVenda.value = produto.valorVenda;
-                codigoVendedor.value =
-                    produto.codigoVendedor;
+                codigoVendedor.value = produto.codigoVendedor;
                 estoque.value = produto.estoque;
 
                 produtoEditando = produto.id;
 
-                const modal =
-                    bootstrap.Modal.getInstance(
-                        document.getElementById(
-                            "modalBuscarProduto"
-                        )
-                    );
+                const modal = bootstrap.Modal.getInstance(
+                    document.getElementById("modalBuscarProduto")
+                );
 
                 if (modal) {
                     modal.hide();
@@ -187,9 +198,7 @@ btnBuscar.addEventListener("click", async () => {
         });
 
         const modal = new bootstrap.Modal(
-            document.getElementById(
-                "modalBuscarProduto"
-            )
+            document.getElementById("modalBuscarProduto")
         );
 
         modal.show();
@@ -205,7 +214,6 @@ btnBuscar.addEventListener("click", async () => {
 btnEditar.addEventListener("click", () => {
 
     if (!codigo.value) {
-
         alert("Busque um produto primeiro.");
         return;
     }
@@ -220,7 +228,6 @@ btnCancelar.addEventListener("click", () => {
 btnRemover.addEventListener("click", async () => {
 
     if (!codigo.value) {
-
         alert("Selecione um produto.");
         return;
     }
